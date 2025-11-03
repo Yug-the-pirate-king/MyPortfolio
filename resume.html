@@ -3,27 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume - Jerimy Brown</title>
+    <title>Resume - Yug Shah</title>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://jerimybrown.com/resume.html">
-    <meta property="og:title" content="Resume - Jerimy Brown">
-    <meta property="og:description" content="Full-stack UX leader combining director-level strategy with hands-on design and development expertise. Over 25 years architecting user experiences.">
-    <meta property="og:image" content="https://jerimybrown.com/assets/images/preview/resume-preview.png">
+    <meta property="og:title" content="Resume - Yug Shah">
+    <meta property="og:description" content="Computer Science and Engineering student with strong foundation in web development and problem-solving.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://jerimybrown.com/resume.html">
-    <meta property="twitter:title" content="Resume - Jerimy Brown">
-    <meta property="twitter:description" content="Full-stack UX leader combining director-level strategy with hands-on design and development expertise. Over 25 years architecting user experiences.">
-    <meta property="twitter:image" content="https://jerimybrown.com/assets/images/preview/resume-preview.png">
+    <meta property="twitter:title" content="Resume - Yug Shah">
+    <meta property="twitter:description" content="Computer Science and Engineering student with strong foundation in web development and problem-solving.">
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-    <link rel="icon" href="favicon.ico?v=1" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/main.css?v=1761419847">
     <style>
         /* Resume-specific CSS variables */
         :root {
@@ -32,6 +25,7 @@
             --secondary-color: #525252;
             --tertiary-color: #737373;
             --divider-color: #e5e5e5;
+            --bg-color: #fafafa;
         }
 
         body[data-theme="dark"] {
@@ -40,36 +34,130 @@
             --secondary-color: #e0e0e0;
             --tertiary-color: #a3a3a3;
             --divider-color: #404040;
+            --bg-color: #171717;
         }
 
-        /* Critical inline styles to prevent navigation flash on first load
-           These must stay inline to override external CSS before it loads */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+        }
+
         .nav {
-            background: rgba(250, 250, 250, 0.1) !important;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(250, 250, 250, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--divider-color);
+            padding: 16px 0;
         }
+
         body[data-theme="dark"] .nav {
-            background: rgba(23, 23, 23, 0.1) !important;
+            background: rgba(23, 23, 23, 0.1);
         }
 
-        /* Resume-specific styles */
-        .header .subtitle {
-            font-size: clamp(18px, 2.5vw, 32px);
-            color: var(--text-secondary);
-            font-weight: var(--font-weight-regular);
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .header .description {
-            word-spacing: 0.5em;
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-decoration: none;
         }
 
-        .header .description .interactive-text {
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--accent-color);
         }
 
-        /* Ensure default body font for description paragraphs (not subtitle) */
-        .header p:not(.subtitle) {
+        .nav-theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            color: var(--secondary-color);
+            transition: color 0.2s ease;
+        }
+
+        .nav-theme-toggle:hover {
+            color: var(--accent-color);
+        }
+
+        .header {
+            padding: 80px 0 48px 0;
+            text-align: center;
+        }
+
+        .title {
+            font-size: clamp(40px, 5vw, 72px);
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .subtitle {
+            font-size: clamp(18px, 2.5vw, 32px);
+            color: var(--secondary-color);
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .description {
             font-size: 16px;
             line-height: 1.7;
+            color: var(--secondary-color);
+            margin-bottom: 16px;
+        }
+
+        .accent-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .accent-link:hover {
+            opacity: 0.8;
         }
 
         .resume-section {
@@ -92,16 +180,21 @@
             color: var(--secondary-color);
         }
 
+        .resume-summary ul {
+            list-style: disc;
+            padding-left: 24px;
+        }
+
+        .resume-summary li {
+            margin-bottom: 12px;
+        }
+
         .experience-timeline {
             position: relative;
         }
 
         .experience-item {
             padding: 0;
-            margin-bottom: 24px;
-        }
-
-        .experience-item.experience-detailed {
             margin-bottom: 32px;
         }
 
@@ -123,28 +216,20 @@
             flex-shrink: 0;
         }
 
-        .experience-company {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--secondary-color);
-            width: 200px;
-            flex-shrink: 0;
-        }
-
-        .experience-location {
-            font-size: 16px;
-            color: var(--secondary-color);
-            width: 150px;
-            flex-shrink: 0;
-        }
-
         .experience-title {
             font-size: 16px;
             font-weight: 400;
             color: var(--accent-color);
             margin-bottom: 0;
-            display: inline;
             flex: 1;
+        }
+
+        .experience-company {
+            font-size: 16px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
         }
 
         .experience-description {
@@ -154,21 +239,109 @@
             margin-top: 16px;
         }
 
-        .experience-compact-grid {
-            margin-top: 64px;
+        .experience-description ul {
+            list-style: disc;
+            padding-left: 24px;
         }
 
-        .experience-compact {
-            padding: 0;
-            margin-bottom: 16px;
+        .experience-description li {
+            margin-bottom: 8px;
         }
 
-        .experience-compact .experience-header {
-            margin-bottom: 0;
+        .certs-body-div {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 24px;
         }
 
-        .experience-compact .experience-description {
-            display: none;
+        .certification-card {
+            background: var(--bg-color);
+            border: 1px solid var(--divider-color);
+            border-radius: 12px;
+            padding: 32px;
+            flex: 1 1 calc(50% - 12px);
+            min-width: 280px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .certification-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        body[data-theme="dark"] .certification-card {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        body[data-theme="dark"] .certification-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .cert-thumbnail {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0ea5e9 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .cert-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .cert-thumbnail-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #0ea5e9 100%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .cert-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .cert-issuer {
+            font-size: 15px;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .cert-date {
+            font-size: 14px;
+            color: var(--tertiary-color);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: auto;
+        }
+
+        .cert-date svg {
+            width: 16px;
+            height: 16px;
         }
 
         .skills-grid {
@@ -183,11 +356,9 @@
 
         .skill-category-title {
             font-size: 16px;
-            font-weight: 400;
+            font-weight: 600;
             color: var(--primary-color);
-            margin-bottom: 24px;
-            text-transform: none;
-            letter-spacing: 0;
+            margin-bottom: 12px;
         }
 
         .skill-list {
@@ -196,108 +367,110 @@
             color: var(--secondary-color);
         }
 
-        .skill-level {
-            color: var(--accent-color);
-            font-weight: 600;
-            display: block;
-            margin-top: 0;
+        .bottom-spacing {
+            height: 120px;
         }
 
-        .accolades-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 32px;
+        .back-to-top {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
         }
 
-        .accolade-category {
-            padding: 0;
+        .back-to-top:hover {
+            transform: translateY(-4px);
         }
 
-        .accolade-category-title {
+        .back-to-top.show {
+            display: flex;
+        }
+
+        /* Download Button */
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
             font-size: 16px;
-            font-weight: 400;
-            color: var(--primary-color);
-            margin-bottom: 32px;
-            text-transform: none;
-            letter-spacing: 0;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            margin-top: 16px;
         }
 
-        .accolade-item {
-            margin-bottom: 24px;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .accolade-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .accolade-date {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--secondary-color);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-
-        .accolade-title {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--tertiary-color);
-            line-height: 1.6;
-        }
-
-        .accolade-award-name {
-            color: var(--accent-color);
-            font-weight: 700;
+        .download-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            /* Ensure mobile body font for description paragraphs (not subtitle) */
-            .header p:not(.subtitle) {
-                font-size: 12px;
+            .container {
+                padding: 0 24px;
+            }
+
+            .nav-container {
+                padding: 0 24px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .header {
+                padding: 48px 0 32px 0;
+            }
+
+            .description {
+                font-size: 14px;
             }
 
             .resume-section-title {
                 font-size: 24px;
+                margin-bottom: 32px;
             }
 
             .resume-summary {
-                padding: 0;
                 font-size: 16px;
-            }
-
-            .experience-item {
-                padding: 0;
-            }
-
-            .experience-compact {
-                padding: 0;
             }
 
             .experience-header {
                 flex-direction: column;
+                gap: 8px;
             }
 
-            .experience-compact-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
+            .experience-dates {
+                width: 100%;
             }
 
             .skills-grid {
                 grid-template-columns: 1fr;
+                gap: 24px;
             }
-
-            .accolades-grid {
-                grid-template-columns: 1fr;
+            
+            .certs-body-div {
+                flex-direction: column;
             }
-
-            .accolade-category {
-                padding: 0;
+            
+            .certification-card {
+                flex: 1 1 100%;
             }
         }
     </style>
@@ -313,25 +486,55 @@
                 document.body.setAttribute('data-theme', 'dark');
             }
         })();
+
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.getAttribute('data-theme') === 'dark';
+            
+            if (isDark) {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function downloadResume() {
+            // Create a temporary link element
+            const link = document.createElement('a');
+            link.href = 'path/to/your/resume.pdf'; // Replace with actual path to your resume
+            link.download = 'Yug_Shah_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
     </script>
 
     <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="index.html" class="logo">
-                <div class="logo-container">
-                    <div class="logo-svg"></div>
-                    <span class="logo-text">Jerimy Brown</span>
-                </div>
-            </a>
+            <a href="#" class="logo">Yug Shah</a>
             <div class="nav-right">
                 <ul class="nav-links">
-                    <li><a href="index.html"><span class="link-text">Home</span></a></li>
-                    <li><a href="index.html#projects"><span class="link-text">Work</span></a></li>
-                    <li><a href="index.html#about"><span class="link-text">About</span></a></li>
-                    <li><a href="index.html#contact"><span class="link-text">Contact</span></a></li>
-                    <li><a href="lab.html"><span class="link-text">Lab</span></a></li>
-                    <li><a href="resume.html" class="active"><span class="link-text">Resume</span></a></li>
+                    <li><a href="#"><span class="link-text">Home</span></a></li>
+                    <li><a href="#experience"><span class="link-text">Experience</span></a></li>
+                    <li><a href="#education"><span class="link-text">Education</span></a></li>
+                    <li><a href="#skills"><span class="link-text">Skills</span></a></li>
+                    <li><a href="#projects" class="active"><span class="link-text">Projects</span></a></li>
                 </ul>
                 <button class="nav-theme-toggle" onclick="toggleTheme()">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -342,84 +545,244 @@
         </div>
     </nav>
 
-    <!-- Mobile Menu Toggle Button (Outside nav for proper z-index layering) -->
-    <button class="nav-mobile-toggle" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu">
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-    </button>
-
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay">
-        <div class="mobile-menu-content">
-            <nav class="mobile-nav">
-                <a href="index.html" onclick="toggleMobileMenu(event)"><span class="mobile-link-text">Home</span></a>
-                <a href="index.html#projects" onclick="toggleMobileMenu(event)"><span class="mobile-link-text">Work</span></a>
-                <a href="index.html#about" onclick="toggleMobileMenu(event)"><span class="mobile-link-text">About</span></a>
-                <a href="index.html#contact" onclick="toggleMobileMenu(event)"><span class="mobile-link-text">Contact</span></a>
-                <a href="lab.html" onclick="toggleMobileMenu(event)"><span class="mobile-link-text">Lab</span></a>
-                <a href="resume.html" onclick="toggleMobileMenu(event)" class="active"><span class="mobile-link-text">Resume</span></a>
-            </nav>
-            <button class="mobile-theme-toggle" onclick="toggleTheme()">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.98038 2.73135C9.79117 2.67374 9.59078 2.67397 9.40415 2.72944C7.79045 3.18158 6.32264 4.04719 5.14599 5.24078C3.96517 6.4386 3.11882 7.92491 2.69124 9.55165C2.26365 11.1784 2.26977 12.8888 2.70898 14.5124C3.14819 16.136 4.00515 17.6163 5.19451 18.8056C6.38386 19.995 7.86409 20.8519 9.48773 21.2911C11.1114 21.7303 12.8218 21.7364 14.4485 21.3088C16.0752 20.8812 17.5615 20.0348 18.7593 18.854C19.9525 17.6778 20.8179 16.2106 21.2702 14.5976C21.324 14.4177 21.3265 14.2247 21.275 14.041C21.1538 13.6089 20.7597 13.3102 20.311 13.3106C20.2099 13.3107 20.1116 13.326 20.0186 13.3546C18.7246 13.7093 17.3598 13.7164 16.0619 13.3751C14.7554 13.0314 13.5636 12.347 12.6083 11.3918C11.6531 10.4365 10.9686 9.24468 10.625 7.93818C10.2834 6.63949 10.2908 5.27379 10.6461 3.9791C10.6732 3.89024 10.6881 3.79655 10.6893 3.70018C10.6947 3.25564 10.4057 2.86084 9.98038 2.73135ZM6.57028 6.64485C7.11058 6.09677 7.72838 5.63598 8.40126 5.27566C8.32141 6.33717 8.41781 7.40898 8.69079 8.44689C9.12451 10.096 9.98839 11.6003 11.1941 12.806C12.3998 14.0117 13.9041 14.8756 15.5532 15.3093C16.5911 15.5822 17.6629 15.6786 18.7244 15.5988C18.3641 16.2717 17.9033 16.8894 17.3553 17.4297C16.4063 18.3652 15.2288 19.0357 13.9401 19.3745C12.6513 19.7133 11.2963 19.7084 10.01 19.3605C8.72365 19.0125 7.55096 18.3336 6.60871 17.3914C5.66647 16.4492 4.98755 15.2765 4.63959 13.9902C4.29163 12.7039 4.28679 11.3488 4.62553 10.0601C4.96428 8.77132 5.63479 7.59381 6.57028 6.64485Z" fill="currentColor"/>
-                </svg>
-            </button>
-        </div>
-    </div>
-
     <!-- Resume Header -->
     <div class="container">
         <header class="header">
-            <h1 class="title">Resume</h1>
-            <p class="subtitle">Jerimy Brown</p>
+            <h1 class="title">Yug Shah</h1>
+            <p class="subtitle">Resume</p>
             <p class="description">
-                4126 Fern Ave, Broomfield, CO 80020 • 720.299.4940 • jerimy@comcast.net<br>
-                <a href="index.html" class="accent-link">Portfolio</a> •
-                <a href="https://dribbble.com/Jerimy" class="accent-link" target="_blank" rel="noopener noreferrer">Dribbble</a> •
-                <a href="https://github.com/jer1my" class="accent-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+                91-9137143315 • yugshah197@gmail.com<br>
+                <a href="https://www.linkedin.com/in/yug-shah26" class="accent-link" target="_blank" rel="noopener noreferrer">LinkedIn</a> •
+                <a href="https://github.com/Yug-the-pirate-king" class="accent-link" target="_blank" rel="noopener noreferrer">GitHub</a> •
+                Mumbai, India
             </p>
-            <p style="margin-top: 32px;"><strong>Curious about my design evolution?</strong><br>Take a look at life before the flat design movement.</p>
-            <p>Old Portfolio: <a href="https://www.jerimy.co/" class="accent-link" target="_blank" rel="noopener noreferrer">https://www.jerimy.co/</a></p>
+            <button class="download-btn" onclick="downloadResume()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 16L12 4M12 16L8 12M12 16L16 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M4 20H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                Download Resume
+            </button>
         </header>
     </div>
 
-    <!-- Curriculum Vitae Section -->
+    <!-- Summary Section -->
     <section class="resume-section">
         <div class="container">
             <h2 class="resume-section-title">Summary</h2>
             <div class="resume-summary">
-                Full-stack UX leader combining director-level strategy with hands-on design and development expertise. Over 25 years architecting user experiences that bridge business objectives, technical constraints, and emerging AI capabilities. Specializing in transforming complex problems into intuitive solutions—leading teams through platform consolidations, establishing enterprise design systems, and integrating AI features that build progressive user trust. Technical fluency in modern front-end development and deep understanding of ML/AI capabilities enable authentic collaboration across disciplines while driving innovation in human-AI interaction design.
+                <ul>
+                    <li>Computer Science and Engineering student with strong foundation in <strong>web development</strong> (HTML, CSS, JS, SQL, C/C++, Python).</li>
+                    <li>Certified in <strong>CS50 (Harvard)</strong>, <strong>Oracle AI Foundations</strong>, and <strong>JavaScript Algorithms</strong>.</li>
+                    <li>Passionate about <strong>problem-solving, collaboration</strong>, and applying knowledge to real-world projects.</li>
+                </ul>
             </div>
         </div>
     </section>
 
-    <!-- Experience Section -->
+    <!-- Professional Experience Section -->
+    <section class="resume-section" id="experience">
+        <div class="container">
+            <h2 class="resume-section-title">Professional Experience</h2>
+            <div class="experience-timeline">
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">Apr 2025 – Present</span>
+                        <span class="experience-title">Research Project</span>
+                    </div>
+                    <div class="experience-company">Cybersecurity Research Paper • Mumbai, IN</div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Leading a Team in <strong>analysis department</strong>, contributing research and insights for a paper that provides structured guidance to students aspiring for a profession in cybersecurity.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">Aug 2024 – Present</span>
+                        <span class="experience-title">Academic Achievement</span>
+                    </div>
+                    <div class="experience-company">SVKM's Shri Bhagubhai Mafatlal College • Mumbai, IN</div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Secured <strong>2nd Runner-up</strong> position in the annual tech competition.</li>
+                            <li>Nominated for the <strong>SIH Internal Hackathon 2025</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications Section -->
     <section class="resume-section">
         <div class="container">
-            <h2 class="resume-section-title">Experience</h2>
+            <h2 class="resume-section-title">Certifications</h2>
+            <div class="certs-body-div">
+                <a href="https://certificates.example.com/cs50-cybersecurity" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">CS50 Cybersecurity</div>
+                    </div>
+                    <div class="cert-title">CS50's Introduction to Cybersecurity</div>
+                    <div class="cert-issuer">Harvard University</div>
+                    <div class="cert-date">Sep 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/javascript-algorithms" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">JavaScript Algorithms</div>
+                    </div>
+                    <div class="cert-title">JavaScript Algorithms and Data Structures</div>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">Aug 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/oracle-ai" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">Oracle AI</div>
+                    </div>
+                    <div class="cert-title">Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</div>
+                    <div class="cert-issuer">Oracle</div>
+                    <div class="cert-date">Aug 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/web-development" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">Web Development</div>
+                    </div>
+                    <div class="cert-title">Web Development Fundamentals</div>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">Aug 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/cs50" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">CS50</div>
+                    </div>
+                    <div class="cert-title">CS50's Introduction to Computer Science</div>
+                    <div class="cert-issuer">Harvard University</div>
+                    <div class="cert-date">Jul 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/excel" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">Excel</div>
+                    </div>
+                    <div class="cert-title">Microsoft Excel</div>
+                    <div class="cert-issuer">Coursera</div>
+                    <div class="cert-date">Jul 2025</div>
+                </a>
+                
+                <a href="https://certificates.example.com/responsive-web" target="_blank" class="certification-card">
+                    <div class="cert-thumbnail">
+                        <div class="cert-thumbnail-placeholder">Responsive Web</div>
+                    </div>
+                    <div class="cert-title">Responsive Web Design</div>
+                    <div class="cert-issuer">freeCodeCamp</div>
+                    <div class="cert-date">Jul 2025</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="resume-section" id="education">
+        <div class="container">
+            <h2 class="resume-section-title">Education</h2>
             <div class="experience-timeline">
-                <!-- Experience items are dynamically generated from data/experience.json -->
+                
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">Oct 2024 – Present</span>
+                        <span class="experience-title">Bachelor of Technology in Computer Science and Engineering</span>
+                    </div>
+                    <div class="experience-company">SVKM's Shri Bhagubhai Mafatlal Polytechnic and College of Engineering • Mumbai, IN</div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Cumulative Grade Point Average (CGPA): <strong>8.00</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">Oct 2022 – Oct 2024</span>
+                        <span class="experience-title">Higher Secondary Certificate (HSC)</span>
+                    </div>
+                    <div class="experience-company">Sardar Vallabhbhai Patel Vidyalaya and Jr. College • Mumbai, IN</div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>HSC Percentage: <strong>72%</strong>, Grade I.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">May 2022</span>
+                        <span class="experience-title">Secondary School Certificate (SSC)</span>
+                    </div>
+                    <div class="experience-company">The Don Bosco High School • Mumbai, IN</div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>SSC Percentage: <strong>76%</strong>, Grade I with Distinction.</li>
+                        <li>Received <strong>Academic Excellence Award</strong> for outstanding performance.</li>
+                        <li>Participated in <strong>Science Exhibition</strong> and secured 2nd position.</li>
+                        <li>Active member of the <strong>Computer Club</strong> and organized coding workshops.</li>
+                        <li>Volunteered for <strong>community service initiatives</strong> through the school's social outreach program.</li>
+                        <li>Represented school in <strong>Inter-School Quiz Competition</strong>.</li>
+                    </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
     <!-- Skills Section -->
-    <section class="resume-section">
+    <section class="resume-section" id="skills">
         <div class="container">
             <h2 class="resume-section-title">Skills</h2>
             <div class="skills-grid">
-                <!-- Skill categories are dynamically generated from data/skills.json -->
+                <div class="skill-category">
+                    <div class="skill-category-title">Languages</div>
+                    <div class="skill-list">Python, C/C++, JavaScript, SQL</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-title">Web</div>
+                    <div class="skill-list">HTML, CSS, Full-Stack Development</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-title">Tools</div>
+                    <div class="skill-list">Git/GitHub, Debugging</div>
+                </div>
+                <div class="skill-category">
+                    <div class="skill-category-title">Areas</div>
+                    <div class="skill-list">AI/ML, Cloud Fundamentals</div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Accolades Section -->
-    <section class="resume-section">
+    <!-- Projects Section -->
+    <section class="resume-section" id="projects">
         <div class="container">
-            <h2 class="resume-section-title">Accolades</h2>
-            <div class="accolades-grid">
-                <!-- Accolades (awards and features) are dynamically generated from data/accolades.json -->
+            <h2 class="resume-section-title">Projects</h2>
+            <div class="experience-timeline">
+                <div class="experience-item">
+                    <div class="experience-header">
+                        <span class="experience-dates">May 2024</span>
+                        <span class="experience-title">Development Project</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>All Projects Source code and documentation available on GitHub: <a href="https://github.com/Yug-the-pirate-king" class="accent-link" target="_blank" rel="noopener noreferrer">github.com/Yug-the-pirate-king</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -428,30 +791,10 @@
     <div class="bottom-spacing"></div>
 
     <!-- Back to Top Button -->
-    <button class="btn-arrow btn-arrow-md btn-arrow-filled back-to-top" onclick="scrollToTop()">
+    <button class="back-to-top" onclick="scrollToTop()">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 18L12 6M8 10L12 6L16 10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M12 18L12 6M8 10L12 6L16 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>
-    <!-- Modular JavaScript Architecture -->
-    <script src="assets/js/core/config.js?v=1760886500"></script>
-    <script src="assets/js/core/data-loader.js?v=1760886500"></script>
-    <script src="assets/js/core/theme-system.js?v=1760886500"></script>
-    <script src="assets/js/utils/helpers.js?v=1760886500"></script>
-    <script src="assets/js/utils/animations.js?v=1760886500"></script>
-    <script src="assets/js/utils/image-preloader.js?v=1760886500"></script>
-    <script src="assets/js/components/navigation.js?v=1760886500"></script>
-    <script src="assets/js/components/mobile-menu.js?v=1760886500"></script>
-    <script src="assets/js/components/logo-animation.js?v=1760886500"></script>
-    <script src="assets/js/components/carousel-base.js?v=1760886500"></script>
-    <script src="assets/js/components/carousel-about.js?v=1760886500"></script>
-    <script src="assets/js/components/carousel-project.js?v=1760886500"></script>
-    <script src="assets/js/components/carousel-featured.js?v=1760886500"></script>
-    <script src="assets/js/content/project-renderer.js?v=1760886500"></script>
-    <script src="assets/js/content/carousel-renderer.js?v=1760886500"></script>
-    <script src="assets/js/content/brand-renderer.js?v=1760886500"></script>
-    <script src="assets/js/content/resume-renderer.js?v=1760886500"></script>
-    <script src="assets/js/content/case-study-renderer.js?v=1760886500"></script>
-    <script src="assets/js/main.js?v=1760886500"></script>
 </body>
 </html>

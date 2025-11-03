@@ -66,8 +66,8 @@
 }
 
 .logo-svg {
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 27px;
     flex-shrink: 0;
     transition: opacity var(--transition-base), background-image var(--transition-base);
     background-image: url('../icons/logo-jb-dark.svg');
