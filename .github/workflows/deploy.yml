@@ -1,29 +1,63 @@
 name: Deploy to FTP
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
+    inputs:
+      deploy_token:
+        description: 'Owner-only deployment token (set in repo secrets)'
+        required: true
+        type: string
 
 jobs:
+  validate:
+    name: Validate trigger (owner + token)
+    runs-on: ubuntu-latest
+    outputs:
+      validated: ${{ steps.validate.outputs.validated }}
+    steps:
+      - name: Check actor and token
+        id: validate
+        env:
+          INPUT_TOKEN: ${{ github.event.inputs.deploy_token }}
+          SECRET_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
+        run: |
+          echo "Trigger actor: $GITHUB_ACTOR"
+          if [ "$GITHUB_ACTOR" != "yug-the-pirate-king" ]; then
+            echo "Actor not authorized: $GITHUB_ACTOR"
+            echo "validated=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          if [ "$INPUT_TOKEN" != "$SECRET_TOKEN" ]; then
+            echo "Invalid deploy token"
+            echo "validated=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          echo "validated=true" >> $GITHUB_OUTPUT
+
   deploy:
+    name: Deploy to FTP
+    needs: validate
+    if: needs.validate.outputs.validated == 'true'
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Deploy to FTP
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_HOST }}
-        username: ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./
-        server-dir: /jerimybrown.com/
-        exclude: |
-          **/.git*
-          **/.git*/**
-          **/node_modules/**
-          **/.DS_Store
-          **/Thumbs.db
+      - name: 📂 Deploy to FTP
+        if: ${{ secrets.FTP_SERVER != '' }}
+        uses: SamKirkland/FTP-Deploy-Action@v4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./build
+          server-dir: /public_html/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/.DS_Store
+            **/Thumbs.db
