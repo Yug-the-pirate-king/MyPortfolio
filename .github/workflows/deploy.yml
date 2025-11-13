@@ -1,4 +1,4 @@
-name: Deploy to FTP
+name: Deploy to GitHub Pages (Owner-only)
 
 on:
   workflow_dispatch:
@@ -37,31 +37,27 @@ jobs:
           echo "validated=true" >> $GITHUB_OUTPUT
 
   deploy:
-    name: Deploy to FTP
+    name: Deploy to GitHub Pages
     needs: validate
     if: needs.validate.outputs.validated == 'true'
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 📂 Deploy to FTP
-        if: ${{ secrets.FTP_SERVER != '' }}
-        uses: SamKirkland/FTP-Deploy-Action@v4
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./build
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            **/.DS_Store
-<<<<<<< HEAD
-            **/Thumbs.db
-=======
-            **/Thumbs.db
->>>>>>> aba73901c5d79c61c86ba81e7738bfd5c3c41c0e
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
