@@ -1,9 +1,9 @@
 {
-  "name": "Jerimy Brown",
+  "name": "Shah Yug",
   "jobTitle": "UX Director, Designer and Developer",
   "description": "Creating design experiences that connect, inspire, and empower users through thoughtful UX direction, design, and development.",
-  "email": "jerimy@comcast.net",
-  "phone": "720.299.4940",
+  "email": "hello@example.com",
+  "phone": "",
   "location": {
     "address": "4126 Fern Ave",
     "city": "Broomfield",
@@ -11,13 +11,13 @@
     "zip": "80020",
     "country": "USA"
   },
-  "website": "https://jerimybrown.com",
-  "image": "https://jerimybrown.com/assets/images/about-me-1.png",
+  "website": "./",
+  "image": "assets/images/about-me-1.png",
   "socialLinks": {
-    "linkedin": "https://www.linkedin.com/in/jerimybrown/",
-    "github": "https://github.com/jer1my",
-    "dribbble": "https://dribbble.com/Jerimy",
-    "instagram": "https://www.instagram.com/jerimybrown/"
+    "linkedin": "#",
+    "github": "#",
+    "dribbble": "#",
+    "instagram": "#"
   },
   "skills": [
     "UX Design",
@@ -31,7 +31,7 @@
   ],
   "summary": "Full-stack UX leader combining director-level strategy with hands-on design and development expertise. Over 25 years architecting user experiences that bridge business objectives, technical constraints, and emerging AI capabilities. Specializing in transforming complex problems into intuitive solutions—leading teams through platform consolidations, establishing enterprise design systems, and integrating AI features that build progressive user trust. Technical fluency in modern front-end development and deep understanding of ML/AI capabilities enable authentic collaboration across disciplines while driving innovation in human-AI interaction design.",
   "oldPortfolio": {
-    "url": "https://www.jerimy.co/",
-    "description": "Curious about my design evolution? Take a look at life before the flat design movement."
+    "url": "#",
+    "description": "Curious about my design evolution?"
   }
 }

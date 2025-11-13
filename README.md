@@ -1,9 +1,9 @@
-# Jerimy Brown - UX Portfolio
+# Shah Yug - UX Portfolio
 
 A modern UX portfolio showcasing design work with sophisticated glassmorphism effects, interactive particle systems, and intelligent temperature-based theming.
 
 ## 🚀 Live Demo
-[View Portfolio](https://www.jerimybrown.com)
+[View Portfolio](./)
 
 ## ✨ Features
 
@@ -266,7 +266,7 @@ See the [LICENSE](LICENSE) file for complete details.
 This is a personal portfolio project. While the code is open source under MIT, please note:
 - **Code improvements and bug fixes** are welcome via pull requests
 - **Portfolio content** (case studies, designs, images) is not open for contribution
-- Issues and feature suggestions are appreciated on the [issues page](https://github.com/jer1my/jerimybrown-2025/issues)
+- Issues and feature suggestions are appreciated on the [issues page](#)
 
 ## 🙏 Acknowledgments
 
