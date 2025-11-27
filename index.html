@@ -33,6 +33,37 @@
         body[data-theme="dark"] .nav {
             background: rgba(23, 23, 23, 0.1) !important;
         }
+        .under-progress {
+  text-align: center;
+  background: rgba(255, 196, 0, 0.08);
+  border: 1px solid rgba(255, 196, 0, 0.4);
+  padding: 40px 20px;
+  border-radius: 16px;
+  margin: 40px auto;
+  max-width: 600px;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.8s ease;
+}
+
+.under-progress h3 {
+  font-size: 28px;
+  color: #ffca2c;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.under-progress p {
+  font-size: 16px;
+  color: #e8e8e8;
+  opacity: 0.9;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
     </style>
     <noscript>
         <style>
@@ -309,7 +340,10 @@
     <section class="projects" id="projects">
         <div class="container">
             <h2 class="section-title">My Projects</h2>
-            <h3 class="section-title">work under progress</h3>
+            <section class="under-progress">
+  <h3>Work in Progress</h3>
+  <p>This section is currently being updated. Please check back soon!</p>
+</section>
             <!-- <div class="projects-grid">
                 Project cards are dynamically generated from PROJECTS configuration in main.js 
             </div> -->
