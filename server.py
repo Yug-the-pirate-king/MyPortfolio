@@ -17,11 +17,15 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Expires', '0')
         super().end_headers()
 
+class ReusableTCPServer(socketserver.TCPServer):
+    """TCP server that allows address reuse."""
+    allow_reuse_address = True
+
 def run_server(port=5000):
     """Start the HTTP server on the specified port."""
     handler = NoCacheHTTPRequestHandler
     
-    with socketserver.TCPServer(("0.0.0.0", port), handler) as httpd:
+    with ReusableTCPServer(("0.0.0.0", port), handler) as httpd:
         print(f"Server running at http://0.0.0.0:{port}/")
         print("Press Ctrl+C to stop the server")
         httpd.serve_forever()
