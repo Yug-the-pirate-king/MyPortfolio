@@ -332,19 +332,19 @@ body:not([data-theme="dark"]) [data-card="style-guide-sample"] .project-bg-image
 
 /* About carousel card images - using dedicated about-me images */
 [data-card="about-design"] .project-bg-image {
-    background-image: url('../images/about-me-1.png');
+    background-image: url('../images/work/about-me-1.jpg');
 }
 
 [data-card="about-background"] .project-bg-image {
-    background-image: url('../images/about-me-2.png');
+    background-image: url('../images/work/about-me-2.jpg');
 }
 
 [data-card="about-creative"] .project-bg-image {
-    background-image: url('../images/about-me-3.png');
+    background-image: url('../images/work/about-me-3.jpg');
 }
 
 [data-card="about-personal"] .project-bg-image {
-    background-image: url('../images/about-me-4.png');
+    background-image: url('../images/work/about-me-4.jpg');
 }
 
 body:not([data-theme="dark"]) .project-content-overlay {
