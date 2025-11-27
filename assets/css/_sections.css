@@ -904,3 +904,345 @@ body[data-theme="dark"] .logo-dark {
     justify-content: start;
 }
 
+/* ==========================================
+   Skills Section - Professional Glassmorphism
+   ========================================== */
+.skills-section {
+    padding: 120px 0;
+    background: linear-gradient(135deg, rgba(21, 181, 255, 0.02) 0%, transparent 50%);
+}
+
+.skills-section .section-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 48px;
+    margin-top: -40px;
+}
+
+/* Stats Highlights */
+.stats-highlights {
+    display: flex;
+    justify-content: center;
+    gap: 64px;
+    margin-bottom: 64px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 600;
+    color: var(--color-accent);
+    display: block;
+    line-height: 1.1;
+}
+
+.stat-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+    display: block;
+}
+
+/* Skills Grid */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+
+.skill-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 32px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skill-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.skill-card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: rgba(21, 181, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: var(--color-accent);
+}
+
+.skill-card-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+}
+
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.skill-tag {
+    font-size: 13px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    background: rgba(21, 181, 255, 0.1);
+    color: var(--color-accent);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.skill-tag:hover {
+    background: rgba(21, 181, 255, 0.2);
+    transform: scale(1.05);
+}
+
+/* Dark mode adjustments for skills */
+[data-theme="dark"] .skill-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .skill-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .skill-card-icon {
+    background: rgba(234, 88, 12, 0.15);
+    color: #ea580c;
+}
+
+[data-theme="dark"] .skill-tag {
+    background: rgba(234, 88, 12, 0.15);
+    color: #ea580c;
+}
+
+[data-theme="dark"] .skill-tag:hover {
+    background: rgba(234, 88, 12, 0.25);
+}
+
+[data-theme="dark"] .stat-number {
+    color: #ea580c;
+}
+
+/* ==========================================
+   Certifications Section
+   ========================================== */
+.certifications-section {
+    padding: 120px 0;
+}
+
+.certifications-section .section-subtitle {
+    font-size: 18px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 48px;
+    margin-top: -40px;
+}
+
+.certifications-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.certification-card {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 28px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+}
+
+.certification-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.cert-badge {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 16px;
+}
+
+.cert-badge.harvard {
+    background: linear-gradient(135deg, #a41034, #c51b3f);
+}
+
+.cert-badge.freecodecamp {
+    background: linear-gradient(135deg, #006400, #0a8a0a);
+}
+
+.cert-badge.oracle {
+    background: linear-gradient(135deg, #c74634, #f80000);
+}
+
+.cert-badge.microsoft {
+    background: linear-gradient(135deg, #00a4ef, #0078d4);
+}
+
+.cert-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.cert-issuer {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.cert-date {
+    font-size: 12px;
+    color: var(--color-accent);
+    font-weight: 500;
+    margin-top: auto;
+}
+
+/* Dark mode for certifications */
+[data-theme="dark"] .certification-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .certification-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .cert-date {
+    color: #ea580c;
+}
+
+/* ==========================================
+   Contact Section Enhancements
+   ========================================== */
+.contact-info-grid {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.contact-info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+}
+
+.contact-info-item svg {
+    color: var(--color-accent);
+}
+
+[data-theme="dark"] .contact-info-item svg {
+    color: #ea580c;
+}
+
+.contact-buttons .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.contact-buttons .btn-primary svg {
+    stroke: currentColor;
+}
+
+/* ==========================================
+   About Section Enhancements
+   ========================================== */
+.about-education {
+    margin-top: 16px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.about-subtitle {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-accent);
+    margin-bottom: 12px;
+}
+
+[data-theme="dark"] .about-education {
+    border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .about-subtitle {
+    color: #ea580c;
+}
+
+/* ==========================================
+   Responsive Adjustments
+   ========================================== */
+@media (max-width: 1024px) {
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .certifications-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .skills-section,
+    .certifications-section {
+        padding: 80px 0;
+    }
+    
+    .stats-highlights {
+        gap: 40px;
+    }
+    
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .certifications-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .skill-card,
+    .certification-card {
+        padding: 24px;
+    }
+    
+    .contact-info-grid {
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+}
+
