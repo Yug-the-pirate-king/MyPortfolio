@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shah Yug - UX Director, Designer and Developer</title>
+    <title>Yug Shah - Web Developer | CS Student | Tech Enthusiast</title>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="./">
-    <meta property="og:title" content="Shah Yug - UX Director, Designer and Developer">
-    <meta property="og:description" content="Creating design experiences that connect, inspire, and empower users through thoughtful UX direction, design, and development.">
+    <meta property="og:title" content="Yug Shah - Web Developer | CS Student | Tech Enthusiast">
+    <meta property="og:description" content="Computer Science student with a strong foundation in web development. Certified in CS50 (Harvard), Oracle AI, and JavaScript. Building meaningful digital experiences.">
     <meta property="og:image" content="assets/images/preview/home-preview.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="./">
-    <meta property="twitter:title" content="Shah Yug - UX Director, Designer and Developer">
-    <meta property="twitter:description" content="Creating design experiences that connect, inspire, and empower users through thoughtful UX direction, design, and development.">
+    <meta property="twitter:title" content="Yug Shah - Web Developer | CS Student | Tech Enthusiast">
+    <meta property="twitter:description" content="Computer Science student with a strong foundation in web development. Certified in CS50 (Harvard), Oracle AI, and JavaScript. Building meaningful digital experiences.">
     <meta property="twitter:image" content="assets/images/preview/home-preview.png">
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -61,7 +61,7 @@
             <a href="#" class="logo" onclick="scrollToTop(); return false;">
                 <div class="logo-container">
                     <div class="logo-svg"></div>
-                    <span class="logo-text">Shah Yug</span>
+                    <span class="logo-text">Yug Shah</span>
                 </div>
             </a>
             <div class="nav-right">
@@ -112,8 +112,14 @@
         <div class="hero-bg"></div>
         <canvas id="particleCanvas" class="particle-canvas"></canvas>
         <div class="hero-content">
-            <h1 class="hero-title">Design that <span class="rotating-word" id="rotatingWord">connects</span></h1>
-            <h2 class="hero-subtitle">Creating meaningful experiences<br class="mobile-break"> with thoughtful UX</h2>
+            <p class="hero-greeting">Hi, I'm</p>
+            <h1 class="hero-title" id="heroTitle">Yug Shah</h1>
+            <h2 class="hero-subtitle">Web Developer <span class="hero-divider">|</span> CS Student <span class="hero-divider">|</span> Problem Solver</h2>
+            <p class="hero-tagline">Building meaningful digital experiences with code</p>
+            <div class="hero-cta">
+                <a href="#projects" class="button btn-primary">View My Work</a>
+                <a href="#contact" class="button btn-secondary">Get In Touch</a>
+            </div>
         </div>
 
         <!-- Scroll Arrow -->
@@ -302,29 +308,159 @@
     <!-- Projects Section -->
     <section class="projects" id="projects">
         <div class="container">
-            <h2 class="section-title">Selected Work</h2>
+            <h2 class="section-title">My Projects</h2>
             <div class="projects-grid">
                 <!-- Project cards are dynamically generated from PROJECTS configuration in main.js -->
             </div>
         </div>
     </section>
 
-    <!-- Brands Section -->
-    <section class="brands">
+    <!-- Skills Section -->
+    <section class="skills-section" id="skills">
         <div class="container">
-            <h2 class="section-title">The Brands</h2>
-            <p class="section-subtitle">I've been fortunate enough to work with some amazing brands and people.</p>
-
-            <!-- Brands Speed Control -->
-            <div class="brands-speed-control">
-                <span class="brands-speed-label">Speed</span>
-                <input type="range" id="brandsSpeedSlider" min="20" max="100" value="40" step="5" class="particle-slider">
-                <span class="brands-speed-value" id="brandsSpeedValue">40%</span>
+            <h2 class="section-title">Skills & Expertise</h2>
+            <p class="section-subtitle">Technologies and tools I work with</p>
+            
+            <!-- Stats Highlights -->
+            <div class="stats-highlights">
+                <div class="stat-item">
+                    <span class="stat-number">6+</span>
+                    <span class="stat-label">Certifications</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">5+</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">CS50</span>
+                    <span class="stat-label">Harvard Certified</span>
+                </div>
             </div>
+            
+            <!-- Skills Grid -->
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 3V6M16 3V6M12 3V6M4 9H20M4 6H20C20.5523 6 21 6.44772 21 7V19C21 19.5523 20.5523 20 20 20H4C3.44772 20 3 19.5523 3 19V7C3 6.44772 3.44772 6 4 6Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            <text x="6" y="16" font-size="8" fill="currentColor" font-family="monospace">&lt;/&gt;</text>
+                        </svg>
+                    </div>
+                    <h3 class="skill-card-title">Programming Languages</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C/C++</span>
+                        <span class="skill-tag">SQL</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                            <path d="M2 12H22M12 2C14.5 4.5 16 8 16 12C16 16 14.5 19.5 12 22M12 2C9.5 4.5 8 8 8 12C8 16 9.5 19.5 12 22" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 class="skill-card-title">Web Development</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Responsive Design</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">Frontend</span>
+                        <span class="skill-tag">Backend Basics</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Databases</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="skill-card-title">Tools & Technologies</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Git/GitHub</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">DevTools</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Terminal</span>
+                    </div>
+                </div>
+                
+                <div class="skill-card">
+                    <div class="skill-card-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                            <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="skill-card-title">Soft Skills</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Problem Solving</span>
+                        <span class="skill-tag">Team Work</span>
+                        <span class="skill-tag">Communication</span>
+                        <span class="skill-tag">Quick Learner</span>
+                        <span class="skill-tag">Adaptability</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="logo-scroller">
-                <div class="logo-scroller-track">
-                    <!-- Brand logos are dynamically generated from data/brands.json -->
+    <!-- Certifications Section -->
+    <section class="certifications-section" id="certifications">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <p class="section-subtitle">Professional certifications and achievements</p>
+            
+            <div class="certifications-grid">
+                <div class="certification-card">
+                    <div class="cert-badge harvard">CS50</div>
+                    <h3 class="cert-title">CS50's Introduction to Cybersecurity</h3>
+                    <p class="cert-issuer">Harvard University</p>
+                    <span class="cert-date">Sep 2025</span>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-badge harvard">CS50</div>
+                    <h3 class="cert-title">CS50's Introduction to Computer Science</h3>
+                    <p class="cert-issuer">Harvard University</p>
+                    <span class="cert-date">2024</span>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-badge freecodecamp">fCC</div>
+                    <h3 class="cert-title">JavaScript Algorithms & Data Structures</h3>
+                    <p class="cert-issuer">freeCodeCamp</p>
+                    <span class="cert-date">Aug 2025</span>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-badge oracle">AI</div>
+                    <h3 class="cert-title">Oracle Cloud AI Foundations Associate</h3>
+                    <p class="cert-issuer">Oracle</p>
+                    <span class="cert-date">Aug 2025</span>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-badge freecodecamp">fCC</div>
+                    <h3 class="cert-title">Web Development Fundamentals</h3>
+                    <p class="cert-issuer">freeCodeCamp</p>
+                    <span class="cert-date">2024</span>
+                </div>
+                
+                <div class="certification-card">
+                    <div class="cert-badge microsoft">MS</div>
+                    <h3 class="cert-title">Microsoft Excel Certification</h3>
+                    <p class="cert-issuer">Microsoft</p>
+                    <span class="cert-date">2024</span>
                 </div>
             </div>
         </div>
@@ -336,12 +472,18 @@
             <h2 class="section-title">About Me</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>I'm a UX Director, Designer and Developer passionate about creating digital experiences that are both beautiful and functional. With a background in design psychology and technology, I bring a unique perspective to understanding user needs and translating them into elegant design solutions.</p>
+                    <p>I'm a <strong>Computer Science & Engineering student</strong> at SVKM's Shri Bhagubhai Mafatlal College in Mumbai, passionate about building impactful digital solutions.</p>
                     <br>
-                    <p>When I'm not designing, you'll find me exploring new technologies, painting, practicing photography, or racing motorcycles.</p>
+                    <p>With a strong foundation in <strong>web development</strong> (HTML, CSS, JavaScript, Python, C/C++, SQL), I focus on creating clean, efficient, and user-friendly applications. I'm certified by <strong>Harvard's CS50</strong>, <strong>Oracle AI Foundations</strong>, and <strong>freeCodeCamp</strong>.</p>
                     <br>
-                    <p><strong>Curious about my design evolution?</strong><br>Take a look at life before the flat design movement.</p>
-                    <p>Old Portfolio: <a href="#" class="accent-link" target="_blank" rel="noopener noreferrer">Old portfolio</a></p>
+                    <p>Currently, I'm leading a research team working on a <strong>cybersecurity research paper</strong> to guide aspiring professionals in the field. I was also nominated for the <strong>SIH Internal Hackathon 2025</strong> and secured <strong>2nd Runner-up</strong> in our college's annual tech competition.</p>
+                    <br>
+                    <div class="about-education">
+                        <h3 class="about-subtitle">Education</h3>
+                        <p><strong>B.Sc. Computer Science & Engineering</strong><br>
+                        SVKM's Shri Bhagubhai Mafatlal College<br>
+                        Mumbai, India</p>
+                    </div>
                 </div>
                 <div class="about-carousel">
                     <div class="carousel-container">
@@ -363,13 +505,34 @@
     <section class="contact" id="contact">
         <div class="container">
             <h2 class="section-title">Let's Connect</h2>
-            <p class="section-subtitle">Whether you have a project in mind, want to collaborate, or simply chat about design... I'd love to connect.</p>
+            <p class="section-subtitle">Interested in collaborating or have a project idea? I'd love to hear from you!</p>
+            <div class="contact-info-grid">
+                <div class="contact-info-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>yugshah197@gmail.com</span>
+                </div>
+                <div class="contact-info-item">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>Mumbai, India</span>
+                </div>
+            </div>
             <div class="contact-buttons">
-                <a href="mailto:hello@example.com" class="button btn-secondary">Email</a>
-                <a href="#" class="button btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                <a href="#" class="button btn-secondary" target="_blank" rel="noopener noreferrer">Dribbble</a>
-                <a href="#" class="button btn-secondary" target="_blank" rel="noopener noreferrer">Instagram</a>
-                <a href="#" class="button btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="mailto:yugshah197@gmail.com" class="button btn-primary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M22 6L12 13L2 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Send Email
+                </a>
+                <a href="https://www.linkedin.com/in/yug-shah26" class="button btn-secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="https://github.com/Yug-the-pirate-king" class="button btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <a href="resume.html" class="button btn-secondary">View Resume</a>
             </div>
         </div>
     </section>

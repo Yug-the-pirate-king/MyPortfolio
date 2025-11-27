@@ -1,80 +1,70 @@
 {
   "skillCategories": [
     {
-      "category": "Computer",
-      "title": "Computer",
-      "description": "Basically, whatever it takes to get the job done ;). Proficient on both MAC and PC.",
+      "category": "Programming",
+      "title": "Programming Languages",
+      "icon": "code",
       "skills": [
-        "AI / Vibe Coding",
-        "Terminal",
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "Python",
+        "C/C++",
+        "SQL"
+      ]
+    },
+    {
+      "category": "WebDev",
+      "title": "Web Development",
+      "icon": "globe",
+      "skills": [
+        "Responsive Design",
+        "REST APIs",
+        "Frontend Development",
+        "Backend Basics",
+        "Version Control (Git)",
+        "Database Management"
+      ]
+    },
+    {
+      "category": "Tools",
+      "title": "Tools & Technologies",
+      "icon": "tools",
+      "skills": [
+        "VS Code",
+        "Git/GitHub",
+        "MySQL",
+        "Chrome DevTools",
         "Figma",
-        "Adobe Creative Cloud (All)",
-        "Sketch",
-        "Apple",
-        "Microsoft"
+        "Terminal/CLI"
       ]
     },
     {
-      "category": "Creative",
-      "title": "Creative",
+      "category": "Soft",
+      "title": "Soft Skills",
+      "icon": "users",
       "skills": [
-        "Concepting",
-        "Usability & Wireframing",
-        "Interactive & Print",
-        "Logo & Identity",
-        "Typography",
-        "Icons & Information Systems",
-        "Storyboarding",
-        "Illustration",
-        "Motion",
-        "Audio Editing & Production",
-        "Some 3D"
-      ]
-    },
-    {
-      "category": "Development",
-      "title": "Development",
-      "skillLevels": {
-        "Expert": [
-          "HTML",
-          "CSS",
-          "JavaScript",
-          "jQuery",
-          "WordPress",
-          "Bootstrap",
-          "Sass",
-          "Less"
-        ],
-        "Intermediate": [
-          "Ruby",
-          "Ember",
-          "Play",
-          "Gulp",
-          "Git",
-          "NPM",
-          "Node",
-          "Jekyll"
-        ],
-        "Beginner": [
-          "Objective-C",
-          "Java",
-          "Angular",
-          "React"
-        ]
-      }
-    },
-    {
-      "category": "Management",
-      "title": "Management",
-      "skills": [
-        "Team Building",
-        "Leadership",
         "Problem Solving",
+        "Team Collaboration",
         "Communication",
-        "Adaptability",
         "Time Management",
-        "Presentation"
+        "Adaptability",
+        "Quick Learner"
       ]
+    }
+  ],
+  "highlights": [
+    {
+      "stat": "6+",
+      "label": "Certifications"
+    },
+    {
+      "stat": "5+",
+      "label": "Projects"
+    },
+    {
+      "stat": "CS50",
+      "label": "Harvard Certified"
     }
   ]
 }
