@@ -1,35 +1,91 @@
 {
-  "name": "Shah Yug",
-  "jobTitle": "UX Director, Designer and Developer",
-  "description": "Creating design experiences that connect, inspire, and empower users through thoughtful UX direction, design, and development.",
-  "email": "hello@example.com",
-  "phone": "",
+  "name": "Yug Shah",
+  "jobTitle": "Computer Science & Engineering Student",
+  "tagline": "Web Developer | Problem Solver | Tech Enthusiast",
+  "description": "Building meaningful digital experiences with a strong foundation in web development and a passion for solving real-world problems through technology.",
+  "email": "yugshah197@gmail.com",
+  "phone": "+91-9137143315",
   "location": {
-    "address": "4126 Fern Ave",
-    "city": "Broomfield",
-    "state": "CO",
-    "zip": "80020",
-    "country": "USA"
+    "city": "Mumbai",
+    "state": "Maharashtra",
+    "country": "India"
   },
   "website": "./",
   "image": "assets/images/about-me-1.png",
   "socialLinks": {
-    "linkedin": "#",
-    "github": "#",
+    "linkedin": "https://www.linkedin.com/in/yug-shah26",
+    "github": "https://github.com/Yug-the-pirate-king",
     "dribbble": "#",
     "instagram": "#"
   },
   "skills": [
-    "UX Design",
-    "Product Design",
-    "Design Systems",
-    "AI/ML Design",
-    "User Research",
-    "Front-end Development",
-    "Accessibility",
-    "Design Leadership"
+    "HTML/CSS",
+    "JavaScript",
+    "Python",
+    "C/C++",
+    "SQL",
+    "Web Development",
+    "Problem Solving",
+    "Cybersecurity"
   ],
-  "summary": "Full-stack UX leader combining director-level strategy with hands-on design and development expertise. Over 25 years architecting user experiences that bridge business objectives, technical constraints, and emerging AI capabilities. Specializing in transforming complex problems into intuitive solutions—leading teams through platform consolidations, establishing enterprise design systems, and integrating AI features that build progressive user trust. Technical fluency in modern front-end development and deep understanding of ML/AI capabilities enable authentic collaboration across disciplines while driving innovation in human-AI interaction design.",
+  "summary": "Computer Science and Engineering student with a strong foundation in web development (HTML, CSS, JS, SQL, C/C++, Python). Certified in CS50 (Harvard), Oracle AI Foundations, and JavaScript Algorithms. Passionate about problem-solving, collaboration, and applying knowledge to real-world projects.",
+  "education": {
+    "institution": "SVKM's Shri Bhagubhai Mafatlal College",
+    "degree": "B.Sc. Computer Science & Engineering",
+    "location": "Mumbai, India",
+    "current": true
+  },
+  "achievements": [
+    "2nd Runner-up in Annual Tech Competition",
+    "Nominated for SIH Internal Hackathon 2025"
+  ],
+  "certifications": [
+    {
+      "name": "CS50's Introduction to Cybersecurity",
+      "issuer": "Harvard University",
+      "date": "Sep 2025",
+      "image": "assets/Certifications/CS50 Cybersecurity.png"
+    },
+    {
+      "name": "CS50's Introduction to Computer Science",
+      "issuer": "Harvard University",
+      "date": "2024",
+      "image": "assets/Certifications/CS50.png"
+    },
+    {
+      "name": "JavaScript Algorithms and Data Structures",
+      "issuer": "freeCodeCamp",
+      "date": "Aug 2025",
+      "image": "assets/Certifications/Javascript.png"
+    },
+    {
+      "name": "Oracle Cloud Infrastructure 2025 AI Foundations",
+      "issuer": "Oracle",
+      "date": "Aug 2025",
+      "image": "assets/Certifications/Ai.jpg"
+    },
+    {
+      "name": "Web Development Fundamentals",
+      "issuer": "freeCodeCamp",
+      "date": "2024",
+      "image": "assets/Certifications/Web_site.png"
+    },
+    {
+      "name": "Microsoft Excel Certification",
+      "issuer": "Microsoft",
+      "date": "2024",
+      "image": "assets/Certifications/Execl.png"
+    }
+  ],
+  "experience": [
+    {
+      "title": "Research Project Lead",
+      "company": "Cybersecurity Research Paper",
+      "location": "Mumbai, IN",
+      "dates": "Apr 2025 - Present",
+      "description": "Leading a team in the analysis department, contributing research and insights for a paper that provides structured guidance to students aspiring for a profession in cybersecurity."
+    }
+  ],
   "oldPortfolio": {
     "url": "#",
     "description": "Curious about my design evolution?"
