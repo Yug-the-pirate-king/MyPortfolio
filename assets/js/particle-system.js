@@ -44,11 +44,11 @@ class ParticleSystem {
         this.colors = {
             light: {
                 accent: { particle: 'rgba(21, 181, 255, 0.8)', connection: 'rgba(21, 181, 255, 0.5)' },
-                greys: { particle: 'rgba(185, 185, 185, 0.85)', connection: 'rgba(185, 185, 185, 0.55)' }
+                greys: { particle: 'rgba(21, 181, 255, 0.8)', connection: 'rgba(21, 181, 255, 0.5)' }
             },
             dark: {
                 accent: { particle: 'rgba(234, 88, 12, 0.8)', connection: 'rgba(234, 88, 12, 0.5)' },
-                greys: { particle: 'rgba(64, 64, 64, 0.8)', connection: 'rgba(64, 64, 64, 0.5)' }
+                greys: { particle: 'rgba(234, 88, 12, 0.8)', connection: 'rgba(234, 88, 12, 0.5)' }
             }
         };
 
