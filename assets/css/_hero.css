@@ -29,13 +29,28 @@
 
 .hero-title {
     font-size: clamp(48px, 8vw, 96px);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    margin-bottom: 8px;
-    line-height: 0.9;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+font-weight: 300;
+letter-spacing: -0.02em;
+margin-bottom: 8px;
+
+/* FIXES */
+line-height: 1.05;
+padding: 0.05em 0;
+
+/* Animation */
+opacity: 0;
+transform: translateY(30px);
+animation: fadeInUp 0.8s ease-out 0.2s forwards;
+
+/* Fallback */
+color: #ffffff;
+
+/* Gradient */
+background: linear-gradient(to right, #ffffff, var(--color-accent));
+-webkit-background-clip: text;
+background-clip: text;
+-webkit-text-fill-color: transparent;
+
 }
 
 .hero-greeting {
