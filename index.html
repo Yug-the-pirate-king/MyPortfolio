@@ -356,21 +356,27 @@
             <h2 class="section-title">Skills & Expertise</h2>
             <p class="section-subtitle">Technologies and tools I work with</p>
             
-            <!-- Stats Highlights -->
-            <div class="stats-highlights">
-                <div class="stat-item">
-                    <span class="stat-number">11</span>
-                    <span class="stat-label">Certifications</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">5+</span>
-                    <span class="stat-label">Languages</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">15</span>
-                    <span class="stat-label">Repositories</span>
-                </div>
-            </div>
+          <!-- Stats Highlights -->
+<div class="stats-highlights">
+    <div class="stat-item">
+        <span id="stat1" class="stat-number">0</span>
+        <span class="stat-label">Certifications</span>
+    </div>
+    <div class="stat-item">
+        <span id="stat2" class="stat-number">0+</span>
+        <span class="stat-label">Languages</span>
+    </div>
+    <div class="stat-item">
+        <span id="stat3" class="stat-number">0</span>
+        <span class="stat-label">Repositories</span>
+    </div>
+    </div>
+    <div class="stat-item">
+        <span id="stat5" class="stat-number">0</span>
+        <span class="stat-label">Contributions</span>
+    </div>
+</div>
+
             
             <!-- Skills Grid -->
             <div class="skills-grid">
@@ -616,5 +622,36 @@
 
     <!-- Main initialization -->
     <script src="assets/js/main.js?v=1761270420"></script>
+
+  <script>
+function animateNumber(id, start, end, duration, addPlus = false) {
+    const element = document.getElementById(id);
+    let startTime = null;
+
+    function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        const progress = Math.min((timestamp - startTime) / duration, 1);
+        const value = Math.floor(progress * (end - start) + start);
+
+        element.textContent = addPlus ? value + "+" : value;
+
+        if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+</script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    animateNumber("stat1", 0, 11, 2000);
+    animateNumber("stat2", 0, 9, 2000,true);
+    animateNumber("stat3", 0, 15, 2000);
+    animateNumber("stat5", 0, 256, 2000);
+    element.textContent = value + (id === "stat2" ? "+" : "");
+});
+</script>
+
 </body>
 </html>
