@@ -359,23 +359,26 @@
           <!-- Stats Highlights -->
 <div class="stats-highlights">
     <div class="stat-item">
-        <span id="stat1" class="stat-number">0</span>
+        <span class="stat-number" data-target="11">0</span>
         <span class="stat-label">Certifications</span>
     </div>
+
     <div class="stat-item">
-        <span id="stat2" class="stat-number">0+</span>
+        <span class="stat-number" data-target="5">0</span>
         <span class="stat-label">Languages</span>
     </div>
+
     <div class="stat-item">
-        <span id="stat3" class="stat-number">0</span>
+        <span class="stat-number" data-target="15">0</span>
         <span class="stat-label">Repositories</span>
     </div>
-    </div>
+
     <div class="stat-item">
-        <span id="stat5" class="stat-number">0</span>
+        <span class="stat-number" data-target="256">0</span>
         <span class="stat-label">Contributions</span>
     </div>
 </div>
+
 
             
             <!-- Skills Grid -->
@@ -623,35 +626,42 @@
     <!-- Main initialization -->
     <script src="assets/js/main.js?v=1761270420"></script>
 
-  <script>
-function animateNumber(id, start, end, duration, addPlus = false) {
-    const element = document.getElementById(id);
+ <script>
+function animateNumber(element, start, end, duration) {
     let startTime = null;
 
-    function step(timestamp) {
+    function update(timestamp) {
         if (!startTime) startTime = timestamp;
         const progress = Math.min((timestamp - startTime) / duration, 1);
-        const value = Math.floor(progress * (end - start) + start);
+        const value = Math.floor(start + (end - start) * progress);
+        element.textContent = value;
 
-        element.textContent = addPlus ? value + "+" : value;
-
-        if (progress < 1) requestAnimationFrame(step);
+        if (progress < 1) requestAnimationFrame(update);
     }
 
-    requestAnimationFrame(step);
+    requestAnimationFrame(update);
 }
-</script>
 
+// Scroll trigger using Intersection Observer
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const elements = document.querySelectorAll(".stat-number");
 
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    animateNumber("stat1", 0, 11, 2000);
-    animateNumber("stat2", 0, 9, 2000,true);
-    animateNumber("stat3", 0, 15, 2000);
-    animateNumber("stat5", 0, 256, 2000);
-    element.textContent = value + (id === "stat2" ? "+" : "");
+            elements.forEach(el => {
+                const endValue = parseInt(el.getAttribute("data-target"));
+                animateNumber(el, 0, endValue, 1500);
+            });
+
+            observer.disconnect(); // Run only once
+        }
+    });
 });
+
+// Observe the stats section
+observer.observe(document.querySelector(".stats-highlights"));
 </script>
+
 
 </body>
 </html>
