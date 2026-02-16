@@ -46,7 +46,7 @@ animation: fadeInUp 0.8s ease-out 0.2s forwards;
 color: #ffffff;
 
 /* Gradient */
-background: linear-gradient(to right, #ffffff, var(--color-accent));
+background: linear-gradient(to right, #add8e6, var(--color-accent));
 -webkit-background-clip: text;
 background-clip: text;
 -webkit-text-fill-color: transparent;

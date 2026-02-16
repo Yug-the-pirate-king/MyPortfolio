@@ -100,10 +100,10 @@ body[data-theme="dark"] .logo.accent-color .logo-svg {
 
 .logo-text {
     font-size: 16px;
-    font-weight: var(--font-weight-medium);
-    line-height: 1;
+    font-weight:var(--font-weight-medium);
+    line-height:1;
     letter-spacing: 0.05em;
-    color: inherit;
+    color: #043260; 
     position: absolute;
     right: calc(100% + var(--logo-text-offset));
     top: 0;
@@ -111,8 +111,9 @@ body[data-theme="dark"] .logo.accent-color .logo-svg {
     transform-origin: right top;
     z-index: 1;
     white-space: nowrap;
-    visibility: hidden; /* Hide until JavaScript transforms it */
-    pointer-events: none; /* Prevent text from triggering hover/clicks */
+    visibility: visible; 
+    
+    pointer-events: none;
 }
 
 .logo-text.transformed {
