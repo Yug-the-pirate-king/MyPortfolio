@@ -74,6 +74,7 @@
     </noscript>
 </head>
 <body>
+    <canvas id="particleCanvas" class="particle-canvas"></canvas>
     <script>
         // Apply theme immediately to prevent flash
         (function() {
@@ -141,7 +142,6 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-bg"></div>
-        <canvas id="particleCanvas" class="particle-canvas"></canvas>
         <div class="hero-content">
             <p class="hero-greeting">Hi, I'm</p>
             <h1 class="hero-title" id="heroTitle">Yug Shah</h1>
@@ -630,9 +630,6 @@
             </div>
         </div>
     </section>
-
-    <!-- Bottom Spacing -->
-    <div class="bottom-spacing"></div>
 
     <!-- Back to Top Button -->
     <button class="btn-arrow btn-arrow-md btn-arrow-filled back-to-top" onclick="scrollToTop()">

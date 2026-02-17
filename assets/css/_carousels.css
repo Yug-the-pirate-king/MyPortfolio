@@ -533,6 +533,11 @@ body[data-theme="dark"] .drag-hint-cursor::before {
     white-space: nowrap;
     backdrop-filter: blur(10px);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    
+    /* Ensure the background is slightly transparent so the blur is visible */
+    background: rgba(255, 255, 255, 0.05);
 }
 
 /* Moving hover effect without pausing */

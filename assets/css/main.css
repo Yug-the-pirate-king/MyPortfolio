@@ -43,3 +43,7 @@
 
 /* Utilities & Overrides (must be last) */
 @import '_utilities.css';
+
+.hero, .projects, .skills-section, .about, .contact {
+    background: transparent !important;
+}
