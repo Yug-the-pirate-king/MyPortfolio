@@ -496,3 +496,61 @@ body[data-theme="dark"] .drag-hint-cursor::before {
         font-size: var(--font-size-xs);
     }
 }
+
+.skills-multiverse {
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Slightly more gap between 3 rows looks cleaner */
+    padding: 50px 0;
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
+
+.ticker-row {
+    display: flex;
+    width: 100%;
+}
+
+.ticker-track {
+    display: flex;
+    width: max-content;
+    /* LINEAR is the key to no-reset feeling */
+    animation: scroll-left 45s linear infinite; 
+}
+
+.ticker-row.reverse .ticker-track {
+    animation: scroll-right 45s linear infinite;
+}
+
+.skill-brick {
+    flex-shrink: 0;
+    padding: 14px 30px;
+    margin: 0 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--color-accent);
+    border-radius: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+    backdrop-filter: blur(10px);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Moving hover effect without pausing */
+.skill-brick:hover {
+    transform: scale(1.18);
+    z-index: 100;
+    background: rgba(255, 196, 0, 0.2);
+    border-color: #ffca2c;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+}
+
+/* Seamless Animation Points */
+@keyframes scroll-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes scroll-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
