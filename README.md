@@ -3,7 +3,7 @@
 A modern UX portfolio showcasing design work with sophisticated glassmorphism effects, interactive particle systems, and intelligent temperature-based theming.
 
 ## 🚀 Live Demo
-[View Portfolio](./)
+[View Portfolio](https://shahyug.netlify.app/)
 
 ## ✨ Features
 
