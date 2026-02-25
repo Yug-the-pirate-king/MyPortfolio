@@ -544,8 +544,7 @@ body[data-theme="dark"] .drag-hint-cursor::before {
 .skill-brick:hover {
     transform: scale(1.18);
     z-index: 100;
-    background: rgba(255, 196, 0, 0.2);
-    border-color: #ffca2c;
+    border-color: var(--color-accent);
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
 }
 
