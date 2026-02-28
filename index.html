@@ -140,18 +140,39 @@
     </div>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-content">
-            <p class="hero-greeting">Hi, I'm</p>
-            <h1 class="hero-title" id="heroTitle">Yug Shah</h1>
-            <h2 class="hero-subtitle">Web Developer <span class="hero-divider">|</span> CS Student <span class="hero-divider">|</span> Problem Solver</h2>
-            <p class="hero-tagline">Building meaningful digital experiences with code</p>
-            <div class="hero-cta">
-                <a href="#projects" class="button btn-primary">View My Work</a>
-                <a href="#contact" class="button btn-secondary">Get In Touch</a>
-            </div>
+   <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+        <p class="hero-greeting">Hi, I'm</p>
+        
+        <div class="hero-title-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 160" class="dasha-overlay-svg">
+                <g id="dasha-box">
+                    <rect x="50" y="25" width="700" height="110" stroke="var(--color-accent)" stroke-width="2" fill="var(--color-accent)" fill-opacity="0.05" rx="4" />
+                    <rect x="46" y="21" width="8" height="8" fill="white" stroke="var(--color-accent)" />
+                    <rect x="746" y="21" width="8" height="8" fill="white" stroke="var(--color-accent)" />
+                </g>
+                <g id="dasha-cursor-root">
+                    <path stroke="white" stroke-width="2" fill="var(--color-accent)" d="M0 0 L-5 -25 L18 -12 L7 -9 L0 0Z" />
+                    <g transform="translate(10, 5)">
+                        <rect width="55" height="20" fill="var(--color-accent)" rx="3" />
+                        <text x="8" y="14" fill="white" font-family="Arial" font-size="11" font-weight="bold">Yug</text>
+                    </g>
+                </g>
+            </svg>
+
+            <h1 class="hero-title unified-typewriter">Yug Shah</h1>
         </div>
+
+        <h2 class="hero-subtitle">Web Developer <span class="hero-divider">|</span> CS Student <span class="hero-divider">|</span> Problem Solver</h2>
+        <p class="hero-tagline">Building meaningful digital experiences with code</p>
+        
+        <div class="hero-cta">
+            <a href="#projects" class="button btn-primary">View My Work</a>
+            <a href="#contact" class="button btn-secondary">Get In Touch</a>
+        </div>
+    </div>
+</section>
 
         <!-- Scroll Arrow -->
         <button class="btn-arrow btn-arrow-lg scroll-arrow" onclick="scrollToProjects()">

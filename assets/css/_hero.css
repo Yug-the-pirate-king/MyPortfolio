@@ -193,3 +193,106 @@ background-clip: text;
     pointer-events: auto;
 }
 
+:root {
+    --color-accent: #ea580c; /* Change this to update box, cursor, and pipe colors */
+}
+
+/* --- Positioning & Stack --- */
+.hero-title-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    min-height: clamp(100px, 15vw, 200px); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dasha-overlay-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+/* --- The Unified Typewriter & Reveal Class --- */
+.unified-typewriter {
+    /* Base Hero Styles */
+    font-size: clamp(48px, 8vw, 96px);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    font-family: 'Courier New', monospace;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0 !important;
+    z-index: 10;
+
+    /* Gradient Styles */
+    background: linear-gradient(to right, #474949, var(--color-accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    
+    /* Typewriter Logic */
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    border-right: 6px solid var(--color-accent);
+    
+    /* Animation: Combined Logic */
+    animation: 
+        unified-logic 10s infinite,
+        dasha-blink 0.8s infinite;
+}
+
+/* --- Shared Animation Timeline --- */
+
+@keyframes unified-logic {
+    /* 0-25%: Hidden for initial cursor move */
+    0%, 25% { width: 0; opacity: 0; border-right-width: 6px; }
+    
+    /* 26-58%: Typing Phase (Steps(8) for 'Yug Shah') */
+    26% { opacity: 1; width: 0; }
+    58% { width: 8.2ch; opacity: 1; border-right-width: 6px; }
+    
+    /* 60-92%: Reveal Phase (Pipe vanishes) */
+    60%, 92% { width: 8.2ch; opacity: 1; border-right-width: 0; }
+    
+    /* 96-100%: Reset Phase */
+    96%, 100% { width: 0; opacity: 0; }
+}
+
+#dasha-box {
+    opacity: 0;
+    animation: box-logic 10s infinite;
+}
+
+@keyframes box-logic {
+    0%, 19% { opacity: 0; }
+    20%, 58% { opacity: 1; }
+    60%, 100% { opacity: 0; } /* Box vanishes exactly when pipe does */
+}
+
+#dasha-cursor-root {
+    animation: cursor-logic 10s infinite ease-in-out;
+}
+
+@keyframes cursor-logic {
+    0% { transform: translate(650px, 120px); opacity: 0; }
+    10% { opacity: 1; }
+    15%, 20% { transform: translate(400px, 80px); } 
+    25% { transform: translate(160px, 95px); opacity: 1; }
+    26% { opacity: 0; } /* Hide during typing */
+    58% { opacity: 1; transform: translate(640px, 95px); }
+    70%, 100% { transform: translate(900px, 250px); opacity: 0; }
+}
+
+@keyframes dasha-blink {
+    50% { border-color: transparent; }
+}
