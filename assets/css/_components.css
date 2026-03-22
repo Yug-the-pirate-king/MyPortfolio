@@ -607,3 +607,11 @@ body[data-theme="dark"] .nav-prev-next-title {
     }
 }
 
+/* --- OVERLAP FIX FOR MOBILE SCROLL ARROW --- */
+@media (max-width: 768px) {
+    .scroll-arrow {
+        bottom: 15px !important; /* Pushes the arrow tight to the bottom of the screen */
+        transform: translateX(-50%) scale(0.8) !important; /* Shrinks it slightly so it takes up less space */
+    }
+}
+

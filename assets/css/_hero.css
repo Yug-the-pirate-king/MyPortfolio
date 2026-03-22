@@ -194,7 +194,13 @@ background-clip: text;
 }
 
 :root {
-    --color-accent: #ea580c; /* Change this to update box, cursor, and pipe colors */
+    --color-accent:#15B5FF;
+    --gradient-end: black; /* Change this to update box, cursor, and pipe colors */
+}
+
+[data-theme="dark"] {
+    --color-accent:#ea580c;
+    --gradient-end: white;
 }
 
 /* --- Positioning & Stack --- */
@@ -234,7 +240,7 @@ background-clip: text;
     z-index: 10;
 
     /* Gradient Styles */
-    background: linear-gradient(to right, #474949, var(--color-accent));
+    background: linear-gradient(to right, #474949, var(--gradient-end) );
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
