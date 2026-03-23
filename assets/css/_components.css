@@ -663,7 +663,7 @@ body[data-theme="dark"] .nav-prev-next-title {
   background: #fff;
   border-radius: 8px;
   transform: skewX(15deg);
-  transition: 0.5s;
+  transition: 1.5s;
   filter: blur(30px);
 }
 
