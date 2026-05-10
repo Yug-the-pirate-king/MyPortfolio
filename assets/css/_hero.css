@@ -80,6 +80,9 @@
 [data-theme="dark"] .hero-divider {
     color: #ea580c;
 }
+[data-theme="dark"] .hero-title{
+    color: white;
+}
 
 .hero-tagline {
     font-size: clamp(14px, 1.8vw, 18px);
