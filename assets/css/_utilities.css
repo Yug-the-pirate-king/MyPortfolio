@@ -13,8 +13,8 @@
 .font-weight-300 { font-weight: 300; }
 .font-weight-400 { font-weight: 400; }
 .font-weight-500 { font-weight: 500; }
-.font-weight-600 { font-weight: 600; }
-.font-weight-700 { font-weight: 700; }
+.font-weight-600 { font-weight: 500; }
+.font-weight-700 { font-weight: 500; }
 
 .mb-4 { margin-bottom: 16px; }
 .mb-6 { margin-bottom: 24px; }

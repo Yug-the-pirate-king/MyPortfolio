@@ -225,30 +225,26 @@ body.work-page .logo:hover .logo-letter {
     color: inherit;
     text-decoration: none;
     font-weight: 400;
+    font-size: 13px;
     position: relative;
+    transition: color 0.3s ease;
 }
 
 .nav-links a .link-text {
-    transition: opacity 0.3s ease, color 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .nav-links a::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background: var(--color-accent);
-    transition: width var(--transition-base);
+    display: none;
 }
 
 .nav-links a:hover .link-text {
-    opacity: 0.5;
+    opacity: 1;
+    color: var(--color-accent);
 }
 
 .nav-links a:hover::after {
-    width: 100%;
+    display: none;
 }
 
 .nav-links a.active .link-text {

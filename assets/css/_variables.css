@@ -38,7 +38,8 @@
   --bg-overlay-dark: rgba(26, 26, 26, 0.8);
 
   /* Typography */
-  --font-family-primary: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-primary: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-family-serif: 'DM Serif Display', Georgia, serif;
   --font-family-mono: 'SF Mono', Monaco, monospace;
 
   /* Font Weights */

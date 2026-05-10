@@ -39,16 +39,24 @@
 }
 
 .section-title {
+    font-family: var(--font-family-serif);
     font-size: 48px;
-    font-weight: 300;
+    font-weight: 400;
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 48px;
     letter-spacing: -0.02em;
 }
 
 /* Projects Section */
 .projects {
-    padding: 120px 0;
+    padding: 80px 0;
+    border-top: 0.5px solid rgba(26, 26, 26, 0.15);
+    border-bottom: 0.5px solid rgba(26, 26, 26, 0.15);
+}
+
+[data-theme="dark"] .projects {
+    border-top-color: rgba(224, 224, 224, 0.1);
+    border-bottom-color: rgba(224, 224, 224, 0.1);
 }
 
 .projects-grid {
@@ -247,7 +255,7 @@
 
 .project-card-featured .project-title {
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .project-card-featured .project-description {
@@ -380,7 +388,14 @@ body:not([data-theme="dark"]) .project-card-featured .project-link-text::after {
 
 /* About Section */
 .about {
-    padding: 120px 0;
+    padding: 80px 0;
+    border-top: 0.5px solid rgba(26, 26, 26, 0.15);
+    border-bottom: 0.5px solid rgba(26, 26, 26, 0.15);
+}
+
+[data-theme="dark"] .about {
+    border-top-color: rgba(224, 224, 224, 0.1);
+    border-bottom-color: rgba(224, 224, 224, 0.1);
 }
 
 .about-content {
@@ -487,7 +502,7 @@ body[data-theme="dark"] .logo-dark {
 
 .brands-speed-value {
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-accent);
     white-space: nowrap;
     min-width: 45px;
@@ -522,7 +537,12 @@ body[data-theme="dark"] .logo-dark {
     display: flex;
     align-items: center;
     background: var(--bg-primary);
-    padding-bottom: 50vh; /* Allow scrolling past center to top of viewport */
+    padding-bottom: 50vh;
+    border-top: 0.5px solid rgba(26, 26, 26, 0.15);
+}
+
+[data-theme="dark"] .contact {
+    border-top-color: rgba(224, 224, 224, 0.1);
 }
 
 .contact-buttons {
@@ -898,8 +918,15 @@ body[data-theme="dark"] .logo-dark {
    Skills Section - Professional Glassmorphism
    ========================================== */
 .skills-section {
-    padding: 50px 0;
-    background: linear-gradient(135deg, rgba(21, 181, 255, 0.02) 0%, transparent 50%);
+    padding: 80px 0;
+    background: transparent;
+    border-top: 0.5px solid rgba(26, 26, 26, 0.15);
+    border-bottom: 0.5px solid rgba(26, 26, 26, 0.15);
+}
+
+[data-theme="dark"] .skills-section {
+    border-top-color: rgba(224, 224, 224, 0.1);
+    border-bottom-color: rgba(224, 224, 224, 0.1);
 }
 
 .skills-section .section-subtitle {
@@ -914,9 +941,10 @@ body[data-theme="dark"] .logo-dark {
 .stats-highlights {
     display: flex;
     justify-content: center;
-    gap: 64px;
-    margin-bottom: 64px;
+    gap: 48px;
+    margin: 48px 0 64px;
     flex-wrap: wrap;
+    opacity: 0.7;
 }
 
 .stat-item {
@@ -924,19 +952,19 @@ body[data-theme="dark"] .logo-dark {
 }
 
 .stat-number {
-    font-size: clamp(32px, 5vw, 48px);
-    font-weight: 600;
-    color: var(--color-accent);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-secondary);
     display: block;
     line-height: 1.1;
 }
 
 .stat-label {
-    font-size: 14px;
-    color: var(--text-secondary);
+    font-size: 12px;
+    color: var(--text-tertiary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-top: 8px;
+    margin-top: 4px;
     display: block;
 }
 
@@ -944,82 +972,118 @@ body[data-theme="dark"] .logo-dark {
 .skills-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 32px;
+    gap: 0;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+    border-collapse: collapse;
+}
+
+[data-theme="dark"] .skills-grid {
+    border-color: rgba(224, 224, 224, 0.1);
 }
 
 .skill-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
+    background: transparent;
+    border-radius: 0;
     padding: 32px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+    border-left: none;
+    border-top: none;
+    transition: background 0.3s ease;
+}
+
+[data-theme="dark"] .skill-card {
+    border-color: rgba(224, 224, 224, 0.1);
+}
+
+.skill-card:nth-child(odd) {
+    border-left: 0.5px solid rgba(26, 26, 26, 0.2);
+}
+
+[data-theme="dark"] .skill-card:nth-child(odd) {
+    border-left-color: rgba(224, 224, 224, 0.1);
+}
+
+.skill-card:nth-child(-n + 2) {
+    border-top: 0.5px solid rgba(26, 26, 26, 0.2);
+}
+
+[data-theme="dark"] .skill-card:nth-child(-n + 2) {
+    border-top-color: rgba(224, 224, 224, 0.1);
 }
 
 .skill-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    background: rgba(26, 26, 26, 0.02);
+    transform: none;
+    box-shadow: none;
+}
+
+[data-theme="dark"] .skill-card:hover {
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .skill-card-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 16px;
-    background: rgba(21, 181, 255, 0.1);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
     color: var(--color-accent);
 }
 
 .skill-card-title {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     letter-spacing: -0.01em;
 }
 
 .skill-tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .skill-tag {
-    font-size: 13px;
-    padding: 6px 14px;
-    border-radius: 100px;
-    background: rgba(21, 181, 255, 0.1);
-    color: var(--color-accent);
-    font-weight: 500;
+    font-size: 12px;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
     transition: all 0.2s ease;
 }
 
+[data-theme="dark"] .skill-tag {
+    border-color: rgba(224, 224, 224, 0.1);
+}
+
 .skill-tag:hover {
-    background: rgba(21, 181, 255, 0.2);
-    transform: scale(1.05);
+    border-color: var(--color-accent);
+    color: var(--color-accent);
 }
 
 /* Dark mode adjustments for skills */
 [data-theme="dark"] .skill-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: transparent;
+    border: 0.5px solid rgba(224, 224, 224, 0.1);
 }
 
 [data-theme="dark"] .skill-card:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 [data-theme="dark"] .skill-card-icon {
-    background: rgba(234, 88, 12, 0.15);
+    background: transparent;
     color: #ea580c;
 }
 
 [data-theme="dark"] .skill-tag {
-    background: rgba(234, 88, 12, 0.15);
+    background: transparent;
     color: #ea580c;
 }
 
@@ -1028,140 +1092,107 @@ body[data-theme="dark"] .logo-dark {
 }
 
 [data-theme="dark"] .stat-number {
-    color: #ea580c;
+    color: var(--text-secondary);
 }
 
 /* ==========================================
    Certifications Section
    ========================================== */
    
-   /* ── Certification Card: Terminal Style ── */
-/* ── Certification Card: Terminal Style ── */
-.certification-card.terminal-style {
-    position: relative; /* Required for absolute pseudo-elements */
-    padding: 0;
+   /* ── Certification Card: Simple List Style ── */
+.certification-card {
+    position: relative;
+    padding: 24px;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    z-index: 1; /* Keep content above the background glow */
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+    border-top: none;
+    z-index: 1;
+    transition: background 0.3s ease;
 }
 
-/* ── RGB Border Glow (Hidden by default) ── */
-/* ── Enhanced RGB Border Glow ── */
+.certification-card:first-child {
+    border-top: 0.5px solid rgba(26, 26, 26, 0.2);
+}
+
+[data-theme="dark"] .certification-card {
+    border-color: rgba(224, 224, 224, 0.1);
+}
+
+.certification-card:hover {
+    background: rgba(26, 26, 26, 0.02);
+    transform: none;
+}
+
+[data-theme="dark"] .certification-card:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.certification-card.terminal-style {
+    position: relative;
+    padding: 24px;
+    overflow: hidden;
+    background: transparent;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+    border-top: none;
+    z-index: 1;
+    transition: background 0.3s ease;
+}
+
+.certification-card.terminal-style:first-child {
+    border-top: 0.5px solid rgba(26, 26, 26, 0.2);
+}
+
 .certification-card.terminal-style::before {
-    content: '';
-    position: absolute;
-    /* INCREASED BORDER WIDTH: -4px makes the border thicker */
-    inset: -4px; 
-    /* Light Mode Palette: Blue/Cyan/Green */
-    background: linear-gradient(90deg, var(--color-accent), #00ff9f, #00d4ff, var(--color-accent));
-    background-size: 300% 100%;
-    z-index: -2;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    animation: rgb-slide 4s linear infinite;
+    display: none;
 }
 
-/* Dark Mode RGB override: Custom palette for Dark Mode */
-[data-theme="dark"] .certification-card.terminal-style::before {
-    /* Adjusted to your dark mode accent colors (Orange/Red/Sunset) */
-    background: linear-gradient(90deg, #ea580c, #ff2e00, #ff8c00, #ea580c);
-    background-size: 300% 100%;
-}
-
-/* ── CRITICAL FIX: Ensures RGB stays ONLY on the border ── */
 .certification-card.terminal-style::after {
-    content: '';
-    position: absolute;
-    /* This must be 0 or 1px to cover the 'middle' of the RGB layer */
-    inset: 0; 
-    /* We use a solid background here so the RGB cannot shine through the center */
-    background: var(--bg-secondary); 
-    border-radius: inherit;
-    z-index: -1;
-    transition: background 0.3s ease;
+    display: none;
 }
 
-/* When hovering, ensure the center stays solid so only the edges glow */
-.certification-card.terminal-style:hover::after {
-    /* Slightly lighter than the base, but still opaque enough to block the RGB */
-    background: var(--bg-secondary); 
+[data-theme="dark"] .certification-card.terminal-style {
+    background: transparent;
+    border-color: rgba(224, 224, 224, 0.1);
 }
 
-/* Dark mode specific hover background */
-[data-theme="dark"] .certification-card.terminal-style:hover::after {
-    background: #111111; /* Or your specific dark background hex */
-}
-/* ── Inner Mask (Ensures the card body stays solid) ── */
-.certification-card.terminal-style::after {
-    content: '';
-    position: absolute;
-    inset: 1px; /* Covers the RGB glow except for the 1px edge */
-    background: inherit;
-    border-radius: inherit;
-    z-index: -1;
-    transition: background 0.3s ease;
-}
-
-/* ── Hover States ── */
 .certification-card.terminal-style:hover {
-    transform: translateY(-8px);
-    border-color: transparent; /* Allows the RGB glow to show through */
+    transform: none;
+    border-color: rgba(26, 26, 26, 0.2);
+    background: rgba(26, 26, 26, 0.02);
+}
+
+[data-theme="dark"] .certification-card.terminal-style:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(224, 224, 224, 0.1);
 }
 
 .certification-card.terminal-style:hover::before {
-    opacity: 1; /* Show RGB glow */
+    opacity: 0;
 }
 
-/* Light Mode Specifics */
 body:not([data-theme="dark"]) .certification-card.terminal-style {
-    background: #ffffff; /* Solid white for better light mode contrast */
-    border-color: rgba(0, 0, 0, 0.08);
+    background: transparent;
+    border-color: rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Mode Specifics */
-[data-theme="dark"] .certification-card.terminal-style {
-    background: rgba(25, 25, 25, 1); /* Darker solid background */
-    border-color: rgba(255, 255, 255, 0.08);
-}
-
-/* ── Terminal Titlebar ── */
+/* ── Terminal Titlebar (Hidden) ── */
 .cert-titlebar {
-    background: rgba(0, 0, 0, 0.05);
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    position: relative;
-    z-index: 2;
+    display: none;
 }
 
-[data-theme="dark"] .cert-titlebar {
-    background: rgba(0, 0, 0, 0.4); /* Darker for better contrast */
-    border-bottom-color: rgba(255, 255, 255, 0.05);
-}
-
-.tdots { display: flex; gap: 6px; }
-.td { width: 8px; height: 8px; border-radius: 50%; }
-.td-r { background: #ff5f56; }
-.td-y { background: #ffbd2e; }
-.td-g { background: #27c93f; }
+.tdots { display: none; }
+.td { display: none; }
 
 .cert-path {
-    font-size: 11px;
-    font-family: 'Fira Code', monospace;
-    color: var(--text-secondary);
-    opacity: 0.8;
+    display: none;
 }
 
-.cert-path span { color: var(--color-accent); }
-[data-theme="dark"] .cert-path span { color: #ea580c; }
+.cert-path span { display: none; }
 
 /* ── Card Body ── */
 .cert-body {
-    padding: 28px;
+    padding: 0;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -1170,56 +1201,54 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
 }
 
 .cert-icon-wrapper {
-    width: 44px;
-    height: 44px;
-    background: rgba(21, 181, 255, 0.1);
-    border-radius: 10px;
-    display: flex;
+    width: 0;
+    height: 0;
+    background: transparent;
+    border-radius: 0;
+    display: none;
     align-items: center;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 0;
     color: var(--color-accent);
     transition: all 0.3s ease;
 }
 
-[data-theme="dark"] .cert-icon-wrapper {
-    background: rgba(234, 88, 12, 0.1);
-    color: var(--color-accent);
-}
-
-/* Hover Icon Logic */
 .certification-card:hover .cert-icon-wrapper {
-    transform: scale(1.1) rotate(-5deg);
-    background: var(--color-accent);
-    color: white;
-}
-
-[data-theme="dark"] .certification-card:hover .cert-icon-wrapper {
-    background: var(--color-accent);
+    transform: none;
+    background: transparent;
+    color: inherit;
 }
 
 .cert-icon-wrapper svg {
-    width: 22px;
-    height: 22px;
+    width: 0;
+    height: 0;
     stroke: currentColor;
+    display: none;
 }
 
 /* Text Styles */
 .cert-title {
     margin-bottom: 8px;
     color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .cert-title {
+    color: #e0e0e0;
 }
 
 .cert-issuer {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-secondary);
-    margin-bottom: 16px;
+    margin-bottom: 8px;
 }
 
 .cert-date {
-    font-family: 'Fira Code', monospace;
+    font-family: var(--font-family-primary);
     font-size: 12px;
-    margin-top: auto;
+    margin-top: 4px;
+    color: var(--text-tertiary);
 }
 
 /* ── Animation Keyframes ── */
@@ -1228,7 +1257,12 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
     100% { background-position: 300% 50%; }
 }
 .certifications-section {
-    padding: 50px 0;
+    padding: 80px 0;
+    border-top: 0.5px solid rgba(26, 26, 26, 0.15);
+}
+
+[data-theme="dark"] .certifications-section {
+    border-top-color: rgba(224, 224, 224, 0.1);
 }
 
 .certifications-section .section-subtitle {
@@ -1240,38 +1274,56 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
 }
 
 .certifications-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 0.5px solid rgba(26, 26, 26, 0.2);
+}
+
+[data-theme="dark"] .certifications-grid {
+    border-color: rgba(224, 224, 224, 0.1);
 }
 
 .certification-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    padding: 28px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    background: transparent;
+    border-radius: 0;
+    padding: 24px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: none;
+    border-bottom: 0.5px solid rgba(26, 26, 26, 0.2);
+    transition: background 0.3s ease;
     display: flex;
     flex-direction: column;
 }
 
+[data-theme="dark"] .certification-card {
+    border-bottom-color: rgba(224, 224, 224, 0.1);
+}
+
+.certification-card:last-child {
+    border-bottom: none;
+}
+
 .certification-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    background: rgba(26, 26, 26, 0.02);
+    transform: none;
+    box-shadow: none;
+}
+
+[data-theme="dark"] .certification-card:hover {
+    background: rgba(255, 255, 255, 0.02);
 }
 
 .cert-badge {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    display: flex;
+    width: 0;
+    height: 0;
+    border-radius: 0;
+    display: none;
     align-items: center;
     justify-content: center;
     font-size: 12px;
-    font-weight: 700;
+    font-weight: 500;
     color: white;
     margin-bottom: 16px;
 }
@@ -1373,7 +1425,7 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
 
 .about-subtitle {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     color: var(--color-accent);
     margin-bottom: 12px;
 }
@@ -1395,7 +1447,7 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
     }
     
     .certifications-grid {
-        grid-template-columns: repeat(2, 1fr);
+        flex-direction: column;
     }
 }
 
@@ -1414,12 +1466,12 @@ body:not([data-theme="dark"]) .certification-card.terminal-style {
     }
     
     .certifications-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
     }
     
     .skill-card,
     .certification-card {
-        padding: 24px;
+        padding: 20px;
     }
     
     .contact-info-grid {
