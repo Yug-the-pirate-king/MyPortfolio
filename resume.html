@@ -17,24 +17,25 @@
 
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
     <style>
         /* Resume-specific CSS variables */
         :root {
             --accent-color: #15B5FF;
-            --primary-color: #0f0f0f;
+            --primary-color: #111111;
             --secondary-color: #525252;
             --tertiary-color: #737373;
             --divider-color: #e5e5e5;
-            --bg-color: #fafafa;
+            --bg-color: #f7f5f2;
         }
 
         body[data-theme="dark"] {
             --accent-color: #ea580c;
-            --primary-color: #ffffff;
+            --primary-color: #e8e8e8;
             --secondary-color: #e0e0e0;
             --tertiary-color: #a3a3a3;
             --divider-color: #404040;
-            --bg-color: #171717;
+            --bg-color: #0f0e11;
         }
 
         * {
@@ -473,10 +474,218 @@
                 flex: 1 1 100%;
             }
         }
+
+        /* ========================
+           Art System Overrides
+           ======================== */
+
+        .title {
+            font-family: 'DM Serif Display', Georgia, serif;
+            font-weight: 400;
+        }
+
+        /* Film Grain + Vignette */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            pointer-events: none;
+            opacity: 0.04;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 99;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 60%, rgba(0,0,0,0.12) 100%);
+        }
+
+        body[data-theme="dark"]::after {
+            background: radial-gradient(circle at center, transparent 55%, rgba(0,0,0,0.35) 100%);
+        }
+
+        /* Custom Cursor */
+        .custom-cursor-enabled,
+        .custom-cursor-enabled * {
+            cursor: none !important;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99999;
+            pointer-events: none;
+            mix-blend-mode: difference;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .custom-cursor-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #ffffff;
+            transform: scale(1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                        background 0.3s ease;
+            box-shadow: 0 0 20px 4px rgba(21, 181, 255, 0.35);
+        }
+
+        .custom-cursor.hovering .custom-cursor-dot {
+            transform: scale(2.2);
+            box-shadow: 0 0 30px 8px rgba(21, 181, 255, 0.25);
+        }
+
+        .custom-cursor.clicking .custom-cursor-dot {
+            transform: scale(0.8);
+        }
+
+        body[data-theme="dark"] .custom-cursor-dot {
+            box-shadow: 0 0 20px 4px rgba(234, 88, 12, 0.35);
+        }
+
+        body[data-theme="dark"] .custom-cursor.hovering .custom-cursor-dot {
+            box-shadow: 0 0 30px 8px rgba(234, 88, 12, 0.25);
+        }
+
+        @media (pointer: coarse) {
+            .custom-cursor-enabled, .custom-cursor-enabled * { cursor: auto !important; }
+            .custom-cursor { display: none !important; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .custom-cursor-enabled, .custom-cursor-enabled * { cursor: auto !important; }
+            .custom-cursor { display: none !important; }
+            body::before, body::after { display: none !important; }
+        }
+
+        /* Section Line Dividers */
+        .section-line {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-line::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-color), transparent);
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .section-line.visible::before {
+            transform: scaleX(1);
+        }
+
+        /* Certification Card 3D Entrance */
+        .certification-card {
+            opacity: 0;
+            transform: rotateX(12deg) translateY(50px) scale(0.97);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.3s ease,
+                        box-shadow 0.3s ease;
+        }
+
+        .certification-card.visible {
+            opacity: 1;
+            transform: rotateX(0deg) translateY(0) scale(1);
+        }
+
+        .certification-card.visible:hover {
+            transition: opacity 0.3s ease, transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Holographic Shimmer */
+        .holo-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .holo-shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.08) 45%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.08) 55%, transparent 70%);
+            transform: skewX(-20deg);
+            transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .holo-shimmer:hover::after {
+            left: 150%;
+        }
+
+        /* Sonar Ping on Back-to-Top */
+        .back-to-top.show {
+            display: flex;
+            position: relative;
+        }
+
+        .back-to-top.show::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border-radius: 50%;
+            border: 1px solid var(--accent-color);
+            opacity: 0;
+            animation: sonarPing 2.5s ease-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sonarPing {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.6); opacity: 0; }
+        }
+
+        /* Nav active glow */
+        .nav-links a.active .link-text {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* Aurora canvas positioning */
+        .aurora-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Reduce motion resets */
+        @media (prefers-reduced-motion: reduce) {
+            .certification-card {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            body::before, body::after { display: none !important; }
+        }
     </style>
 </head>
 <body>
-    
+    <canvas id="auroraCanvas" class="aurora-canvas"></canvas>
     <script>
         // Apply theme immediately to prevent flash
         (function() {
@@ -557,7 +766,7 @@
                 <a href="https://github.com/Yug-the-pirate-king" class="accent-link" target="_blank" rel="noopener noreferrer">GitHub</a> •
                 Mumbai, India
             </p>
-            <button class="download-btn" onclick="downloadResume()">
+            <button class="download-btn holo-shimmer" onclick="downloadResume()">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 16L12 4M12 16L8 12M12 16L16 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M4 20H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
@@ -568,7 +777,7 @@
     </div>
 
     <!-- Summary Section -->
-    <section class="resume-section">
+    <section class="resume-section section-line">
         <div class="container">
             <h2 class="resume-section-title">Summary</h2>
             <div class="resume-summary">
@@ -590,7 +799,6 @@
                     <div class="experience-header">
                         <span class="experience-dates">March 2026</span>
                         <span class="experience-title">Communication Skills</span>
-                        </span>
                     </div>
                     <div class="experience-company">Atharva College Of Engineering• Mumbai, IN</div>
                     <div class="experience-description">
@@ -603,7 +811,6 @@
                     <div class="experience-header">
                         <span class="experience-dates">Sept 2025 – Present</span>
                         <span class="experience-title">Leadership Role</span>
-                        </span>
                     </div>
                     <div class="experience-company">SVKM's Shri Bhagubhai Mafatlal College • Mumbai, IN</div>
                     <div class="experience-description">
@@ -616,7 +823,6 @@
                     <div class="experience-header">
                         <span class="experience-dates">Jan 2026</span>
                         <span class="experience-title">Hackathon Participant</span>
-                        </span>
                     </div>
                     <div class="experience-company">IIT Delhi</div>
                     <div class="experience-description">
@@ -659,11 +865,11 @@
     </section>
 
     <!-- Certifications Section -->
-    <section class="resume-section">
+    <section class="resume-section section-line">
         <div class="container">
             <h2 class="resume-section-title">Certifications</h2>
             <div class="certs-body-div">
-                <a href="https://certificates.example.com/cs50-cybersecurity" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/cs50-cybersecurity" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">CS50 Cybersecurity</div>
                     </div>
@@ -672,7 +878,7 @@
                     <div class="cert-date">Sep 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/javascript-algorithms" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/javascript-algorithms" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">JavaScript Algorithms</div>
                     </div>
@@ -681,7 +887,7 @@
                     <div class="cert-date">Aug 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/oracle-ai" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/oracle-ai" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">Oracle AI</div>
                     </div>
@@ -690,7 +896,7 @@
                     <div class="cert-date">Aug 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/web-development" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/web-development" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">Web Development</div>
                     </div>
@@ -699,7 +905,7 @@
                     <div class="cert-date">Aug 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/cs50" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/cs50" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">CS50</div>
                     </div>
@@ -708,7 +914,7 @@
                     <div class="cert-date">Jul 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/excel" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/excel" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">Excel</div>
                     </div>
@@ -717,7 +923,7 @@
                     <div class="cert-date">Jul 2025</div>
                 </a>
                 
-                <a href="https://certificates.example.com/responsive-web" target="_blank" class="certification-card">
+                <a href="https://certificates.example.com/responsive-web" target="_blank" class="certification-card holo-shimmer">
                     <div class="cert-thumbnail">
                         <div class="cert-thumbnail-placeholder">Responsive Web</div>
                     </div>
@@ -834,5 +1040,24 @@
             <path d="M12 18L12 6M8 10L12 6L16 10" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
     </button>
+
+    <!-- Scroll Reveal Observer -->
+    <script>
+        (function() {
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReducedMotion) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('.certification-card, .section-line').forEach(el => observer.observe(el));
+        })();
+    </script>
+
+    <!-- Art Systems -->
+    <script src="assets/js/florida-aurora.js?v=1761500000"></script>
+    <script src="assets/js/custom-cursor.js?v=1761500000"></script>
+
 </body>
 </html>

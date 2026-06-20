@@ -26,15 +26,15 @@
   --color-accent: var(--color-accent-cool); /* Default to cool */
 
   /* Text Colors */
-  --text-primary: #1a1a1a;
+  --text-primary: #111111;
   --text-secondary: #525252;
   --text-tertiary: #737373;
   --text-inverse: #ffffff;
 
   /* Background Colors */
-  --bg-primary: #fafafa;
-  --bg-secondary: #fafafa;
-  --bg-overlay-light: rgba(250, 250, 250, 0.1);
+  --bg-primary: #f7f5f2;
+  --bg-secondary: #f7f5f2;
+  --bg-overlay-light: rgba(247, 245, 242, 0.1);
   --bg-overlay-dark: rgba(26, 26, 26, 0.8);
 
   /* Typography */
@@ -141,11 +141,11 @@
 /* Dark Theme Variables */
 [data-theme="dark"] {
   --color-accent: var(--color-accent-warm);
-  --text-primary: #e0e0e0;
+  --text-primary: #e8e8e8;
   --text-secondary: #a3a3a3;
   --text-tertiary: #737373;
-  --bg-primary: #171717;
-  --bg-secondary: #171717;
+  --bg-primary: #0f0e11;
+  --bg-secondary: #0f0e11;
   --bg-overlay-light: rgba(255, 255, 255, 0.05);
   --bg-overlay-dark: rgba(0, 0, 0, 0.8);
   --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.3);

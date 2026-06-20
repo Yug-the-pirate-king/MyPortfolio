@@ -27,6 +27,7 @@
 
 /* Interactive Features */
 @import '_particles.css';
+@import '_aurora.css';
 
 /* Component Library */
 @import '_components.css';
@@ -34,12 +35,16 @@
 
 /* Content Sections */
 @import '_sections.css';
+@import '_theater.css';
 
 /* Page-Specific Styles */
 @import '_project-pages.css';
 
 /* Specialized Features */
 @import '_charts.css';
+
+/* Cursor & Overlay Systems */
+@import '_cursor.css';
 
 /* Utilities & Overrides (must be last) */
 @import '_utilities.css';

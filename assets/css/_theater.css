@@ -1,0 +1,315 @@
+/* ==========================================
+   Text Theater — Split-Text Scroll Reveals
+   ========================================== */
+
+.char-wrap {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.char-inner {
+    display: inline-block;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* When revealed, the inline styles from JS override these defaults */
+
+/* ==========================================
+   Stagger delays for card entrances
+   ========================================== */
+.project-card:nth-child(1) { transition-delay: 0s; }
+.project-card:nth-child(2) { transition-delay: 0.1s; }
+.project-card:nth-child(3) { transition-delay: 0.2s; }
+.project-card:nth-child(4) { transition-delay: 0.3s; }
+.project-card:nth-child(5) { transition-delay: 0.4s; }
+.project-card:nth-child(6) { transition-delay: 0.5s; }
+
+.skill-card:nth-child(1) { transition-delay: 0s; }
+.skill-card:nth-child(2) { transition-delay: 0.1s; }
+.skill-card:nth-child(3) { transition-delay: 0.2s; }
+.skill-card:nth-child(4) { transition-delay: 0.3s; }
+
+.stat-item {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.stat-item.visible {
+    opacity: 0.7;
+    transform: translateY(0);
+}
+
+/* ==========================================
+   Line-Draw Section Dividers
+   ========================================== */
+
+.section-line {
+    position: relative;
+    overflow: hidden;
+}
+
+.section-line::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.section-line.visible::before {
+    transform: scaleX(1);
+}
+
+/* ==========================================
+   Holographic Shimmer
+   ========================================== */
+
+.holo-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.holo-shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 30%,
+        rgba(255, 255, 255, 0.08) 45%,
+        rgba(255, 255, 255, 0.15) 50%,
+        rgba(255, 255, 255, 0.08) 55%,
+        transparent 70%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.holo-shimmer:hover::after {
+    left: 150%;
+}
+
+/* ==========================================
+   Hero Kinetic Enhancements
+   ========================================== */
+
+.hero-title {
+    text-shadow: 0 0 60px rgba(21, 181, 255, 0.15);
+}
+
+[data-theme="dark"] .hero-title {
+    text-shadow: 0 0 60px rgba(234, 88, 12, 0.15);
+}
+
+/* Scroll indicator sonar ring */
+.scroll-arrow {
+    position: relative;
+}
+
+.scroll-arrow::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid var(--color-accent);
+    opacity: 0;
+    animation: sonarPing 2.5s ease-out infinite;
+}
+
+@keyframes sonarPing {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    100% { transform: scale(1.6); opacity: 0; }
+}
+
+[data-theme="dark"] .scroll-arrow::before {
+    border-color: #ea580c;
+}
+
+/* ==========================================
+   Certification Terminal Glow
+   ========================================== */
+
+.certification-card.terminal-style .cert-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15);
+}
+
+.tdots {
+    display: flex;
+    gap: 6px;
+}
+
+.td {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.td-r { background: #ff5f56; }
+.td-y { background: #ffbd2e; }
+.td-g { background: #27c93f; }
+
+.cert-path {
+    font-family: var(--font-family-mono);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    margin-left: auto;
+}
+
+.cert-path span {
+    color: var(--color-accent);
+}
+
+[data-theme="dark"] .certification-card .cert-title,
+[data-theme="dark"] .certification-card .cert-issuer {
+    text-shadow: 0 0 12px rgba(234, 88, 12, 0.15);
+}
+
+/* Blinking cursor on cert date hover */
+.cert-date {
+    position: relative;
+    display: inline-block;
+}
+
+.certification-card:hover .cert-date::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--color-accent);
+    margin-left: 4px;
+    vertical-align: text-bottom;
+    animation: blinkCaret 1s step-end infinite;
+}
+
+@keyframes blinkCaret {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* ==========================================
+   Skill Brick Orbital Pulse
+   ========================================== */
+
+.skill-brick {
+    position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+}
+
+.skill-brick:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(21, 181, 255, 0.2);
+    color: var(--color-accent);
+}
+
+[data-theme="dark"] .skill-brick:hover {
+    box-shadow: 0 0 20px rgba(234, 88, 12, 0.2);
+}
+
+/* Stat settle bounce */
+.stat-number.settled {
+    animation: statSettle 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes statSettle {
+    0% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* ==========================================
+   About Mask Reveal
+   ========================================== */
+
+.about-carousel {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-carousel.reveal-mask .carousel-container {
+    clip-path: circle(0% at 50% 50%);
+    transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.about-carousel.reveal-mask.visible .carousel-container {
+    clip-path: circle(150% at 50% 50%);
+}
+
+/* ==========================================
+   Contact Constellation Density Boost
+   ========================================== */
+
+.contact-enhanced .particle-canvas {
+    opacity: 1;
+}
+
+/* ==========================================
+   Prism Card Chromatic Aberration
+   ========================================== */
+
+.box::before,
+.box::after {
+    filter: blur(30px);
+}
+
+.box:hover {
+    filter: drop-shadow(0 0 20px rgba(21, 181, 255, 0.15));
+}
+
+[data-theme="dark"] .box:hover {
+    filter: drop-shadow(0 0 20px rgba(234, 88, 12, 0.15));
+}
+
+/* ==========================================
+   Reduced Motion Resets
+   ========================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .project-card,
+    .skill-card,
+    .certification-card,
+    .box {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
+
+    .hero-title {
+        animation: none !important;
+        text-shadow: none !important;
+    }
+
+    .scroll-arrow::before {
+        animation: none !important;
+        display: none !important;
+    }
+
+    .about-carousel.reveal-mask .carousel-container {
+        clip-path: none !important;
+    }
+
+    .skill-brick:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+
+    .holo-shimmer::after {
+        display: none !important;
+    }
+}

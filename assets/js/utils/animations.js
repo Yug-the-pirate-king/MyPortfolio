@@ -24,9 +24,14 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe project cards (only on index page)
-    document.querySelectorAll('.project-card').forEach(card => {
+    // Observe cards for entrance animations (index page sections)
+    document.querySelectorAll('.project-card, .skill-card, .certification-card, .containers .box, .stat-item').forEach(card => {
         observer.observe(card);
+    });
+
+    // Observe section lines and mask reveals
+    document.querySelectorAll('.section-line, .about-carousel.reveal-mask').forEach(el => {
+        observer.observe(el);
     });
 }
 

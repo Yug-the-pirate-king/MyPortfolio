@@ -32,14 +32,14 @@
     font-size: clamp(48px, 8vw, 96px);
     font-weight: 400;
     font-style: italic;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
     margin-bottom: 8px;
     line-height: 1.05;
-    padding: 0.05em 0;
+    padding: 0.1em 0 0.15em;
+    color: #111111;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 0.8s ease-out 0.2s forwards;
-    color: #1a1a1a;
 }
 
 .hero-greeting {
@@ -47,10 +47,10 @@
     font-weight: 400;
     color: var(--color-accent);
     margin-bottom: 8px;
+    letter-spacing: 0.05em;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 0.8s ease-out 0.1s forwards;
-    letter-spacing: 0.05em;
 }
 
 [data-theme="dark"] .hero-greeting {
@@ -87,10 +87,10 @@
 .hero-tagline {
     font-size: clamp(14px, 1.8vw, 18px);
     color: var(--text-secondary);
+    margin-bottom: 32px;
     opacity: 0;
     transform: translateY(30px);
     animation: fadeInUp 0.8s ease-out 0.5s forwards;
-    margin-bottom: 32px;
 }
 
 .hero-cta {

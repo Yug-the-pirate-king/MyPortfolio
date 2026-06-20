@@ -1,0 +1,70 @@
+/* ==========================================
+   Custom Cursor
+   ========================================== */
+
+.custom-cursor-enabled,
+.custom-cursor-enabled * {
+    cursor: none !important;
+}
+
+.custom-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+    pointer-events: none;
+    mix-blend-mode: difference;
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+
+.custom-cursor-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    transform: scale(1);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                background 0.3s ease;
+    box-shadow: 0 0 20px 4px rgba(21, 181, 255, 0.35);
+}
+
+.custom-cursor.hovering .custom-cursor-dot {
+    transform: scale(2.2);
+    box-shadow: 0 0 30px 8px rgba(21, 181, 255, 0.25);
+}
+
+.custom-cursor.clicking .custom-cursor-dot {
+    transform: scale(0.8);
+}
+
+[data-theme="dark"] .custom-cursor-dot {
+    box-shadow: 0 0 20px 4px rgba(234, 88, 12, 0.35);
+}
+
+[data-theme="dark"] .custom-cursor.hovering .custom-cursor-dot {
+    box-shadow: 0 0 30px 8px rgba(234, 88, 12, 0.25);
+}
+
+/* Touch devices: disable cursor styles */
+@media (pointer: coarse) {
+    .custom-cursor-enabled,
+    .custom-cursor-enabled * {
+        cursor: auto !important;
+    }
+    .custom-cursor {
+        display: none !important;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .custom-cursor-enabled,
+    .custom-cursor-enabled * {
+        cursor: auto !important;
+    }
+    .custom-cursor {
+        display: none !important;
+    }
+}

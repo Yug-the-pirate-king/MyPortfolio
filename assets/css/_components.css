@@ -634,7 +634,14 @@ body[data-theme="dark"] .nav-prev-next-title {
   justify-content: center;
   align-items: center;
   margin: 40px 30px;
-  transition: 0.5s;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: rotateX(12deg) translateY(50px) scale(0.97);
+}
+
+.containers .box.visible {
+  opacity: 1;
+  transform: rotateX(0deg) translateY(0) scale(1);
 }
 
 .containers .box::before
