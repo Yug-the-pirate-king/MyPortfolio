@@ -30,6 +30,21 @@ pids
 # Temporary files
 *.tmp
 *.temp
+temp_*
+
+# Backup files
+*.backup
+*.backup-*
+*.old
+*.bak
+
+# Windows
+desktop.ini
+Thumbs.db
+
+# Replit
+.replit
+replit.md
 
 # Tool configurations
 .claude/
