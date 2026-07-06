@@ -1,282 +1,263 @@
-# Shah Yug Vipulbhai - UX Portfolio
+﻿# Yug Shah — Personal Portfolio
 
-A modern UX portfolio showcasing design work with sophisticated glassmorphism effects, interactive particle systems, and intelligent temperature-based theming.
+A modern, interactive personal portfolio built with vanilla HTML, CSS, and JavaScript. Features a stunning aurora background system, dynamic particle effects, smooth animations, and a fully modular JavaScript architecture.
 
 ## 🚀 Live Demo
+
 [View Portfolio](https://shahyug.netlify.app/)
+
+---
 
 ## ✨ Features
 
-- **Interactive Particle System** - Dynamic WebGL particle effects with customizable controls
-- **Modern Glassmorphism** - Sophisticated glass effects with backdrop blur and transparency
-- **Temperature-based Theming** - Cool blues for light mode, warm oranges for dark mode
-- **Responsive Typography** - IBM Plex Sans with fluid scaling across breakpoints
-- **Modular CSS Architecture** - Organized, maintainable stylesheet system
-- **Case Study Pages** - Detailed project showcases with hero imagery and content sections
-- **Interactive Lab** - Experimental features and visual demonstrations
-- **Data-Driven Projects** - JSON-based project management system
+- **Aurora Background System** — GPU-rendered canvas aurora (`florida-aurora.js`) with colour shifts
+- **Particle Canvas** — Interactive floating-particle layer (`particle-system.js`)
+- **Custom Cursor** — Magnetic cursor that snaps to interactive elements
+- **Text Theater** — Animated typewriter / reveal effects for headings
+- **Dark / Light Theme** — Persisted via `localStorage`, applied before paint to prevent flash
+- **Animated Stats Counter** — Numbers count up when scrolled into view via `IntersectionObserver`
+- **Skills Ticker** — Three infinite-scroll rows of skill badges (forward / reverse)
+- **Holographic Shimmer Cards** — `.holo-shimmer` hover effect on skill & certification cards
+- **Certifications Grid** — Terminal-styled cards for Harvard CS50, Oracle, freeCodeCamp, Microsoft
+- **About Carousel** — Data-driven card carousel loaded from `data/about-carousel.json`
+- **Mobile Menu** — Full-screen overlay nav with hamburger toggle
+- **SEO Ready** — Open Graph and Twitter Card meta tags included
+- **Responsive Design** — Mobile-first layout across all breakpoints
 
-## 🎨 Design System
-
-### Typography
-- **Font:** IBM Plex Sans (Google Fonts)
-- **Weights:** 300, 400, 500, 600, 700
-- **Responsive scaling** from mobile (12px body) to desktop (16px body)
-
-### Color Palette
-- **Primary:** `#0f0f0f` (Ultra-dark primary)
-- **Accent Cool:** `#15B5FF` (Light mode)
-- **Accent Warm:** `#ea580c` (Dark mode)
-- **Neutrals:** 10-step scale from `#ffffff` to `#171717`
-
-### Glass Effects
-- Backdrop blur filters
-- Semi-transparent backgrounds
-- Smooth cubic-bezier transitions
-
+---
 
 ## 📁 Project Structure
 
 ```
-├── index.html                 # Main portfolio page
-├── lab.html                   # Interactive experiments
-├── resume.html                # Resume page
-├── work/                      # Case study pages
+MyPortfolio/
+├── index.html                      # Main portfolio page
+├── resume.html                     # Interactive resume page
+├── favicon.ico
+├── server.py                       # Simple local dev server
+│
+├── assets/
+│   ├── css/
+│   │   └── main.css                # Root CSS (imports all partials)
+│   ├── js/
+│   │   ├── core/
+│   │   │   ├── config.js           # Global config & constants
+│   │   │   ├── data-loader.js      # Fetches JSON data files
+│   │   │   └── theme-system.js     # Dark/light theme logic
+│   │   ├── utils/
+│   │   │   ├── helpers.js          # Shared utility functions
+│   │   │   ├── animations.js       # Scroll-triggered animations
+│   │   │   └── image-preloader.js  # Image preloading util
+│   │   ├── components/
+│   │   │   ├── navigation.js       # Sticky nav scroll logic
+│   │   │   ├── mobile-menu.js      # Hamburger / overlay menu
+│   │   │   ├── logo-animation.js   # SVG logo reveal
+│   │   │   ├── carousel-base.js    # Base carousel class
+│   │   │   ├── carousel-about.js   # About section carousel
+│   │   │   ├── carousel-project.js # Project carousel
+│   │   │   └── carousel-featured.js# Featured work carousel
+│   │   ├── content/
+│   │   │   ├── project-renderer.js # Renders projects from JSON
+│   │   │   ├── carousel-renderer.js# Renders carousel cards from JSON
+│   │   │   ├── brand-renderer.js   # Renders brand/logos section
+│   │   │   ├── resume-renderer.js  # Populates resume.html from JSON
+│   │   │   └── case-study-renderer.js # Case study page renderer
+│   │   ├── florida-aurora.js       # Canvas aurora background system
+│   │   ├── particle-system.js      # Canvas particle effects
+│   │   ├── custom-cursor.js        # Magnetic custom cursor
+│   │   ├── text-theater.js         # Typewriter / text animations
+│   │   ├── magnetic.js             # Magnetic hover for buttons
+│   │   └── main.js                 # App entry point & initializer
+│   ├── images/                     # All image assets
+│   ├── icons/                      # Icon assets
+│   ├── logos/                      # Brand / company logos
+│   └── Certifications/             # Certification images
+│
+├── data/
+│   ├── projects.json               # Portfolio project cards
+│   ├── about-carousel.json         # About section carousel slides
+│   ├── accolades.json              # Awards & achievements
+│   ├── brands.json                 # Brand collaborations / tools
+│   ├── experience.json             # Work experience timeline
+│   ├── skills.json                 # Skills data
+│   ├── person.json                 # Personal info / bio
+│   └── case-studies/               # Case study content data
+│
+├── work/                           # Case study HTML pages
 │   ├── design-system.html
 │   ├── product-suite.html
 │   ├── ai-strategy.html
 │   └── research-strategy.html
-├── assets/
-│   ├── css/                   # Modular CSS architecture
-│   │   ├── main.css           # Main import file
-│   │   ├── _variables.css     # CSS custom properties
-│   │   ├── _base.css          # Reset & base styles
-│   │   ├── _navigation.css    # Header & navigation
-│   │   ├── _hero.css          # Hero section
-│   │   ├── _particles.css     # Particle system
-│   │   ├── _components.css    # Reusable components
-│   │   ├── _carousels.css     # Carousel implementations
-│   │   ├── _sections.css      # Page sections
-│   │   ├── _project-pages.css # Project detail pages
-│   │   ├── _charts.css        # Data visualizations
-│   │   └── _utilities.css     # Helper classes & dark mode
-│   ├── js/                    # Interactive features
-│   │   ├── main.js            # Core functionality
-│   │   ├── particles.js       # Particle system
-│   │   └── theme.js           # Theme switching
-│   └── images/                # Image assets
-├── data/
-│   └── projects.json          # Project data
-├── .claude/                   # Claude Code configuration
-│   ├── commands/              # Slash commands
-│   └── settings.local.json
-├── CLAUDE.md                  # Design system docs (AI context)
-└── README.md                  # This file
+│
+├── demos/                          # Interactive demos / experiments
+├── .github/                        # GitHub Actions workflows
+├── CLAUDE.md                       # AI-context design system docs
+└── README.md                       # This file
 ```
 
-## 🛠️ Technologies Used
+---
 
-- **HTML5** - Semantic markup structure
-- **CSS3** - Modular CSS with Grid, Flexbox, glassmorphism effects
-- **Vanilla JavaScript** - Particle system, theme switching, dynamic content loading
-- **WebGL** - Hardware-accelerated particle effects
-- **Google Fonts** - IBM Plex Sans typography
-- **JSON** - Data-driven project management
+## 🛠️ Tech Stack
 
-## 🚀 Development
+| Layer | Technology |
+|---|---|
+| Structure | HTML5 (semantic) |
+| Styling | Vanilla CSS3 — Grid, Flexbox, custom properties |
+| Logic | Vanilla JavaScript (ES6+, no frameworks) |
+| Graphics | Canvas API (Aurora + Particles) |
+| Fonts | DM Serif Display + DM Sans (Google Fonts) |
+| Data | JSON files loaded via `fetch` |
+| Deployment | Netlify / GitHub Pages |
 
-### Local Development
-Start a local server to preview the portfolio:
+---
+
+## 🎨 Design System
+
+### Typography
+- **Display:** DM Serif Display (italic variant for accents)
+- **Body / UI:** DM Sans — weights 300, 400, 500
+
+### Visual Effects
+- Aurora canvas background with animated colour gradients
+- Floating particle layer
+- Glassmorphism nav bar (`backdrop-filter: blur`)
+- Holographic shimmer effect (`.holo-shimmer`) on cards
+- Magnetic snap on interactive elements
+
+### Sections
+
+| Section | Description |
+|---|---|
+| **Hero** | Full-screen intro with name, subtitle, and CTA links |
+| **Achievements & Projects** | Highlight cards for Communication, Leadership, Coding |
+| **Skills & Expertise** | Animated ticker rows + stat counters + skill cards |
+| **Certifications** | Terminal-styled cards (Harvard, Oracle, freeCodeCamp, Microsoft) |
+| **About** | Bio text + data-driven carousel |
+| **Contact** | Email, LinkedIn, GitHub, Resume links |
+
+---
+
+## 🎓 Certifications Showcased
+
+- CS50's Introduction to Cybersecurity — **Harvard University** (Sep 2025)
+- CS50's Introduction to Computer Science — **Harvard University** (Sep 2025)
+- JavaScript Algorithms & Data Structures — **freeCodeCamp** (Aug 2025)
+- Web Development Fundamentals — **freeCodeCamp** (2025)
+- Oracle Cloud AI Foundations Associate — **Oracle** (Aug 2025)
+- Microsoft Excel Certification — **Microsoft** (2024)
+
+---
+
+## 🚀 Local Development
+
+### Option 1 — Python server (recommended)
 
 ```bash
-# Python 3
-python3 -m http.server 8000
-
+python server.py
+# or
+python -m http.server 8000
 # Visit http://localhost:8000
 ```
 
-### Cache Busting Strategy
-CSS and JavaScript files use query parameter versioning:
+### Option 2 — Node
+
+```bash
+npm install
+npm start
+```
+
+### Cache Busting
+
+CSS and JS files use query-string versioning to force browser cache refresh after updates:
 
 ```html
-<link rel="stylesheet" href="assets/css/main.css?v=1760841100">
-<script src="assets/js/main.js?v=1760840700"></script>
+<link rel="stylesheet" href="assets/css/main.css?v=1761500000">
+<script src="assets/js/main.js?v=1761500000"></script>
 ```
 
-Update version numbers in HTML files after making CSS/JS changes to force browser cache refresh.
+Increment the version number in `index.html` / `resume.html` after any CSS or JS change.
 
-### Deployment Workflow
-Slash commands available via Claude Code (`.claude/commands/`):
+---
 
-- **`/status`** - Show git status, current branch, and recent commits
-- **`/quick-commit`** - Quick commit on current branch (no merge, no push)
-- **`/deploy`** - Commit changes, merge to main, push both branches, return to dev
+## 📦 Adding Content
 
-### Branch Strategy
-- **`main`** - Production branch (deployed to GitHub Pages)
-- **`development`** - Active development branch
-
-## ⚡ Key Components
-
-### Particle System
-- Interactive WebGL particle effects
-- Customizable controls (mouse interaction, color, speed, connections)
-- Multiple modes: Black Hole, Deep Space
-- Persistent settings via localStorage
-
-### Buttons
-- Pill-shaped design (`border-radius: 50px`)
-- Glass effect with backdrop blur
-- Responsive hover states
-- Primary and secondary variants
-
-### Cards
-- Multiple card types (`.card`, `.glass-card`, `.interactive-card`)
-- Subtle transparency and blur effects
-- Hover animations with lift and scale effects
-- Project cards with dynamic loading from JSON
-
-### Theme Toggle
-- Circular sun/moon icon button
-- Fixed positioning with glass backdrop
-- Smooth theme transitions
-- Temperature-based color switching
-
-### Navigation
-- Fixed glass navigation bar
-- Smooth scroll to sections
-- Active state indicators
-- Mobile-responsive menu
-
-## 📐 Technical Notes
-
-### Container Strategy
-Content uses max-width containers to maintain readability on large displays:
-- **Max-width:** 1200px (configurable via `--container-max-width` CSS variable)
-- **Behavior:** Content is fluid up to 1200px, then centers with whitespace
-- **Applied to:** Hero, navigation, sections
-
-### Large Display Considerations
-The portfolio uses a max-width container approach rather than viewport scaling. CSS cannot replicate browser zoom behavior with `vh` units, so:
-- ✅ Max-width containers prevent excessive content spread
-- ✅ Users can apply browser zoom if needed
-- ❌ Avoid `transform: scale()` or CSS `zoom` with `vh` layouts (causes misalignment)
-
-See `CLAUDE.md` for detailed technical architecture and best practices.
-
-## 🎯 Portfolio Highlights
-
-### Case Studies
-- **Design System** - Building comprehensive design systems across product suites
-- **Hybrid Product Suite** - End-to-end product ecosystem design
-- **AI Design Strategy** - Integrating AI capabilities into user workflows
-- **Research Strategy** - User research and interaction pattern validation
-
-### Interactive Features
-- **Lab Page** - Experimental UI patterns and visual demonstrations
-- **Particle System** - Engaging visual effects with user controls
-- **Dynamic Content** - JSON-driven project management
-- **Responsive Design** - Optimized for all screen sizes
-
-## 🔧 Customization
-
-### Changing Colors
-Update CSS custom properties in `assets/css/_variables.css`:
-```css
-:root {
-  --accent-cool: #15B5FF;
-  --accent-warm: #ea580c;
-  --primary: #0f0f0f;
-  --container-max-width: 1200px;
-}
-```
-
-### Adding Projects
-Edit `data/projects.json` to add or modify project cards:
+### New Project Card
+Edit `data/projects.json`:
 ```json
 {
-  "title": "Your Project",
-  "category": "UX Design",
-  "description": "Project description",
-  "link": "work/your-project.html",
+  "title": "Project Name",
+  "category": "Web Development",
+  "description": "Short description of the project.",
+  "link": "https://github.com/Yug-the-pirate-king/project",
   "featured": true
 }
 ```
 
-### Typography
-Change font in `assets/css/_variables.css`:
-```css
---font-family-primary: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-```
+### New Certification
+Add a new `.certification-card` block in `index.html` inside `.certifications-grid`, following the terminal-style pattern of existing cards.
 
-### Container Width
-Adjust max-width for large displays:
-```css
---container-max-width: 1400px; /* Default: 1200px */
-```
-
-## 🌐 Browser Support
-
-- **Chrome** 76+ (Full support)
-- **Firefox** 103+ (Full support)  
-- **Safari** 14+ (Full support)
-- **Edge** 79+ (Full support)
-
-*Note: Backdrop filters require modern browser support*
-
-## 📱 Responsive Design
-
-- **Mobile First** - Optimized for small screens
-- **Breakpoints:**
-  - Mobile: < 768px
-  - Tablet: 768px - 1024px
-  - Desktop: > 1024px
-- **Flexible layouts** that adapt to any screen size
-
-## 🎨 Design Philosophy
-
-This style guide embodies:
-- **Minimalism** - Clean, uncluttered interfaces
-- **Sophistication** - Modern glass effects and typography
-- **Accessibility** - High contrast ratios and readable fonts
-- **Performance** - Optimized CSS and smooth animations
-- **Adaptability** - Themes that respond to user preferences
-
-## 🔄 Git Workflow
-
-Built with a branch-based workflow:
-- **`main`** - Production-ready code (deployed to GitHub Pages)
-- **`development`** - Active development branch
-- **Slash Commands** - Use `/deploy`, `/quick-commit`, `/status` for streamlined git operations
-
-## 📄 License
-
-This repository is dual-licensed:
-
-**Code & Technical Implementation:** [MIT License](LICENSE)
-The HTML, CSS, JavaScript, and design system code are freely available for reference and use with attribution.
-
-**Portfolio Content & Designs:** All Rights Reserved
-Case studies, images, designs, and creative work are protected and may not be reproduced without permission.
-
-See the [LICENSE](LICENSE) file for complete details.
-
-## 🤝 Contributing
-
-This is a personal portfolio project. While the code is open source under MIT, please note:
-- **Code improvements and bug fixes** are welcome via pull requests
-- **Portfolio content** (case studies, designs, images) is not open for contribution
-- Issues and feature suggestions are appreciated on the [issues page](#)
-
-## 🙏 Acknowledgments
-
-- **IBM Plex Sans** - IBM's excellent open-source typeface
-- **Glassmorphism** - Modern design trend inspiration
-- **WebGL** - Hardware-accelerated graphics for particle system
-- **CSS Grid** - Powerful layout system enabling flexible designs
+### About Carousel Slide
+Edit `data/about-carousel.json` to add new slides — the carousel is rendered dynamically.
 
 ---
 
-**Built with ❤️ for the design community**
+## 🔄 Git Workflow
 
-*Portfolio showcasing modern UX design work with sophisticated interactive features and glassmorphism effects.*
+| Branch | Purpose |
+|---|---|
+| `main` | Production — deployed to Netlify |
+| `development` | Active feature development |
+
+Slash commands via Claude Code (`.claude/commands/`):
+
+- **`/status`** — Show git status, branch, and recent commits
+- **`/quick-commit`** — Quick commit on current branch
+- **`/deploy`** — Commit → merge to main → push → return to dev
+
+---
+
+## 📱 Responsive Breakpoints
+
+| Breakpoint | Range |
+|---|---|
+| Mobile | < 768px |
+| Tablet | 768px – 1024px |
+| Desktop | > 1024px |
+
+---
+
+## 🌐 Browser Support
+
+| Browser | Support |
+|---|---|
+| Chrome 76+ | ✅ Full |
+| Firefox 103+ | ✅ Full |
+| Safari 14+ | ✅ Full |
+| Edge 79+ | ✅ Full |
+
+> Backdrop filters and Canvas API require modern browser support.
+
+---
+
+## 📄 License
+
+**Dual-licensed:**
+
+- **Code & Technical Implementation** — [MIT License](LICENSE)
+  HTML, CSS, and JavaScript are freely available for reference with attribution.
+- **Portfolio Content & Designs** — All Rights Reserved
+  Personal content, case studies, and creative work may not be reproduced without permission.
+
+---
+
+## 🤝 Connect
+
+| Platform | Link |
+|---|---|
+| 📧 Email | [yugshah197@gmail.com](mailto:yugshah197@gmail.com) |
+| 💼 LinkedIn | [linkedin.com/in/yug-shah26](https://www.linkedin.com/in/yug-shah26) |
+| 🐙 GitHub | [github.com/Yug-the-pirate-king](https://github.com/Yug-the-pirate-king) |
+| 🌍 Location | Mumbai, India |
+
+---
+
+*Built with ❤️ by Yug Shah — Web Developer | CS Student | Problem Solver*
