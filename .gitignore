@@ -46,6 +46,20 @@ Thumbs.db
 .replit
 replit.md
 
+# macOS (global)
+**/.DS_Store
+
+# Demos / experiments
+demos/
+
+# Placeholder brand logos
+assets/logos/
+
+# Random files
+WIN_*.jpg
+WIN_*.jpeg
+WIN_*.png
+
 # Tool configurations
 .claude/
 .playwright-mcp/
