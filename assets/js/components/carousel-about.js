@@ -1,172 +1,280 @@
 /**
- * About Carousel System
+ * @fileoverview About section carousel with auto-rotation, drag support,
+ *    and visibility-aware playback.
  *
- * About section carousel with auto-rotation
- *
- * Dependencies: components/carousel-base.js
- * Exports: About carousel functions
+ * Dependencies: components/carousel-base.js (provides CarouselDrag)
  */
 
-// ==========================================
+(function (global) {
+  'use strict';
 
-let currentSlide = 0;
-let totalSlides = 4; // Will be updated dynamically based on loaded carousel data
-let autoRotateInterval;
-let isUserInteracting = false;
+  const DEFAULT_TOTAL_SLIDES = 4;
+  const AUTO_ROTATE_INTERVAL_MS = 8000;
+  const USER_INTERACTION_INTERVAL_MS = 12000;
+  const INTERSECTION_THRESHOLD = 0.3;
+  const SLIDE_TRANSITION = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
 
-function goToSlide(slideIndex, userTriggered = false) {
-    currentSlide = slideIndex;
+  /**
+   * Internal state for the about carousel.
+   *
+   * @typedef {Object} CarouselState
+   * @property {number} currentSlide
+   * @property {number} totalSlides
+   * @property {number|null} autoRotateInterval
+   */
+  const state = {
+    currentSlide: 0,
+    totalSlides: DEFAULT_TOTAL_SLIDES,
+    autoRotateInterval: null
+  };
 
-    const track = document.getElementById('aboutCarouselTrack');
-    const indicators = document.querySelectorAll('.indicator');
+  /**
+   * @returns {HTMLElement|null} The carousel track element.
+   */
+  const getTrack = () => document.getElementById('aboutCarouselTrack');
 
+  /**
+   * @returns {HTMLElement|null} The about section element.
+   */
+  const getAboutSection = () => document.getElementById('about');
+
+  /**
+   * @returns {HTMLElement|null} The carousel container within the about section.
+   */
+  const getCarouselContainer = () => {
+    const section = getAboutSection();
+    return section
+      ? section.querySelector('.carousel-container')
+      : document.querySelector('.carousel-container');
+  };
+
+  /**
+   * @returns {NodeListOf<HTMLElement>} The carousel indicator dots.
+   */
+  const getIndicators = () => {
+    const container = getCarouselContainer();
+    return container
+      ? container.querySelectorAll('.indicator')
+      : document.querySelectorAll('.indicator');
+  };
+
+  /**
+   * Derive the total slide count from the DOM, falling back to a default.
+   */
+  function updateTotalSlides() {
+    const track = getTrack();
+    state.totalSlides = track && track.children.length
+      ? track.children.length
+      : DEFAULT_TOTAL_SLIDES;
+  }
+
+  /**
+   * Stop the auto-rotation timer if it is running.
+   */
+  function stopAutoRotation() {
+    if (state.autoRotateInterval) {
+      clearInterval(state.autoRotateInterval);
+      state.autoRotateInterval = null;
+    }
+  }
+
+  /**
+   * Start the auto-rotation timer if it is not already running.
+   *
+   * @param {number} [interval=AUTO_ROTATE_INTERVAL_MS] The rotation interval in ms.
+   */
+  function startAutoRotation(interval = AUTO_ROTATE_INTERVAL_MS) {
+    if (state.autoRotateInterval) return;
+    state.autoRotateInterval = setInterval(nextSlide, interval);
+  }
+
+  /**
+   * Update indicator dots to reflect the active slide.
+   *
+   * @param {number} slideIndex The active slide index.
+   */
+  function updateIndicators(slideIndex) {
+    getIndicators().forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === slideIndex);
+    });
+  }
+
+  /**
+   * Keep the drag controller in sync with programmatic slide changes.
+   *
+   * @param {number} slideIndex The current slide index.
+   */
+  function syncDragInstance(slideIndex) {
+    if (
+      global.aboutCarouselDrag &&
+      typeof global.aboutCarouselDrag.updateCurrentSlide === 'function'
+    ) {
+      global.aboutCarouselDrag.updateCurrentSlide(slideIndex);
+    }
+  }
+
+  /**
+   * Move the carousel to a specific slide.
+   *
+   * @param {number} slideIndex The target slide index.
+   * @param {boolean} [userTriggered=false] Whether the change was user-initiated.
+   */
+  function goToSlide(slideIndex, userTriggered = false) {
+    state.currentSlide = slideIndex;
+
+    const track = getTrack();
     if (track) {
-        // Ensure transition is enabled for animation
-        if (userTriggered) {
-            track.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }
-        track.setAttribute('data-position', slideIndex);
+      if (userTriggered) {
+        track.style.transition = SLIDE_TRANSITION;
+      }
+      track.setAttribute('data-position', String(slideIndex));
     }
 
-    // Update indicators
-    indicators.forEach((indicator, index) => {
-        if (index === slideIndex) {
-            indicator.classList.add('active');
-        } else {
-            indicator.classList.remove('active');
-        }
+    updateIndicators(slideIndex);
+    syncDragInstance(slideIndex);
+
+    if (userTriggered) {
+      stopAutoRotation();
+      startAutoRotation(USER_INTERACTION_INTERVAL_MS);
+    }
+  }
+
+  /**
+   * Advance to the next slide, wrapping back to the start.
+   */
+  function nextSlide() {
+    state.currentSlide = (state.currentSlide + 1) % state.totalSlides;
+    goToSlide(state.currentSlide);
+  }
+
+  /**
+   * Determine whether the carousel container is currently hovered.
+   *
+   * @param {HTMLElement|null} container
+   * @returns {boolean}
+   */
+  function isHovered(container) {
+    return container ? container.matches(':hover') : false;
+  }
+
+  /**
+   * Determine whether the about section is in the viewport.
+   *
+   * @param {HTMLElement|null} section
+   * @returns {boolean}
+   */
+  function isSectionInView(section) {
+    if (!section) return false;
+    const rect = section.getBoundingClientRect();
+    return rect.top < global.innerHeight && rect.bottom > 0;
+  }
+
+  /**
+   * Resume auto-rotation after a drag ends, but only when not hovering.
+   *
+   * @param {HTMLElement} container
+   */
+  function resumeAfterDrag(container) {
+    setTimeout(() => {
+      if (!isHovered(container) && !state.autoRotateInterval) {
+        startAutoRotation(AUTO_ROTATE_INTERVAL_MS);
+      }
+    }, 100);
+  }
+
+  /**
+   * Bind pointer and hover events that pause/resume auto-rotation.
+   *
+   * @param {HTMLElement} container
+   */
+  function bindPlaybackControls(container) {
+    container.addEventListener('mouseenter', stopAutoRotation);
+    container.addEventListener('mouseleave', () => startAutoRotation(AUTO_ROTATE_INTERVAL_MS));
+
+    ['mousedown', 'touchstart'].forEach((eventType) => {
+      container.addEventListener(eventType, stopAutoRotation);
     });
 
-    // Keep CarouselDrag instance in sync
-    if (window.aboutCarouselDrag) {
-        window.aboutCarouselDrag.updateCurrentSlide(slideIndex);
+    container.addEventListener('mouseup', () => resumeAfterDrag(container));
+    container.addEventListener('touchend', () => resumeAfterDrag(container));
+  }
+
+  /**
+   * Initialize the drag controller for the carousel.
+   *
+   * @param {HTMLElement} container
+   */
+  function initDrag(container) {
+    global.aboutCarouselDrag = new CarouselDrag(container, {
+      goToSlide: (slideIndex) => goToSlide(slideIndex, true),
+      threshold: 50,
+      sensitivity: 1.0
+    });
+  }
+
+  /**
+   * Start or stop auto-rotation when the page becomes visible/hidden.
+   *
+   * @param {HTMLElement|null} section
+   * @param {HTMLElement|null} container
+   */
+  function handleVisibilityChange(section, container) {
+    if (document.hidden) {
+      stopAutoRotation();
+      return;
     }
 
-    // If user clicked a dot, reset the auto-rotation with slower timing
-    if (userTriggered) {
-        isUserInteracting = true;
-        if (autoRotateInterval) {
-            clearInterval(autoRotateInterval);
+    if (isSectionInView(section) && !isHovered(container)) {
+      startAutoRotation(AUTO_ROTATE_INTERVAL_MS);
+    }
+  }
+
+  /**
+   * Observe section visibility and toggle auto-rotation accordingly.
+   *
+   * @param {HTMLElement} section
+   */
+  function observeSectionVisibility(section) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          startAutoRotation(AUTO_ROTATE_INTERVAL_MS);
+        } else {
+          stopAutoRotation();
         }
+      });
+    }, { threshold: INTERSECTION_THRESHOLD });
 
-        // Restart auto-rotation with slower 12-second intervals
-        autoRotateInterval = setInterval(nextSlide, 12000);
-    }
-}
+    observer.observe(section);
+  }
 
-function nextSlide() {
-    currentSlide = (currentSlide + 1) % totalSlides;
-    goToSlide(currentSlide);
-}
+  /**
+   * Initialize the about carousel, drag controls, and visibility observers.
+   */
+  function initCarousel() {
+    updateTotalSlides();
 
+    const container = getCarouselContainer();
+    const section = getAboutSection();
 
-function initCarousel() {
-    // Set initial position
     goToSlide(0);
 
-    // Initialize drag functionality for about carousel
-    const aboutCarouselContainer = document.querySelector('.carousel-container');
-    if (aboutCarouselContainer) {
-        const aboutDrag = new CarouselDrag(aboutCarouselContainer, {
-            goToSlide: (slideIndex) => goToSlide(slideIndex, true),
-            threshold: 50,
-            sensitivity: 1.0
-        });
-
-        // Update drag instance when slide changes externally
-        window.aboutCarouselDrag = aboutDrag;
-
-        // Pause auto-rotation on hover
-        aboutCarouselContainer.addEventListener('mouseenter', () => {
-            if (autoRotateInterval) {
-                clearInterval(autoRotateInterval);
-                autoRotateInterval = null;
-            }
-        });
-
-        // Resume auto-rotation on mouse leave
-        aboutCarouselContainer.addEventListener('mouseleave', () => {
-            if (!autoRotateInterval) {
-                autoRotateInterval = setInterval(nextSlide, 8000);
-            }
-        });
-
-        // Pause auto-rotation when drag starts
-        aboutCarouselContainer.addEventListener('mousedown', () => {
-            if (autoRotateInterval) {
-                clearInterval(autoRotateInterval);
-                autoRotateInterval = null;
-            }
-        });
-
-        aboutCarouselContainer.addEventListener('touchstart', () => {
-            if (autoRotateInterval) {
-                clearInterval(autoRotateInterval);
-                autoRotateInterval = null;
-            }
-        });
-
-        // Resume auto-rotation when drag ends (with delay to check hover state)
-        const resumeAutoRotation = () => {
-            // Use a short delay to let hover state settle, then check if we should resume
-            setTimeout(() => {
-                const isHovering = aboutCarouselContainer.matches(':hover');
-                if (!isHovering && !autoRotateInterval) {
-                    autoRotateInterval = setInterval(nextSlide, 8000);
-                }
-            }, 100);
-        };
-
-        aboutCarouselContainer.addEventListener('mouseup', resumeAutoRotation);
-        aboutCarouselContainer.addEventListener('touchend', resumeAutoRotation);
+    if (container) {
+      initDrag(container);
+      bindPlaybackControls(container);
     }
 
-    // Handle page visibility changes to prevent race conditions on refocus
     document.addEventListener('visibilitychange', () => {
-        if (document.hidden) {
-            // Page is hidden - pause auto-rotation and clear interval
-            if (autoRotateInterval) {
-                clearInterval(autoRotateInterval);
-                autoRotateInterval = null;
-            }
-        } else {
-            // Page is visible again - resume auto-rotation if carousel is in view
-            const aboutSection = document.getElementById('about');
-            const aboutCarouselContainer = document.querySelector('.carousel-container');
-
-            if (aboutSection && aboutCarouselContainer) {
-                const rect = aboutSection.getBoundingClientRect();
-                const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-                // Only resume if section is in view and not currently hovering
-                const isHovering = aboutCarouselContainer.matches(':hover');
-
-                if (isInView && !isHovering && !autoRotateInterval) {
-                    autoRotateInterval = setInterval(nextSlide, 8000);
-                }
-            }
-        }
+      handleVisibilityChange(section, container);
     });
 
-    // Use Intersection Observer to start auto-rotation when about section is visible
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting && !autoRotateInterval) {
-                    // Start auto-rotation when section comes into view
-                    autoRotateInterval = setInterval(nextSlide, 8000);
-                } else if (!entry.isIntersecting && autoRotateInterval) {
-                    // Stop auto-rotation when section leaves view
-                    clearInterval(autoRotateInterval);
-                    autoRotateInterval = null;
-                }
-            });
-        }, {
-            threshold: 0.3 // Start when 30% of the section is visible
-        });
-
-        observer.observe(aboutSection);
+    if (section) {
+      observeSectionVisibility(section);
     }
-}
+  }
 
+  // Expose public functions for backwards compatibility with the original API.
+  global.goToSlide = goToSlide;
+  global.nextSlide = nextSlide;
+  global.initCarousel = initCarousel;
+})(typeof window !== 'undefined' ? window : this);
