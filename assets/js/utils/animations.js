@@ -7,10 +7,54 @@
  * Exports: Animation and transition functions
  */
 
+function prefersReducedMotion() {
+    if (typeof window === 'undefined' || !window.matchMedia) {
+        return false;
+    }
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
+function observeAll(observer, ...selectors) {
+    if (!observer || !selectors.length) {
+        return;
+    }
+    try {
+        document.querySelectorAll(selectors.join(', ')).forEach(element => observer.observe(element));
+    } catch (error) {
+        console.error('Failed to observe animated elements:', error);
+    }
+}
+
+function getValidHashTarget(href) {
+    if (!href || href === '#') {
+        return null;
+    }
+    try {
+        return document.querySelector(href);
+    } catch (error) {
+        console.warn('Invalid hash selector:', href, error);
+        return null;
+    }
+}
+
+function isExternalLink(href) {
+    return typeof href === 'string' && (/^https?:/.test(href) || href.startsWith('//'));
+}
+
+function getPageTransitionDelay() {
+    const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    const isMobileMenuOpen = mobileMenuOverlay && mobileMenuOverlay.classList.contains('active');
+    return isMobileMenuOpen ? 600 : 300;
+}
+
 // Animation & Interaction Observers
 // ==========================================
 
 function initScrollAnimations() {
+    if (typeof document === 'undefined') {
+        return;
+    }
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
@@ -24,63 +68,60 @@ function initScrollAnimations() {
         });
     }, observerOptions);
 
-    // Observe cards for entrance animations (index page sections)
-    document.querySelectorAll('.project-card, .skill-card, .certification-card, .containers .box, .stat-item').forEach(card => {
-        observer.observe(card);
-    });
-
-    // Observe section lines and mask reveals
-    document.querySelectorAll('.section-line, .about-carousel.reveal-mask').forEach(el => {
-        observer.observe(el);
-    });
+    observeAll(observer,
+        '.project-card, .skill-card, .certification-card, .containers .box, .stat-item',
+        '.section-line, .about-carousel.reveal-mask'
+    );
 }
 
 function initSmoothScrolling() {
-    // Smooth scroll for navigation links
+    if (typeof document === 'undefined') {
+        return;
+    }
+
     document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
 
-            // Skip if href is just '#' or empty
             if (!href || href === '#') {
                 return;
             }
 
             e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                const targetPosition = target.offsetTop - 48;
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+
+            const target = getValidHashTarget(href);
+            if (!target) {
+                return;
             }
+
+            const targetPosition = target.offsetTop - 48;
+            window.scrollTo({
+                top: targetPosition,
+                behavior: 'smooth'
+            });
         });
     });
 }
-
 
 // Page Transitions
 // ==========================================
 
 function initPageTransitions() {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    if (prefersReducedMotion) {
-        return; // Skip transitions if user prefers reduced motion
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+        return;
     }
 
-    // Fade in the page on load
+    if (prefersReducedMotion()) {
+        return;
+    }
+
     document.body.classList.add('page-transition-in');
 
-    // Get all links that navigate to other HTML pages
     const pageLinks = document.querySelectorAll('a[href$=".html"], a[href*=".html#"], a[href*="/"][href*=".html"]');
 
     pageLinks.forEach(link => {
-        // Skip external links
         const href = link.getAttribute('href');
-        if (href.startsWith('http') || href.startsWith('//')) {
+        if (!href || isExternalLink(href)) {
             return;
         }
 
@@ -88,19 +129,11 @@ function initPageTransitions() {
             e.preventDefault();
 
             const targetUrl = this.href;
-
-            // Add fade out class
             document.body.classList.add('page-transition-out');
 
-            // Check if mobile menu is open - use longer delay if it is
-            const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-            const isMobileMenuOpen = mobileMenuOverlay && mobileMenuOverlay.classList.contains('active');
-            const delay = isMobileMenuOpen ? 600 : 300; // Longer delay for mobile menu sequential fade
-
-            // Navigate after transition completes
             setTimeout(() => {
                 window.location.href = targetUrl;
-            }, delay);
+            }, getPageTransitionDelay());
         });
     });
 }
