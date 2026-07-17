@@ -1,38 +1,51 @@
-/**
- * Project Configuration
- *
- * Centralized project data and image mappings
- *
- * Dependencies: core/data-loader.js
- * Exports: PROJECTS array, PROJECT_FEATURED_IMAGES object, helper functions
- */
+'use strict';
 
-// ==========================================
-// Centralized Project Configuration
-// ==========================================
-// All project data now loaded from data/projects.json
-// This file maintains image mappings and helper functions only
+const PROJECT_FEATURED_IMAGES = Object.freeze({
+    'ai-strategy': Object.freeze(['ai-1', 'ai-2', 'ai-3']),
+    'design-system': Object.freeze([
+        'design-system-featured-1',
+        'design-system-featured-2',
+        'design-system-featured-3',
+        'design-system-featured-4',
+        'design-system-featured-5',
+        'design-system-featured-6',
+        'design-system-featured-7'
+    ]),
+    'product-suite': Object.freeze([
+        'product-feature-1',
+        'product-feature-2',
+        'product-feature-3',
+        'product-feature-4'
+    ]),
+    'research-strategy': Object.freeze(['research-1', 'research-2', 'research-3'])
+});
 
-// Mapping of project IDs to their featured carousel images
-const PROJECT_FEATURED_IMAGES = {
-    'ai-strategy': ['ai-1', 'ai-2', 'ai-3'],
-    'design-system': ['design-system-featured-1', 'design-system-featured-2', 'design-system-featured-3', 'design-system-featured-4', 'design-system-featured-5', 'design-system-featured-6', 'design-system-featured-7'],
-    'product-suite': ['product-feature-1', 'product-feature-2', 'product-feature-3', 'product-feature-4'],
-    'research-strategy': ['research-1', 'research-2', 'research-3']
-};
-
-// ==========================================
-// Helper Functions
-// ==========================================
-
-// Helper function to get project by ID or URL
-// Uses dataLoader as single source of truth
-function getProject(identifier) {
-    return dataLoader.getProject(identifier);
+function sanitizeProjectIdentifier(identifier) {
+    if (typeof identifier !== 'string') {
+        return '';
+    }
+    const trimmed = identifier.trim();
+    return trimmed.length > 0 ? trimmed : '';
 }
 
-// Helper function to get previous/next projects
-// Uses dataLoader as single source of truth
-function getAdjacentProjects(identifier) {
-    return dataLoader.getAdjacentProjects(identifier);
+function getProject(projectIdOrUrl) {
+    const projectId = sanitizeProjectIdentifier(projectIdOrUrl);
+    if (!projectId) {
+        return null;
+    }
+    if (typeof dataLoader === 'undefined' || typeof dataLoader.getProject !== 'function') {
+        throw new Error('dataLoader dependency is not available');
+    }
+    return dataLoader.getProject(projectId);
+}
+
+function getAdjacentProjects(projectIdOrUrl) {
+    const projectId = sanitizeProjectIdentifier(projectIdOrUrl);
+    if (!projectId) {
+        return null;
+    }
+    if (typeof dataLoader === 'undefined' || typeof dataLoader.getAdjacentProjects !== 'function') {
+        throw new Error('dataLoader dependency is not available');
+    }
+    return dataLoader.getAdjacentProjects(projectId);
 }
