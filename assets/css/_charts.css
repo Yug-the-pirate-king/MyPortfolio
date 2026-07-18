@@ -1,18 +1,12 @@
-
 /* ==========================================
    Theme Responsive Images
    ========================================== */
 
 /* Theme responsive images are handled by JavaScript */
 
-/* Darker background for slide captions in dark mode */
-[data-theme="dark"] .slide-caption {
-    background: rgba(0, 0, 0, 0.4);
-}
-
-/* Darker background for project metadata overlay in dark mode */
-[data-theme="dark"] .project-meta-overlay {
-    background: rgba(0, 0, 0, 0.4);
+/* Darker background for overlays in dark mode */
+[data-theme="dark"] :is(.slide-caption, .project-meta-overlay) {
+    background: rgb(0 0 0 / 0.4);
 }
 
 
@@ -49,6 +43,7 @@ body {
     }
 }
 
+
 /* ==========================================
    Donut Chart Data Visualization
    ========================================== */
@@ -76,7 +71,7 @@ body {
 .result-metric-with-bg {
     background: var(--bg-secondary);
     border-radius: var(--radius-lg);
-    transition: all var(--transition-base);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
 }
 
 .result-metric-with-bg:hover {
@@ -84,14 +79,19 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
-.metric-value {
-    font-size: var(--font-size-4xl);
+.metric-value,
+.chart-value {
     font-weight: var(--font-weight-bold);
     color: var(--color-accent);
+}
+
+.metric-value {
+    font-size: var(--font-size-4xl);
     margin-bottom: var(--space-2);
 }
 
-.metric-label {
+.metric-label,
+.chart-label {
     font-size: var(--font-size-sm);
     color: var(--text-secondary);
     line-height: 1.4;
@@ -108,9 +108,13 @@ body {
 }
 
 .donut-chart {
+    --donut-size: 100px;
+    --donut-stroke: 4;
+    --donut-circumference: 157.08;
+
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: var(--donut-size);
+    height: var(--donut-size);
     margin: 0 auto;
 }
 
@@ -120,18 +124,19 @@ body {
     transform: rotate(-90deg);
 }
 
-.donut-chart .donut-track {
+.donut-chart :is(.donut-track, .donut-fill) {
     fill: none;
+    stroke-width: var(--donut-stroke);
+}
+
+.donut-chart .donut-track {
     stroke: var(--color-neutral-200);
-    stroke-width: 4;
 }
 
 .donut-chart .donut-fill {
-    fill: none;
     stroke: var(--color-accent);
-    stroke-width: 4;
     stroke-linecap: round;
-    stroke-dasharray: 0 157.08;
+    stroke-dasharray: 0 var(--donut-circumference);
     transition: stroke-dasharray 1.5s ease-in-out 0.5s;
 }
 
@@ -145,15 +150,10 @@ body {
 
 .chart-value {
     font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    color: var(--color-accent);
     line-height: 1;
 }
 
 .chart-label {
-    font-size: var(--font-size-sm);
-    color: var(--text-secondary);
-    line-height: 1.4;
     margin-top: var(--space-2);
     max-width: 200px;
 }
@@ -164,11 +164,12 @@ body {
 }
 
 [data-theme="dark"] .result-metric-with-bg {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgb(255 255 255 / 0.05);
     border: none;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgb(0 0 0 / 0.3);
 }
 
 /* Animation trigger when in viewport */
 .donut-chart.animate .donut-fill {
-    stroke-dasharray: var(--progress) 157.08;
+    stroke-dasharray: var(--progress) var(--donut-circumference);
+}
