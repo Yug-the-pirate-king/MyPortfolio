@@ -1,32 +1,61 @@
 {
+  "$schema": "projects.schema.json",
+  "metadata": {
+    "version": "1.0.0",
+    "description": "Portfolio case-study projects data"
+  },
   "projects": [
     {
       "id": "design-system",
       "title": "Design System",
       "subtitle": "Creating unified experiences across a complex product ecosystem",
       "description": "Building a comprehensive design system that covers a suite of products from SaaS to on-prem, unifying product, UX and Dev teams while embedding accessibility standards throughout the organization.",
-      "url": "design-system.html",
-      "ariaLabel": "View Design System Case Study",
       "category": "Design Systems",
       "year": 2024,
-      "tags": ["UX", "Design Systems", "Accessibility", "Enterprise Software", "Design Tokens", "Component Library"],
-      "seo": {
-        "metaDescription": "Unifying enterprise product experiences through a comprehensive design system with accessibility as a foundational standard.",
-        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
-      },
+      "url": "design-system.html",
+      "ariaLabel": "View Design System Case Study",
+      "tags": [
+        "UX",
+        "Design Systems",
+        "Accessibility",
+        "Enterprise Software",
+        "Design Tokens",
+        "Component Library"
+      ],
       "metrics": {
         "role": "UX Director / Designer",
         "timeline": "18 months",
         "team": "2 UX, 2 Devs"
       },
       "featuredImages": [
-        { "filename": "design-system-featured-1", "alt": "Enterprise design system overview" },
-        { "filename": "design-system-featured-2", "alt": "Atomic design methodology and component structure" },
-        { "filename": "design-system-featured-3", "alt": "Cross-platform design tokens and theming" },
-        { "filename": "design-system-featured-4", "alt": "Custom icon library with 500+ icons" },
-        { "filename": "design-system-featured-5", "alt": "Reusable UI components and patterns" },
-        { "filename": "design-system-featured-6", "alt": "Documentation and implementation guidelines" },
-        { "filename": "design-system-featured-7", "alt": "Design system adoption and impact metrics" }
+        {
+          "filename": "design-system-featured-1",
+          "alt": "Enterprise design system overview"
+        },
+        {
+          "filename": "design-system-featured-2",
+          "alt": "Atomic design methodology and component structure"
+        },
+        {
+          "filename": "design-system-featured-3",
+          "alt": "Cross-platform design tokens and theming"
+        },
+        {
+          "filename": "design-system-featured-4",
+          "alt": "Custom icon library with 500+ icons"
+        },
+        {
+          "filename": "design-system-featured-5",
+          "alt": "Reusable UI components and patterns"
+        },
+        {
+          "filename": "design-system-featured-6",
+          "alt": "Documentation and implementation guidelines"
+        },
+        {
+          "filename": "design-system-featured-7",
+          "alt": "Design system adoption and impact metrics"
+        }
       ],
       "carouselMetadata": [
         {
@@ -61,32 +90,50 @@
           "label1": "Accessibility",
           "value1": "Accessibility in our system ensures inclusive, high-quality experiences for our entire user base"
         }
-      ]
+      ],
+      "seo": {
+        "metaDescription": "Unifying enterprise product experiences through a comprehensive design system with accessibility as a foundational standard.",
+        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
+      }
     },
     {
       "id": "product-suite",
       "title": "Hybrid Product Suite",
       "subtitle": "Building foundational UX patterns for scalable growth",
       "description": "Leading the end-to-end design of a new product ecosystem from concept to launch, establishing foundational UX patterns and information architecture for scalable growth.",
-      "url": "product-suite.html",
-      "ariaLabel": "View hybrid Product Suite Case Study",
       "category": "Product Design",
       "year": 2024,
-      "tags": ["UX", "Product Design", "Information Architecture", "SaaS", "Hybrid Deployment"],
-      "seo": {
-        "metaDescription": "Leading the end-to-end design of a hybrid product ecosystem from concept to launch, establishing foundational UX patterns for scalable growth.",
-        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
-      },
+      "url": "product-suite.html",
+      "ariaLabel": "View hybrid Product Suite Case Study",
+      "tags": [
+        "UX",
+        "Product Design",
+        "Information Architecture",
+        "SaaS",
+        "Hybrid Deployment"
+      ],
       "metrics": {
         "role": "UX Director / Designer",
         "timeline": "36 months",
         "team": "16 UX, 20 Dev, 8 PO"
       },
       "featuredImages": [
-        { "filename": "product-feature-1", "alt": "Hybrid product suite overview" },
-        { "filename": "product-feature-2", "alt": "Component system and patterns" },
-        { "filename": "product-feature-3", "alt": "AI integration strategy" },
-        { "filename": "product-feature-4", "alt": "Progressive disclosure and modalities" }
+        {
+          "filename": "product-feature-1",
+          "alt": "Hybrid product suite overview"
+        },
+        {
+          "filename": "product-feature-2",
+          "alt": "Component system and patterns"
+        },
+        {
+          "filename": "product-feature-3",
+          "alt": "AI integration strategy"
+        },
+        {
+          "filename": "product-feature-4",
+          "alt": "Progressive disclosure and modalities"
+        }
       ],
       "carouselMetadata": [
         {
@@ -109,31 +156,46 @@
           "label1": "Progressive Disclosure",
           "value1": "Progressive disclosure and application modalities reduce cognitive load by selectively hiding unneeded UI when user is focused on a task"
         }
-      ]
+      ],
+      "seo": {
+        "metaDescription": "Leading the end-to-end design of a hybrid product ecosystem from concept to launch, establishing foundational UX patterns for scalable growth.",
+        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
+      }
     },
     {
       "id": "ai-strategy",
       "title": "AI Design Strategy",
       "subtitle": "Making complex automation feel intuitive and trustworthy",
       "description": "Designing intelligent user experiences that seamlessly integrate AI capabilities into existing workflows, making complex automation feel intuitive and trustworthy.",
-      "url": "ai-strategy.html",
-      "ariaLabel": "View AI Product Design Strategy Case Study",
       "category": "AI/ML Design",
       "year": 2024,
-      "tags": ["AI/ML", "Product Design", "UX Strategy", "Trust Design", "Automation"],
-      "seo": {
-        "metaDescription": "Designing intelligent user experiences that seamlessly integrate AI capabilities into existing workflows, making complex automation feel intuitive and trustworthy.",
-        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
-      },
+      "url": "ai-strategy.html",
+      "ariaLabel": "View AI Product Design Strategy Case Study",
+      "tags": [
+        "AI/ML",
+        "Product Design",
+        "UX Strategy",
+        "Trust Design",
+        "Automation"
+      ],
       "metrics": {
         "role": "UX Director / Designer",
         "timeline": "3 months",
         "team": "3 UX, 4 Dev, 3 PO"
       },
       "featuredImages": [
-        { "filename": "ai-1", "alt": "AI product strategy overview" },
-        { "filename": "ai-2", "alt": "AI design patterns for building trust" },
-        { "filename": "ai-3", "alt": "Trust building release cycle" }
+        {
+          "filename": "ai-1",
+          "alt": "AI product strategy overview"
+        },
+        {
+          "filename": "ai-2",
+          "alt": "AI design patterns for building trust"
+        },
+        {
+          "filename": "ai-3",
+          "alt": "Trust building release cycle"
+        }
       ],
       "carouselMetadata": [
         {
@@ -152,31 +214,45 @@
           "label1": "Trust Building Release Cycle",
           "value1": "We introduced AI iteratively, starting with low-risk features"
         }
-      ]
+      ],
+      "seo": {
+        "metaDescription": "Designing intelligent user experiences that seamlessly integrate AI capabilities into existing workflows, making complex automation feel intuitive and trustworthy.",
+        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
+      }
     },
     {
       "id": "research-strategy",
       "title": "Research Strategy",
       "subtitle": "Validating designs through rigorous research",
       "description": "Validating innovative interaction patterns through rigorous user research, turning insights into design decisions that improve usability and reduce cognitive load.",
-      "url": "research-strategy.html",
-      "ariaLabel": "View User Research Strategy Case Study",
       "category": "User Research",
       "year": 2024,
-      "tags": ["User Research", "UX", "Usability Testing", "Design Validation"],
-      "seo": {
-        "metaDescription": "Validating innovative interaction patterns through rigorous user research, turning insights into design decisions that improve usability and reduce cognitive load.",
-        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
-      },
+      "url": "research-strategy.html",
+      "ariaLabel": "View User Research Strategy Case Study",
+      "tags": [
+        "User Research",
+        "UX",
+        "Usability Testing",
+        "Design Validation"
+      ],
       "metrics": {
         "role": "UX Director / Designer",
         "timeline": "2 Weeks",
         "team": "Me"
       },
       "featuredImages": [
-        { "filename": "research-1", "alt": "User research methodology overview" },
-        { "filename": "research-2", "alt": "Research insights and patterns" },
-        { "filename": "research-3", "alt": "Impact and validation results" }
+        {
+          "filename": "research-1",
+          "alt": "User research methodology overview"
+        },
+        {
+          "filename": "research-2",
+          "alt": "Research insights and patterns"
+        },
+        {
+          "filename": "research-3",
+          "alt": "Impact and validation results"
+        }
       ],
       "carouselMetadata": [
         {
@@ -195,7 +271,11 @@
           "label1": "Impact",
           "value1": "Showing research can deliver value quickly and efficiently."
         }
-      ]
+      ],
+      "seo": {
+        "metaDescription": "Validating innovative interaction patterns through rigorous user research, turning insights into design decisions that improve usability and reduce cognitive load.",
+        "ogImage": "https://jerimybrown.com/assets/images/preview/home-preview.png"
+      }
     }
   ]
 }
