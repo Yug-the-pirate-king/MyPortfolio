@@ -4,11 +4,31 @@
  * JSON-LD schemas, grid lines, donut charts, logo scroller
  *
  * Dependencies: core/data-loader.js
- * Exports: Multiple utility functions
+ * Exports: Multiple utility functions (global)
  */
 
+// ---------------------------------------------------------------------------
+// JSON-LD Schema Generators
+// ---------------------------------------------------------------------------
+
+/**
+ * Build a Schema.org Person object from the site person data.
+ * @param {Object} personData
+ * @returns {Object|null}
+ */
 function generatePersonSchema(personData) {
     if (!personData) return null;
+
+    const location = personData.location || {};
+    const social = personData.socialLinks || {};
+
+    // Only include valid social URLs so the schema never contains undefined entries.
+    const sameAs = [
+        social.linkedin,
+        social.github,
+        social.dribbble,
+        social.instagram
+    ].filter(link => typeof link === 'string' && link.trim() !== '');
 
     return {
         "@context": "https://schema.org",
@@ -22,22 +42,23 @@ function generatePersonSchema(personData) {
         "telephone": personData.phone,
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": personData.location.address,
-            "addressLocality": personData.location.city,
-            "addressRegion": personData.location.state,
-            "postalCode": personData.location.zip,
-            "addressCountry": personData.location.country
+            "streetAddress": location.address,
+            "addressLocality": location.city,
+            "addressRegion": location.state,
+            "postalCode": location.zip,
+            "addressCountry": location.country
         },
-        "sameAs": [
-            personData.socialLinks.linkedin,
-            personData.socialLinks.github,
-            personData.socialLinks.dribbble,
-            personData.socialLinks.instagram
-        ],
-        "knowsAbout": personData.skills
+        "sameAs": sameAs,
+        "knowsAbout": Array.isArray(personData.skills) ? personData.skills : []
     };
 }
 
+/**
+ * Build a Schema.org CreativeWork object for a project.
+ * @param {Object} projectData
+ * @param {Object} personData
+ * @returns {Object|null}
+ */
 function generateProjectSchema(projectData, personData) {
     if (!projectData || !personData) return null;
 
@@ -53,12 +74,19 @@ function generateProjectSchema(projectData, personData) {
         },
         "datePublished": projectData.year?.toString(),
         "image": `https://jerimybrown.com/assets/images/work/${projectData.id}-light.png`,
-        "keywords": projectData.tags?.join(', '),
+        "keywords": Array.isArray(projectData.tags) ? projectData.tags.join(', ') : undefined,
         "genre": projectData.category
     };
 }
 
+/**
+ * Build a Schema.org BreadcrumbList from an array of { name, url } items.
+ * @param {Array} items
+ * @returns {Object|null}
+ */
 function generateBreadcrumbSchema(items) {
+    if (!Array.isArray(items)) return null;
+
     return {
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
@@ -71,6 +99,11 @@ function generateBreadcrumbSchema(items) {
     };
 }
 
+/**
+ * Build a Schema.org WebSite object for the portfolio homepage.
+ * @param {Object} personData
+ * @returns {Object|null}
+ */
 function generateWebSiteSchema(personData) {
     if (!personData) return null;
 
@@ -87,8 +120,12 @@ function generateWebSiteSchema(personData) {
     };
 }
 
+/**
+ * Inject a JSON-LD script tag into <head>.
+ * @param {Object} schema
+ */
 function injectJSONLD(schema) {
-    if (!schema) return;
+    if (!schema || typeof document === 'undefined') return;
 
     const script = document.createElement('script');
     script.type = 'application/ld+json';
@@ -96,18 +133,26 @@ function injectJSONLD(schema) {
     document.head.appendChild(script);
 }
 
+/**
+ * Initialize the correct JSON-LD schemas for the current page.
+ */
 function initJSONLDSchemas() {
-    const personData = dataLoader.getPerson();
-    const currentPath = window.location.pathname;
-    const currentPage = currentPath.split('/').pop();
+    if (typeof dataLoader === 'undefined' || !dataLoader) return;
 
-    // Always inject Person schema on all pages
+    const personData = dataLoader.getPerson();
+    if (!personData) return;
+
+    // Person schema is injected on every page.
     injectJSONLD(generatePersonSchema(personData));
 
-    // Inject appropriate schemas based on page
-    if (currentPath.includes('/work/') || currentPath.includes('work/')) {
-        // Project page
-        const projectData = dataLoader.getProject(currentPage);
+    // Normalize the path so trailing slashes do not produce empty slugs.
+    const normalizedPath = window.location.pathname.replace(/\/$/, '') || '/';
+    const segments = normalizedPath.split('/').filter(Boolean);
+    const pageSlug = segments.at(-1) || '';
+
+    if (normalizedPath.startsWith('/work/') && segments.length > 1) {
+        // Project detail page.
+        const projectData = dataLoader.getProject(pageSlug);
         if (projectData) {
             injectJSONLD(generateProjectSchema(projectData, personData));
             injectJSONLD(generateBreadcrumbSchema([
@@ -116,39 +161,51 @@ function initJSONLDSchemas() {
                 { name: projectData.title, url: `https://jerimybrown.com/work/${projectData.url}` }
             ]));
         }
-    } else if (currentPage === 'index.html' || currentPath === '/' || currentPath === '') {
-        // Homepage
+    } else if (normalizedPath === '/' || normalizedPath === '/index.html') {
+        // Homepage.
         injectJSONLD(generateWebSiteSchema(personData));
     }
 }
 
+// ---------------------------------------------------------------------------
 // Grid Lines System
-// ==========================================
+// ---------------------------------------------------------------------------
 
+/** Toggle the grid-lines overlay and persist the state. */
 function toggleGridLines() {
     const overlay = document.getElementById('gridLinesOverlay');
     const toggle = document.getElementById('gridToggle');
     const toggleLocal = document.getElementById('gridToggleLocal');
-    
-    if (overlay) {
-        overlay.classList.toggle('visible');
-        
-        // Update all grid toggles to stay in sync
-        if (toggle) toggle.classList.toggle('active');
-        if (toggleLocal) toggleLocal.classList.toggle('active');
-        
-        // Save state to localStorage
-        const isVisible = overlay.classList.contains('visible');
+
+    if (!overlay) return;
+
+    overlay.classList.toggle('visible');
+
+    // Keep all toggles in sync with the overlay state.
+    if (toggle) toggle.classList.toggle('active');
+    if (toggleLocal) toggleLocal.classList.toggle('active');
+
+    const isVisible = overlay.classList.contains('visible');
+    try {
         localStorage.setItem('gridLinesVisible', isVisible);
+    } catch {
+        // Ignore localStorage errors (e.g. private browsing mode).
     }
 }
 
+/** Restore the grid-lines state from localStorage on load. */
 function initGridLines() {
-    const savedState = localStorage.getItem('gridLinesVisible');
+    let savedState = null;
+    try {
+        savedState = localStorage.getItem('gridLinesVisible');
+    } catch {
+        // Ignore localStorage errors.
+    }
+
     const overlay = document.getElementById('gridLinesOverlay');
     const toggle = document.getElementById('gridToggle');
     const toggleLocal = document.getElementById('gridToggleLocal');
-    
+
     if (savedState === 'true' && overlay) {
         overlay.classList.add('visible');
         if (toggle) toggle.classList.add('active');
@@ -156,62 +213,76 @@ function initGridLines() {
     }
 }
 
-
+// ---------------------------------------------------------------------------
 // Donut Chart Animations
-// ==========================================
+// ---------------------------------------------------------------------------
 
+/** Initialize animated donut charts when they enter the viewport. */
 function initDonutCharts() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const chart = entry.target;
-                const progress = parseInt(chart.dataset.progress) || 0;
-                const radius = 25; // SVG circle radius
-                const circumference = 2 * Math.PI * radius;
-                const progressLength = (progress / 100) * circumference;
+            if (!entry.isIntersecting) return;
 
-                // Add animate class to trigger CSS animation
-                chart.classList.add('animate');
+            const chart = entry.target;
+            const rawProgress = parseInt(chart.dataset.progress, 10);
+            const progress = Number.isFinite(rawProgress)
+                ? Math.min(Math.max(rawProgress, 0), 100)
+                : 0;
 
-                // Set the CSS custom property for the progress
-                chart.style.setProperty('--progress', progressLength);
+            const radius = 25;
+            const circumference = 2 * Math.PI * radius;
+            const progressLength = (progress / 100) * circumference;
 
-                // Animate the percentage number
-                const valueElement = chart.querySelector('.chart-value');
-                if (valueElement) {
-                    animateChartValue(valueElement, 0, progress, 1500);
-                }
+            // Trigger the CSS animation and set the progress CSS variable.
+            chart.classList.add('animate');
+            chart.style.setProperty('--progress', progressLength);
 
-                // Stop observing this chart
-                observer.unobserve(chart);
+            // Animate the numeric value.
+            const valueElement = chart.querySelector('.chart-value');
+            if (valueElement) {
+                animateChartValue(valueElement, 0, progress, 1500);
             }
+
+            // Only animate once per chart.
+            observer.unobserve(chart);
         });
     }, {
         threshold: 0.3,
         rootMargin: '0px 0px -20px 0px'
     });
 
-    // Observe all donut charts
-    const charts = document.querySelectorAll('.donut-chart');
-    charts.forEach(chart => {
+    document.querySelectorAll('.donut-chart').forEach(chart => {
         observer.observe(chart);
     });
 }
 
+/**
+ * Animate a number from start to end over a given duration.
+ * @param {HTMLElement} element
+ * @param {number} start
+ * @param {number} end
+ * @param {number} duration
+ */
 function animateChartValue(element, start, end, duration) {
+    if (duration <= 0) {
+        element.textContent = `${end}%`;
+        return;
+    }
+
     const startTime = performance.now();
+    const range = end - start;
 
     function updateValue(currentTime) {
         const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
+        const t = Math.min(elapsed / duration, 1);
 
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.round(start + (end - start) * easeOutQuart);
+        // easeOutQuart
+        const eased = 1 - Math.pow(1 - t, 4);
+        const current = Math.round(start + range * eased);
 
-        element.textContent = current + '%';
+        element.textContent = `${current}%`;
 
-        if (progress < 1) {
+        if (t < 1) {
             requestAnimationFrame(updateValue);
         }
     }
@@ -219,80 +290,85 @@ function animateChartValue(element, start, end, duration) {
     requestAnimationFrame(updateValue);
 }
 
-
+// ---------------------------------------------------------------------------
 // Logo Scroller - Seamless Infinite Scroll
-// ==========================================
+// ---------------------------------------------------------------------------
 
-// Global variable for brands scroll duration (milliseconds)
-// Default: 40% speed = 80s duration (120 - 40 = 80)
+// Global scroll duration in milliseconds (40% speed = 80s).
 let brandScrollDuration = 80000;
-let restartLogoScroller = null; // Function to restart animation
-let updateLogoScrollSpeed = null; // Function to update speed without resetting position
 
+// Exposed callbacks so external controls can restart or update the scroller.
+let restartLogoScroller = null;
+let updateLogoScrollSpeed = null;
+
+/** Initialize the infinite logo scroller. */
 function initLogoScroller() {
     const track = document.querySelector('.logo-scroller-track');
     const scroller = document.querySelector('.logo-scroller');
+
     if (!track || !scroller) return;
 
-    // Animation state
     let animationId = null;
     let position = 0;
     let isPaused = false;
     let scrollWidth = 0;
     let speed = 0;
+    let lastTimestamp = 0;
 
-    // Calculate width of one complete set and scroll speed
+    /** Calculate the width of one logo set and the corresponding scroll speed. */
     function calculateScrollParameters() {
-        // Get all logos and filter for actually visible ones (not hidden by CSS)
         const allLogos = Array.from(track.querySelectorAll('.brand-logo'));
         const visibleLogos = allLogos.filter(logo => {
             return window.getComputedStyle(logo).display !== 'none';
         });
 
         if (visibleLogos.length === 0) {
-            return; // No logos to scroll
+            scrollWidth = 0;
+            speed = 0;
+            return;
         }
 
-        // visibleLogos contains 2 sets (original + duplicate)
-        // We need to calculate the width of exactly one set
-        const oneSetCount = visibleLogos.length / 2;
+        // The markup contains the original set plus a duplicate for seamless looping.
+        const oneSetCount = Math.floor(visibleLogos.length / 2);
+        if (oneSetCount === 0) {
+            scrollWidth = 0;
+            speed = 0;
+            return;
+        }
 
-        // Get computed gap between logos
         const trackStyles = window.getComputedStyle(track);
-        const gap = parseInt(trackStyles.gap) || 64;
+        const gap = parseInt(trackStyles.gap, 10) || 64;
 
-        // Calculate total width of one set
         let totalWidth = 0;
         for (let i = 0; i < oneSetCount; i++) {
             totalWidth += visibleLogos[i].offsetWidth + gap;
         }
 
         scrollWidth = totalWidth;
-
-        // Calculate speed using global brandScrollDuration variable
-        speed = scrollWidth / brandScrollDuration; // pixels per millisecond
+        speed = scrollWidth / brandScrollDuration;
     }
 
-    // Animation loop
+    /** Animation loop driven by real frame deltas for frame-rate-independent motion. */
     function animate(timestamp) {
-        if (!isPaused && scrollWidth > 0) {
-            // Move position based on speed (pixels per frame at ~60fps)
-            position += speed * 16.67; // Approximate 60fps frame time
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const delta = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
 
-            // Reset position when we've scrolled one complete set
+        if (!isPaused && scrollWidth > 0 && speed > 0) {
+            position += speed * delta;
+
+            // Seamlessly wrap back to the start of the next set.
             if (position >= scrollWidth) {
-                position = position - scrollWidth; // Seamless reset
+                position = position % scrollWidth;
             }
 
-            // Apply transform
             track.style.transform = `translateX(-${position}px)`;
         }
 
-        // Continue animation loop
         animationId = requestAnimationFrame(animate);
     }
 
-    // Pause on hover
+    // Pause scrolling while the user hovers over the scroller.
     scroller.addEventListener('mouseenter', () => {
         isPaused = true;
     });
@@ -301,51 +377,54 @@ function initLogoScroller() {
         isPaused = false;
     });
 
-    // Setup and start animation
+    /** Restart the scroller from the beginning (e.g. on theme change or resize). */
     function start() {
-        // Cancel existing animation
         if (animationId) {
             cancelAnimationFrame(animationId);
+            animationId = null;
         }
 
-        // Reset position
         position = 0;
+        lastTimestamp = 0;
         track.style.transform = 'translateX(0)';
 
-        // Calculate parameters
         calculateScrollParameters();
 
-        // Start animation
         if (scrollWidth > 0) {
             animationId = requestAnimationFrame(animate);
         }
     }
 
-    // Update speed without resetting position (for smooth speed changes)
+    /** Update scroll speed without resetting the current position. */
     function updateSpeed() {
-        // Just recalculate the speed based on new duration
-        // The animation loop will pick up the new speed automatically
+        const previousScrollWidth = scrollWidth;
         calculateScrollParameters();
+
+        if (previousScrollWidth > 0 && scrollWidth > 0) {
+            // Preserve the proportional offset so the loop stays seamless.
+            position = (position / previousScrollWidth) * scrollWidth;
+            if (position >= scrollWidth) {
+                position = position % scrollWidth;
+            }
+            track.style.transform = `translateX(-${position}px)`;
+        }
     }
 
-    // Expose functions globally
     restartLogoScroller = start;
     updateLogoScrollSpeed = updateSpeed;
 
-    // Initial setup
     start();
 
-    // Recalculate on theme change to ensure accuracy with different logo versions
-    const observer = new MutationObserver(() => {
-        start();
-    });
+    // Restart when the theme changes because logos may swap dimensions.
+    if (document.body) {
+        const themeObserver = new MutationObserver(() => start());
+        themeObserver.observe(document.body, {
+            attributes: true,
+            attributeFilter: ['data-theme']
+        });
+    }
 
-    observer.observe(document.body, {
-        attributes: true,
-        attributeFilter: ['data-theme']
-    });
-
-    // Recalculate on window resize
+    // Debounced restart on window resize.
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
@@ -353,49 +432,63 @@ function initLogoScroller() {
     });
 }
 
+// ---------------------------------------------------------------------------
 // Brands Speed Control
-// ==========================================
+// ---------------------------------------------------------------------------
 
+/** Clamp the speed percentage to the allowed 20–100 range. */
+function clampSpeedPercent(percent) {
+    return Math.max(20, Math.min(100, percent));
+}
+
+/** Apply the chosen speed percentage to the global duration and UI. */
+function applyBrandSpeed(percent, slider, valueDisplay) {
+    const clamped = clampSpeedPercent(percent);
+    slider.value = clamped;
+    valueDisplay.textContent = `${clamped}%`;
+    brandScrollDuration = (120 - clamped) * 1000;
+
+    try {
+        localStorage.setItem('brandsScrollSpeed', clamped);
+    } catch {
+        // Ignore localStorage errors.
+    }
+
+    if (typeof updateLogoScrollSpeed === 'function') {
+        updateLogoScrollSpeed();
+    }
+}
+
+/** Initialize the brands speed slider. */
 function initBrandsSpeedControl() {
     const slider = document.getElementById('brandsSpeedSlider');
     const valueDisplay = document.getElementById('brandsSpeedValue');
 
     if (!slider || !valueDisplay) return;
 
-    // Load saved speed percentage from localStorage
-    const savedSpeed = localStorage.getItem('brandsScrollSpeed');
-    if (savedSpeed) {
-        const speedPercent = parseInt(savedSpeed);
-        slider.value = speedPercent;
-        valueDisplay.textContent = `${speedPercent}%`;
-
-        // Calculate duration: higher percentage = faster = shorter duration
-        // Formula: duration = (120 - percentage) * 1000
-        // 100% = 20s (fastest), 60% = 60s (default), 20% = 100s (slowest)
-        brandScrollDuration = (120 - speedPercent) * 1000;
-
-        // Update speed smoothly without resetting position
-        if (updateLogoScrollSpeed) {
-            updateLogoScrollSpeed();
-        }
+    let savedSpeed = null;
+    try {
+        savedSpeed = localStorage.getItem('brandsScrollSpeed');
+    } catch {
+        // Ignore localStorage errors.
     }
 
-    // Update speed when slider changes
-    slider.addEventListener('input', function() {
-        const speedPercent = parseInt(this.value);
+    if (savedSpeed !== null) {
+        const parsed = parseInt(savedSpeed, 10);
+        if (Number.isFinite(parsed)) {
+            applyBrandSpeed(parsed, slider, valueDisplay);
+        } else {
+            applyBrandSpeed(40, slider, valueDisplay);
+        }
+    } else {
+        // Default speed matches the initial 80s duration.
+        applyBrandSpeed(40, slider, valueDisplay);
+    }
 
-        // Update display as percentage
-        valueDisplay.textContent = `${speedPercent}%`;
-
-        // Calculate duration: higher percentage = faster = shorter duration
-        brandScrollDuration = (120 - speedPercent) * 1000;
-
-        // Save to localStorage
-        localStorage.setItem('brandsScrollSpeed', speedPercent);
-
-        // Update speed smoothly without resetting position
-        if (updateLogoScrollSpeed) {
-            updateLogoScrollSpeed();
+    slider.addEventListener('input', () => {
+        const parsed = parseInt(slider.value, 10);
+        if (Number.isFinite(parsed)) {
+            applyBrandSpeed(parsed, slider, valueDisplay);
         }
     });
 }
