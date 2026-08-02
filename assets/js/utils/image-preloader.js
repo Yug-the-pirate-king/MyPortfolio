@@ -7,79 +7,133 @@
  * Exports: prefetchProjectImages(), initHoverPreloading()
  */
 
-// Track which projects have been preloaded
-const preloadedProjects = new Set();
+// Registry of project IDs whose images have already been preloaded.
+const preloadedProjectIds = new Set();
 
-// Prefetch images for a specific project
-function prefetchProjectImages(projectId) {
-    // Don't preload if already preloaded
-    if (preloadedProjects.has(projectId)) {
+/**
+ * Retrieves and validates the list of image names for a project.
+ * Returns an array of image names, or null if unavailable/invalid.
+ */
+function getProjectImageNames(projectId) {
+    if (typeof PROJECT_FEATURED_IMAGES === 'undefined' || PROJECT_FEATURED_IMAGES === null) {
+        console.warn('PROJECT_FEATURED_IMAGES is not defined. Cannot preload images.');
+        return null;
+    }
+
+    const imageNames = PROJECT_FEATURED_IMAGES[projectId];
+
+    if (!Array.isArray(imageNames) || imageNames.length === 0) {
+        return null;
+    }
+
+    return imageNames;
+}
+
+/**
+ * Creates and injects a <link rel="prefetch"> tag for a single image.
+ */
+function createImagePrefetchLink(imageName, theme) {
+    if (typeof imageName !== 'string' || imageName.length === 0) {
+        console.warn('Skipping invalid image name during prefetch.');
         return;
     }
 
-    const images = PROJECT_FEATURED_IMAGES[projectId];
-    if (!images) return;
+    const linkElement = document.createElement('link');
+    linkElement.rel = 'prefetch';
+    linkElement.as = 'image';
+    linkElement.href = `assets/images/work/${imageName}-${theme}.png`;
 
-    // Get current theme to preload correct version
-    const isDark = document.body.getAttribute('data-theme') === 'dark';
-    const theme = isDark ? 'dark' : 'light';
-
-    // Use requestIdleCallback for non-blocking prefetch
-    const prefetchImage = (imageName) => {
-        const link = document.createElement('link');
-        link.rel = 'prefetch';
-        link.as = 'image';
-        link.href = `assets/images/work/${imageName}-${theme}.png`;
-        document.head.appendChild(link);
-    };
-
-    // Prefetch each image
-    if ('requestIdleCallback' in window) {
-        window.requestIdleCallback(() => {
-            images.forEach(prefetchImage);
-        });
-    } else {
-        // Fallback for browsers without requestIdleCallback
-        setTimeout(() => {
-            images.forEach(prefetchImage);
-        }, 100);
-    }
-
-    // Mark as preloaded
-    preloadedProjects.add(projectId);
+    document.head.appendChild(linkElement);
 }
 
-// Initialize hover intent preloading for project cards
+/**
+ * Prefetches all images for a specific project using the active theme.
+ * Each project is only preloaded once.
+ */
+function prefetchProjectImages(projectId) {
+    // Validate input before doing any work.
+    if (typeof projectId !== 'string' || projectId.length === 0) {
+        console.warn('Invalid projectId provided to prefetchProjectImages.');
+        return;
+    }
+
+    // Skip if this project has already been preloaded.
+    if (preloadedProjectIds.has(projectId)) {
+        return;
+    }
+
+    const imageNames = getProjectImageNames(projectId);
+    if (!imageNames) {
+        return;
+    }
+
+    // Resolve the active theme so we preload the correct image variant.
+    const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
+    const theme = isDarkTheme ? 'dark' : 'light';
+
+    /**
+     * Schedules work during browser idle time when available,
+     * otherwise falls back to a short timeout to avoid blocking rendering.
+     */
+    function schedulePrefetch(callback) {
+        if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(callback);
+        } else {
+            setTimeout(callback, 100);
+        }
+    }
+
+    // Schedule prefetch injection for all project images.
+    schedulePrefetch(() => {
+        imageNames.forEach((imageName) => {
+            createImagePrefetchLink(imageName, theme);
+        });
+    });
+
+    // Mark project as preloaded immediately to prevent duplicate scheduling.
+    preloadedProjectIds.add(projectId);
+}
+
+/**
+ * Initializes hover-intent preloading for project card links.
+ * Only runs on pages containing a projects section.
+ */
 function initHoverPreloading() {
-    // Only run on index page
     const projectsSection = document.getElementById('projects');
-    if (!projectsSection) return;
 
-    const projectCards = document.querySelectorAll('.project-card-link');
+    // Bail out if this is not the index/projects page.
+    if (!projectsSection) {
+        return;
+    }
 
-    projectCards.forEach(card => {
-        let hoverTimeout = null;
+    const projectCardLinks = document.querySelectorAll('.project-card-link');
+    const HOVER_INTENT_DELAY_MS = 200;
 
-        // Get project ID from the card
-        const projectCard = card.querySelector('.project-card');
+    projectCardLinks.forEach((cardLink) => {
+        let hoverTimeoutId = null;
+
+        // Resolve the project ID from the nested project card element.
+        const projectCard = cardLink.querySelector('.project-card');
         const projectId = projectCard?.getAttribute('data-card');
 
-        if (!projectId) return;
+        // Skip cards without a valid project ID.
+        if (!projectId) {
+            return;
+        }
 
-        // Start prefetch on hover (with 200ms delay to detect intent)
-        card.addEventListener('mouseenter', () => {
-            hoverTimeout = setTimeout(() => {
+        // Start preloading after the user hovers long enough to show intent.
+        cardLink.addEventListener('mouseenter', () => {
+            hoverTimeoutId = setTimeout(() => {
                 prefetchProjectImages(projectId);
-            }, 200);
+            }, HOVER_INTENT_DELAY_MS);
         });
 
-        // Cancel prefetch if user moves away quickly
-        card.addEventListener('mouseleave', () => {
-            if (hoverTimeout) {
-                clearTimeout(hoverTimeout);
-                hoverTimeout = null;
+        // Cancel the pending preload if the user leaves the card quickly.
+        cardLink.addEventListener('mouseleave', () => {
+            if (hoverTimeoutId !== null) {
+                clearTimeout(hoverTimeoutId);
+                hoverTimeoutId = null;
             }
         });
     });
 }
-
