@@ -1,4 +1,4 @@
-﻿# Yug Shah — Personal Portfolio
+# Yug Shah — Personal Portfolio
 
 A modern, interactive personal portfolio built with vanilla HTML, CSS, and JavaScript. Features a stunning aurora background system, dynamic particle effects, smooth animations, and a fully modular JavaScript architecture.
 
@@ -54,10 +54,10 @@ MyPortfolio/
 │   │   │   ├── carousel-base.js    # Base carousel class
 │   │   │   ├── carousel-about.js   # About section carousel
 │   │   │   ├── carousel-project.js # Project carousel
-│   │   │   └── carousel-featured.js# Featured work carousel
+│   │   │   └── carousel-featured.js # Featured work carousel
 │   │   ├── content/
 │   │   │   ├── project-renderer.js # Renders projects from JSON
-│   │   │   ├── carousel-renderer.js# Renders carousel cards from JSON
+│   │   │   ├── carousel-renderer.js # Renders carousel cards from JSON
 │   │   │   ├── brand-renderer.js   # Renders brand/logos section
 │   │   │   ├── resume-renderer.js  # Populates resume.html from JSON
 │   │   │   └── case-study-renderer.js # Case study page renderer
@@ -148,6 +148,8 @@ MyPortfolio/
 ---
 
 ## 🚀 Local Development
+
+> **Note:** The site uses ES modules and `fetch` to load JSON data. Open `index.html` directly from the file system may fail in some browsers; run a local server instead.
 
 ### Option 1 — Python server (recommended)
 
