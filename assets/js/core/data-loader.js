@@ -21,21 +21,21 @@ class DataLoader {
         };
         this.loaded = false;
         this.loadPromise = null;
+        this.projectIndex = new Map();
+        this.cacheVersion = Date.now().toString(36);
 
-        // Auto-detect base path based on current location
-        // If we're in a subdirectory (like work/), use '../data/', otherwise 'data/'
-        const path = window.location.pathname;
-        const isInSubdirectory = path.split('/').filter(p => p && p.includes('.html')).length > 0 &&
-                                 path.split('/').slice(0, -1).some(p => p && p !== '');
-        this.basePath = isInSubdirectory ? '../data/' : 'data/';
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        const isFilePath = !window.location.pathname.endsWith('/');
+        const directoryDepth = Math.max(0, pathSegments.length - (isFilePath ? 1 : 0));
+        this.basePath = directoryDepth > 0
+            ? `${'../'.repeat(directoryDepth)}data/`
+            : 'data/';
     }
 
     async fetchJSON(path) {
         try {
-            // Add cache-busting parameter
-            const cacheBuster = new Date().getTime();
-            const url = path.includes('?') ? `${path}&v=${cacheBuster}` : `${path}?v=${cacheBuster}`;
-            const response = await fetch(url);
+            const separator = path.includes('?') ? '&' : '?';
+            const response = await fetch(`${path}${separator}v=${this.cacheVersion}`);
             if (!response.ok) {
                 throw new Error(`Failed to fetch ${path}: ${response.statusText}`);
             }
@@ -66,10 +66,23 @@ class DataLoader {
             this.data.brands = brands?.brands || [];
             this.data.aboutCarousel = aboutCarousel?.carouselCards || [];
             this.loaded = true;
+            this.buildProjectIndex();
             return this.data;
         });
 
         return this.loadPromise;
+    }
+
+    buildProjectIndex() {
+        this.projectIndex.clear();
+        for (const project of this.data.projects || []) {
+            if (project.id && !this.projectIndex.has(project.id)) {
+                this.projectIndex.set(project.id, project);
+            }
+            if (project.url && !this.projectIndex.has(project.url)) {
+                this.projectIndex.set(project.url, project);
+            }
+        }
     }
 
     async loadCaseStudy(caseStudyId) {
@@ -83,21 +96,20 @@ class DataLoader {
     }
 
     getProject(identifier) {
-        const projects = this.getProjects();
-        return projects.find(p => p.id === identifier || p.url === identifier);
+        return this.projectIndex.get(identifier) ||
+            this.getProjects().find(project => project.id === identifier || project.url === identifier);
     }
 
     getAdjacentProjects(identifier) {
         const projects = this.getProjects();
-        const currentIndex = projects.findIndex(p => p.id === identifier || p.url === identifier);
-        if (currentIndex === -1) return { prev: null, next: null };
-
-        const prevIndex = (currentIndex - 1 + projects.length) % projects.length;
-        const nextIndex = (currentIndex + 1) % projects.length;
+        const currentIndex = projects.findIndex(project => project.id === identifier || project.url === identifier);
+        if (currentIndex === -1) {
+            return { prev: null, next: null };
+        }
 
         return {
-            prev: projects[prevIndex],
-            next: projects[nextIndex]
+            prev: projects[(currentIndex - 1 + projects.length) % projects.length],
+            next: projects[(currentIndex + 1) % projects.length]
         };
     }
 
@@ -130,5 +142,4 @@ class DataLoader {
     }
 }
 
-// Create global instance
 const dataLoader = new DataLoader();
