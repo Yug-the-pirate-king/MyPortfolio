@@ -7,84 +7,84 @@
  * Exports: Multiple utility functions
  */
 
+const SCHEMA_CONTEXT = 'https://schema.org';
+
+function buildSchema(type, properties) {
+    return {
+        '@context': SCHEMA_CONTEXT,
+        '@type': type,
+        ...properties
+    };
+}
+
 function generatePersonSchema(personData) {
     if (!personData) return null;
 
-    return {
-        "@context": "https://schema.org",
-        "@type": "Person",
-        "name": personData.name,
-        "jobTitle": personData.jobTitle,
-        "description": personData.description,
-        "url": personData.website,
-        "image": personData.image,
-        "email": personData.email,
-        "telephone": personData.phone,
-        "address": {
-            "@type": "PostalAddress",
-            "streetAddress": personData.location.address,
-            "addressLocality": personData.location.city,
-            "addressRegion": personData.location.state,
-            "postalCode": personData.location.zip,
-            "addressCountry": personData.location.country
-        },
-        "sameAs": [
-            personData.socialLinks.linkedin,
-            personData.socialLinks.github,
-            personData.socialLinks.dribbble,
-            personData.socialLinks.instagram
+    const { name, jobTitle, description, website, image, email, phone, location, socialLinks, skills } = personData;
+
+    return buildSchema('Person', {
+        name,
+        jobTitle,
+        description,
+        url: website,
+        image,
+        email,
+        telephone: phone,
+        address: buildSchema('PostalAddress', {
+            streetAddress: location?.address,
+            addressLocality: location?.city,
+            addressRegion: location?.state,
+            postalCode: location?.zip,
+            addressCountry: location?.country
+        }),
+        sameAs: [
+            socialLinks?.linkedin,
+            socialLinks?.github,
+            socialLinks?.dribbble,
+            socialLinks?.instagram
         ],
-        "knowsAbout": personData.skills
-    };
+        knowsAbout: skills
+    });
 }
 
 function generateProjectSchema(projectData, personData) {
     if (!projectData || !personData) return null;
 
-    return {
-        "@context": "https://schema.org",
-        "@type": "CreativeWork",
-        "name": projectData.title,
-        "description": projectData.description,
-        "author": {
-            "@type": "Person",
-            "name": personData.name,
-            "url": personData.website
-        },
-        "datePublished": projectData.year?.toString(),
-        "image": `https://jerimybrown.com/assets/images/work/${projectData.id}-light.png`,
-        "keywords": projectData.tags?.join(', '),
-        "genre": projectData.category
-    };
+    return buildSchema('CreativeWork', {
+        name: projectData.title,
+        description: projectData.description,
+        author: buildSchema('Person', {
+            name: personData.name,
+            url: personData.website
+        }),
+        datePublished: projectData.year?.toString(),
+        image: `https://jerimybrown.com/assets/images/work/${projectData.id}-light.png`,
+        keywords: projectData.tags?.join(', '),
+        genre: projectData.category
+    });
 }
 
 function generateBreadcrumbSchema(items) {
-    return {
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": items.map((item, index) => ({
-            "@type": "ListItem",
-            "position": index + 1,
-            "name": item.name,
-            "item": item.url
+    return buildSchema('BreadcrumbList', {
+        itemListElement: items.map((item, index) => buildSchema('ListItem', {
+            position: index + 1,
+            name: item.name,
+            item: item.url
         }))
-    };
+    });
 }
 
 function generateWebSiteSchema(personData) {
     if (!personData) return null;
 
-    return {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "name": `${personData.name} - Portfolio`,
-        "url": personData.website,
-        "description": personData.description,
-        "author": {
-            "@type": "Person",
-            "name": personData.name
-        }
-    };
+    return buildSchema('WebSite', {
+        name: `${personData.name} - Portfolio`,
+        url: personData.website,
+        description: personData.description,
+        author: buildSchema('Person', {
+            name: personData.name
+        })
+    });
 }
 
 function injectJSONLD(schema) {
@@ -92,7 +92,7 @@ function injectJSONLD(schema) {
 
     const script = document.createElement('script');
     script.type = 'application/ld+json';
-    script.textContent = JSON.stringify(schema, null, 2);
+    script.textContent = JSON.stringify(schema);
     document.head.appendChild(script);
 }
 
@@ -100,13 +100,12 @@ function initJSONLDSchemas() {
     const personData = dataLoader.getPerson();
     const currentPath = window.location.pathname;
     const currentPage = currentPath.split('/').pop();
+    const isProjectPage = currentPath.includes('work/');
+    const isHomePage = currentPage === 'index.html' || currentPath === '/' || currentPath === '';
 
-    // Always inject Person schema on all pages
     injectJSONLD(generatePersonSchema(personData));
 
-    // Inject appropriate schemas based on page
-    if (currentPath.includes('/work/') || currentPath.includes('work/')) {
-        // Project page
+    if (isProjectPage) {
         const projectData = dataLoader.getProject(currentPage);
         if (projectData) {
             injectJSONLD(generateProjectSchema(projectData, personData));
@@ -116,8 +115,7 @@ function initJSONLDSchemas() {
                 { name: projectData.title, url: `https://jerimybrown.com/work/${projectData.url}` }
             ]));
         }
-    } else if (currentPage === 'index.html' || currentPath === '/' || currentPath === '') {
-        // Homepage
+    } else if (isHomePage) {
         injectJSONLD(generateWebSiteSchema(personData));
     }
 }
@@ -125,77 +123,82 @@ function initJSONLDSchemas() {
 // Grid Lines System
 // ==========================================
 
+function getGridControls() {
+    return {
+        overlay: document.getElementById('gridLinesOverlay'),
+        toggles: [
+            document.getElementById('gridToggle'),
+            document.getElementById('gridToggleLocal')
+        ]
+    };
+}
+
+function syncGridToggles(overlay) {
+    const isVisible = overlay.classList.contains('visible');
+    const { toggles } = getGridControls();
+
+    toggles.forEach(toggle => {
+        if (toggle) toggle.classList.toggle('active', isVisible);
+    });
+}
+
 function toggleGridLines() {
-    const overlay = document.getElementById('gridLinesOverlay');
-    const toggle = document.getElementById('gridToggle');
-    const toggleLocal = document.getElementById('gridToggleLocal');
-    
-    if (overlay) {
-        overlay.classList.toggle('visible');
-        
-        // Update all grid toggles to stay in sync
-        if (toggle) toggle.classList.toggle('active');
-        if (toggleLocal) toggleLocal.classList.toggle('active');
-        
-        // Save state to localStorage
-        const isVisible = overlay.classList.contains('visible');
-        localStorage.setItem('gridLinesVisible', isVisible);
-    }
+    const { overlay } = getGridControls();
+
+    if (!overlay) return;
+
+    overlay.classList.toggle('visible');
+    syncGridToggles(overlay);
+    localStorage.setItem('gridLinesVisible', overlay.classList.contains('visible'));
 }
 
 function initGridLines() {
     const savedState = localStorage.getItem('gridLinesVisible');
-    const overlay = document.getElementById('gridLinesOverlay');
-    const toggle = document.getElementById('gridToggle');
-    const toggleLocal = document.getElementById('gridToggleLocal');
-    
+    const { overlay } = getGridControls();
+
     if (savedState === 'true' && overlay) {
         overlay.classList.add('visible');
-        if (toggle) toggle.classList.add('active');
-        if (toggleLocal) toggleLocal.classList.add('active');
+        syncGridToggles(overlay);
     }
 }
-
 
 // Donut Chart Animations
 // ==========================================
 
+function easeOutQuart(t) {
+    return 1 - Math.pow(1 - t, 4);
+}
+
 function initDonutCharts() {
+    const charts = document.querySelectorAll('.donut-chart');
+    if (charts.length === 0) return;
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const chart = entry.target;
-                const progress = parseInt(chart.dataset.progress) || 0;
-                const radius = 25; // SVG circle radius
-                const circumference = 2 * Math.PI * radius;
-                const progressLength = (progress / 100) * circumference;
+            if (!entry.isIntersecting) return;
 
-                // Add animate class to trigger CSS animation
-                chart.classList.add('animate');
+            const chart = entry.target;
+            const progress = parseInt(chart.dataset.progress, 10) || 0;
+            const radius = 25;
+            const circumference = 2 * Math.PI * radius;
+            const progressLength = (progress / 100) * circumference;
 
-                // Set the CSS custom property for the progress
-                chart.style.setProperty('--progress', progressLength);
+            chart.classList.add('animate');
+            chart.style.setProperty('--progress', progressLength);
 
-                // Animate the percentage number
-                const valueElement = chart.querySelector('.chart-value');
-                if (valueElement) {
-                    animateChartValue(valueElement, 0, progress, 1500);
-                }
-
-                // Stop observing this chart
-                observer.unobserve(chart);
+            const valueElement = chart.querySelector('.chart-value');
+            if (valueElement) {
+                animateChartValue(valueElement, 0, progress, 1500);
             }
+
+            observer.unobserve(chart);
         });
     }, {
         threshold: 0.3,
         rootMargin: '0px 0px -20px 0px'
     });
 
-    // Observe all donut charts
-    const charts = document.querySelectorAll('.donut-chart');
-    charts.forEach(chart => {
-        observer.observe(chart);
-    });
+    charts.forEach(chart => observer.observe(chart));
 }
 
 function animateChartValue(element, start, end, duration) {
@@ -204,12 +207,9 @@ function animateChartValue(element, start, end, duration) {
     function updateValue(currentTime) {
         const elapsed = currentTime - startTime;
         const progress = Math.min(elapsed / duration, 1);
+        const current = Math.round(start + (end - start) * easeOutQuart(progress));
 
-        // Easing function for smooth animation
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.round(start + (end - start) * easeOutQuart);
-
-        element.textContent = current + '%';
+        element.textContent = `${current}%`;
 
         if (progress < 1) {
             requestAnimationFrame(updateValue);
@@ -219,80 +219,85 @@ function animateChartValue(element, start, end, duration) {
     requestAnimationFrame(updateValue);
 }
 
-
 // Logo Scroller - Seamless Infinite Scroll
 // ==========================================
 
-// Global variable for brands scroll duration (milliseconds)
-// Default: 40% speed = 80s duration (120 - 40 = 80)
 let brandScrollDuration = 80000;
-let restartLogoScroller = null; // Function to restart animation
-let updateLogoScrollSpeed = null; // Function to update speed without resetting position
+let restartLogoScroller = null;
+let updateLogoScrollSpeed = null;
 
 function initLogoScroller() {
     const track = document.querySelector('.logo-scroller-track');
     const scroller = document.querySelector('.logo-scroller');
     if (!track || !scroller) return;
 
-    // Animation state
     let animationId = null;
     let position = 0;
     let isPaused = false;
     let scrollWidth = 0;
     let speed = 0;
+    let lastTimestamp = 0;
 
-    // Calculate width of one complete set and scroll speed
     function calculateScrollParameters() {
-        // Get all logos and filter for actually visible ones (not hidden by CSS)
         const allLogos = Array.from(track.querySelectorAll('.brand-logo'));
-        const visibleLogos = allLogos.filter(logo => {
-            return window.getComputedStyle(logo).display !== 'none';
-        });
+        const visibleLogos = allLogos.filter(logo => window.getComputedStyle(logo).display !== 'none');
 
         if (visibleLogos.length === 0) {
-            return; // No logos to scroll
+            scrollWidth = 0;
+            speed = 0;
+            return;
         }
 
-        // visibleLogos contains 2 sets (original + duplicate)
-        // We need to calculate the width of exactly one set
         const oneSetCount = visibleLogos.length / 2;
+        const gap = parseInt(window.getComputedStyle(track).gap, 10) || 64;
 
-        // Get computed gap between logos
-        const trackStyles = window.getComputedStyle(track);
-        const gap = parseInt(trackStyles.gap) || 64;
-
-        // Calculate total width of one set
         let totalWidth = 0;
         for (let i = 0; i < oneSetCount; i++) {
             totalWidth += visibleLogos[i].offsetWidth + gap;
         }
 
         scrollWidth = totalWidth;
-
-        // Calculate speed using global brandScrollDuration variable
-        speed = scrollWidth / brandScrollDuration; // pixels per millisecond
+        speed = scrollWidth / brandScrollDuration;
     }
 
-    // Animation loop
     function animate(timestamp) {
-        if (!isPaused && scrollWidth > 0) {
-            // Move position based on speed (pixels per frame at ~60fps)
-            position += speed * 16.67; // Approximate 60fps frame time
+        if (!lastTimestamp) lastTimestamp = timestamp;
 
-            // Reset position when we've scrolled one complete set
+        if (!isPaused && scrollWidth > 0) {
+            const delta = timestamp - lastTimestamp;
+            position += speed * delta;
+
             if (position >= scrollWidth) {
-                position = position - scrollWidth; // Seamless reset
+                position = position % scrollWidth;
             }
 
-            // Apply transform
             track.style.transform = `translateX(-${position}px)`;
         }
 
-        // Continue animation loop
+        lastTimestamp = timestamp;
         animationId = requestAnimationFrame(animate);
     }
 
-    // Pause on hover
+    function start() {
+        if (animationId) {
+            cancelAnimationFrame(animationId);
+        }
+
+        position = 0;
+        lastTimestamp = 0;
+        track.style.transform = 'translateX(0)';
+
+        calculateScrollParameters();
+
+        if (scrollWidth > 0) {
+            animationId = requestAnimationFrame(animate);
+        }
+    }
+
+    function updateSpeed() {
+        calculateScrollParameters();
+    }
+
     scroller.addEventListener('mouseenter', () => {
         isPaused = true;
     });
@@ -301,51 +306,20 @@ function initLogoScroller() {
         isPaused = false;
     });
 
-    // Setup and start animation
-    function start() {
-        // Cancel existing animation
-        if (animationId) {
-            cancelAnimationFrame(animationId);
-        }
-
-        // Reset position
-        position = 0;
-        track.style.transform = 'translateX(0)';
-
-        // Calculate parameters
-        calculateScrollParameters();
-
-        // Start animation
-        if (scrollWidth > 0) {
-            animationId = requestAnimationFrame(animate);
-        }
-    }
-
-    // Update speed without resetting position (for smooth speed changes)
-    function updateSpeed() {
-        // Just recalculate the speed based on new duration
-        // The animation loop will pick up the new speed automatically
-        calculateScrollParameters();
-    }
-
-    // Expose functions globally
     restartLogoScroller = start;
     updateLogoScrollSpeed = updateSpeed;
 
-    // Initial setup
     start();
 
-    // Recalculate on theme change to ensure accuracy with different logo versions
-    const observer = new MutationObserver(() => {
+    const themeObserver = new MutationObserver(() => {
         start();
     });
 
-    observer.observe(document.body, {
+    themeObserver.observe(document.body, {
         attributes: true,
         attributeFilter: ['data-theme']
     });
 
-    // Recalculate on window resize
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
@@ -356,46 +330,38 @@ function initLogoScroller() {
 // Brands Speed Control
 // ==========================================
 
+function getBrandSpeedDuration(speedPercent) {
+    return (120 - speedPercent) * 1000;
+}
+
+function applyBrandSpeed(speedPercent) {
+    brandScrollDuration = getBrandSpeedDuration(speedPercent);
+    if (updateLogoScrollSpeed) {
+        updateLogoScrollSpeed();
+    }
+}
+
 function initBrandsSpeedControl() {
     const slider = document.getElementById('brandsSpeedSlider');
     const valueDisplay = document.getElementById('brandsSpeedValue');
 
     if (!slider || !valueDisplay) return;
 
-    // Load saved speed percentage from localStorage
+    const updateDisplay = (percent) => {
+        valueDisplay.textContent = `${percent}%`;
+    };
+
     const savedSpeed = localStorage.getItem('brandsScrollSpeed');
-    if (savedSpeed) {
-        const speedPercent = parseInt(savedSpeed);
-        slider.value = speedPercent;
-        valueDisplay.textContent = `${speedPercent}%`;
+    const initialPercent = savedSpeed ? parseInt(savedSpeed, 10) : parseInt(slider.value, 10);
 
-        // Calculate duration: higher percentage = faster = shorter duration
-        // Formula: duration = (120 - percentage) * 1000
-        // 100% = 20s (fastest), 60% = 60s (default), 20% = 100s (slowest)
-        brandScrollDuration = (120 - speedPercent) * 1000;
+    slider.value = initialPercent;
+    updateDisplay(initialPercent);
+    applyBrandSpeed(initialPercent);
 
-        // Update speed smoothly without resetting position
-        if (updateLogoScrollSpeed) {
-            updateLogoScrollSpeed();
-        }
-    }
-
-    // Update speed when slider changes
-    slider.addEventListener('input', function() {
-        const speedPercent = parseInt(this.value);
-
-        // Update display as percentage
-        valueDisplay.textContent = `${speedPercent}%`;
-
-        // Calculate duration: higher percentage = faster = shorter duration
-        brandScrollDuration = (120 - speedPercent) * 1000;
-
-        // Save to localStorage
+    slider.addEventListener('input', function () {
+        const speedPercent = parseInt(this.value, 10);
+        updateDisplay(speedPercent);
         localStorage.setItem('brandsScrollSpeed', speedPercent);
-
-        // Update speed smoothly without resetting position
-        if (updateLogoScrollSpeed) {
-            updateLogoScrollSpeed();
-        }
+        applyBrandSpeed(speedPercent);
     });
 }
