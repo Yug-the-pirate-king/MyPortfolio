@@ -1,4 +1,46 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "about-carousel.schema.json",
+  "title": "About Carousel",
+  "description": "Schema and configuration data for the about-section carousel cards.",
+  "type": "object",
+  "required": ["carouselCards"],
+  "properties": {
+    "carouselCards": {
+      "type": "array",
+      "description": "Ordered list of carousel cards displayed in the about section.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "A single carousel card with a title, description, and background styling.",
+        "required": ["id", "dataCard", "title", "description", "backgroundClass"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique machine-readable identifier for the card.",
+            "pattern": "^about-[a-z-]+$"
+          },
+          "dataCard": {
+            "type": "string",
+            "description": "Value for the data-card attribute consumed by the carousel component."
+          },
+          "title": {
+            "type": "string",
+            "description": "Human-readable headline shown on the card."
+          },
+          "description": {
+            "type": "string",
+            "description": "Body text displayed on the card."
+          },
+          "backgroundClass": {
+            "type": "string",
+            "description": "CSS class applied to the card background."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
   "carouselCards": [
     {
       "id": "about-design",
