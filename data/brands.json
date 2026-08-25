@@ -1,90 +1,105 @@
 {
   "brands": [
     {
+      "id": "nike",
       "name": "Nike",
       "lightLogo": "assets/logos/nike-light.svg",
       "darkLogo": "assets/logos/nike-dark.svg",
       "alt": "Nike"
     },
     {
+      "id": "adidas",
       "name": "Adidas",
       "lightLogo": "assets/logos/adidas-light.svg",
       "darkLogo": "assets/logos/adidas-dark.svg",
       "alt": "Adidas"
     },
     {
+      "id": "audi",
       "name": "Audi",
       "lightLogo": "assets/logos/audi-light.svg",
       "darkLogo": "assets/logos/audi-dark.svg",
       "alt": "Audi"
     },
     {
+      "id": "volkswagen",
       "name": "Volkswagen",
       "lightLogo": "assets/logos/vw-light.svg",
       "darkLogo": "assets/logos/vw-dark.svg",
       "alt": "Volkswagen"
     },
     {
+      "id": "ducati",
       "name": "Ducati",
       "lightLogo": "assets/logos/ducati-light.svg",
       "darkLogo": "assets/logos/ducati-dark.svg",
       "alt": "Ducati"
     },
     {
+      "id": "the-north-face",
       "name": "The North Face",
       "lightLogo": "assets/logos/the-north-face-light.svg",
       "darkLogo": "assets/logos/the-north-face-dark.svg",
       "alt": "The North Face"
     },
     {
+      "id": "beats",
       "name": "Beats",
       "lightLogo": "assets/logos/beats-light.svg",
       "darkLogo": "assets/logos/beats-dark.svg",
       "alt": "Beats"
     },
     {
+      "id": "sony",
       "name": "Sony",
       "lightLogo": "assets/logos/sony-light.svg",
       "darkLogo": "assets/logos/sony-dark.svg",
       "alt": "Sony"
     },
     {
+      "id": "disney",
       "name": "Disney",
       "lightLogo": "assets/logos/disney-light.svg",
       "darkLogo": "assets/logos/disney-dark.svg",
       "alt": "Disney"
     },
     {
+      "id": "coca-cola",
       "name": "Coca-Cola",
       "lightLogo": "assets/logos/coke-light.svg",
       "darkLogo": "assets/logos/coke-dark.svg",
       "alt": "Coca-Cola"
     },
     {
+      "id": "pentax",
       "name": "Pentax",
       "lightLogo": "assets/logos/pentax-light.svg",
       "darkLogo": "assets/logos/pentax-dark.svg",
       "alt": "Pentax"
     },
     {
+      "id": "national-geographic",
       "name": "National Geographic",
       "lightLogo": "assets/logos/nat-geo-light.svg",
       "darkLogo": "assets/logos/nat-geo-dark.svg",
       "alt": "National Geographic"
     },
     {
+      "id": "hitachi",
       "name": "Hitachi",
       "lightLogo": "assets/logos/hitachi-light.svg",
       "darkLogo": "assets/logos/hitachi-dark.svg",
       "alt": "Hitachi"
     },
     {
+      "id": "callaway",
       "name": "Callaway",
       "lightLogo": "assets/logos/callaway-light.svg",
       "darkLogo": "assets/logos/callaway-dark.svg",
       "alt": "Callaway"
     },
     {
+      "id": "beatport",
       "name": "Beatport",
       "lightLogo": "assets/logos/beatport-light.svg",
       "darkLogo": "assets/logos/beatport-dark.svg",
