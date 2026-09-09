@@ -24,8 +24,13 @@ function sanitizeProjectIdentifier(identifier) {
     if (typeof identifier !== 'string') {
         return '';
     }
-    const trimmed = identifier.trim();
-    return trimmed.length > 0 ? trimmed : '';
+    return identifier.trim() || '';
+}
+
+function requireDataLoader(method) {
+    if (typeof dataLoader === 'undefined' || !dataLoader || typeof dataLoader[method] !== 'function') {
+        throw new Error('dataLoader dependency is not available');
+    }
 }
 
 function getProject(projectIdOrUrl) {
@@ -33,9 +38,7 @@ function getProject(projectIdOrUrl) {
     if (!projectId) {
         return null;
     }
-    if (typeof dataLoader === 'undefined' || typeof dataLoader.getProject !== 'function') {
-        throw new Error('dataLoader dependency is not available');
-    }
+    requireDataLoader('getProject');
     return dataLoader.getProject(projectId);
 }
 
@@ -44,8 +47,6 @@ function getAdjacentProjects(projectIdOrUrl) {
     if (!projectId) {
         return null;
     }
-    if (typeof dataLoader === 'undefined' || typeof dataLoader.getAdjacentProjects !== 'function') {
-        throw new Error('dataLoader dependency is not available');
-    }
+    requireDataLoader('getAdjacentProjects');
     return dataLoader.getAdjacentProjects(projectId);
 }
