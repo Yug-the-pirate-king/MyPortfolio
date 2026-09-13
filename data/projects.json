@@ -104,7 +104,7 @@
       "category": "Product Design",
       "year": 2024,
       "url": "product-suite.html",
-      "ariaLabel": "View hybrid Product Suite Case Study",
+      "ariaLabel": "View Hybrid Product Suite Case Study",
       "tags": [
         "UX",
         "Product Design",
@@ -237,7 +237,7 @@
       ],
       "metrics": {
         "role": "UX Director / Designer",
-        "timeline": "2 Weeks",
+        "timeline": "2 weeks",
         "team": "Me"
       },
       "featuredImages": [
@@ -259,7 +259,7 @@
           "label1": "Role",
           "value1": "UX Director / Designer",
           "label2": "Timeline",
-          "value2": "2 Weeks",
+          "value2": "2 weeks",
           "label3": "Team",
           "value3": "Me"
         },
