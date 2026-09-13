@@ -1,12 +1,26 @@
 /* ==========================================
    Custom Cursor
+   ==========================================
+   Provides a JavaScript-driven custom cursor.
+   Hides the default pointer on capable devices
+   and replaces it with a glowing dot that reacts
+   to hover and click states.
+
+   The cursor is automatically disabled on:
+   - touch / pointer-coarse devices
+   - systems that request reduced motion
    ========================================== */
 
+/* Hide the native cursor for every element when the custom
+   cursor is enabled. JavaScript toggles this class. */
 .custom-cursor-enabled,
 .custom-cursor-enabled * {
     cursor: none !important;
 }
 
+/* Base custom cursor layer.
+   Fixed at the viewport origin; JavaScript translates it
+   to the current pointer position. */
 .custom-cursor {
     position: fixed;
     top: 0;
@@ -18,52 +32,53 @@
     transition: opacity 0.4s ease;
 }
 
+/* Reusable easing curve used for all cursor shape animations. */
 .custom-cursor-dot {
+    --cursor-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
     width: 16px;
     height: 16px;
     border-radius: 50%;
     background: #ffffff;
     transform: scale(1);
-    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                width 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                height 0.3s cubic-bezier(0.16, 1, 0.3, 1),
-                background 0.3s ease;
+    transition:
+        transform 0.3s var(--cursor-ease),
+        width 0.3s var(--cursor-ease),
+        height 0.3s var(--cursor-ease),
+        background 0.3s ease;
     box-shadow: 0 0 20px 4px rgba(21, 181, 255, 0.35);
 }
 
+/* Hover state: enlarge the dot and increase the glow radius. */
 .custom-cursor.hovering .custom-cursor-dot {
     transform: scale(2.2);
     box-shadow: 0 0 30px 8px rgba(21, 181, 255, 0.25);
 }
 
+/* Click state: shrink the dot for tactile feedback. */
 .custom-cursor.clicking .custom-cursor-dot {
     transform: scale(0.8);
 }
 
+/* Dark theme: switch the glow to a warm accent color. */
 [data-theme="dark"] .custom-cursor-dot {
     box-shadow: 0 0 20px 4px rgba(234, 88, 12, 0.35);
 }
 
+/* Dark theme hover state. */
 [data-theme="dark"] .custom-cursor.hovering .custom-cursor-dot {
     box-shadow: 0 0 30px 8px rgba(234, 88, 12, 0.25);
 }
 
-/* Touch devices: disable cursor styles */
-@media (pointer: coarse) {
+/* Disable the custom cursor on touch devices and for users
+   that prefer reduced motion. Both groups get the native
+   cursor back and the custom layer is hidden. */
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
     .custom-cursor-enabled,
     .custom-cursor-enabled * {
         cursor: auto !important;
     }
-    .custom-cursor {
-        display: none !important;
-    }
-}
 
-@media (prefers-reduced-motion: reduce) {
-    .custom-cursor-enabled,
-    .custom-cursor-enabled * {
-        cursor: auto !important;
-    }
     .custom-cursor {
         display: none !important;
     }
