@@ -1,4 +1,10 @@
 {
+  "_meta": {
+    "description": "Portfolio accolades data. Contains professional awards and public features consumed by the portfolio site to render the accolades section.",
+    "version": "1.0.0",
+    "schema": "schemas/accolades.schema.json",
+    "securityNotes": "All values are plain text. Consumers must HTML-escape strings before DOM insertion and must parse this file with a standard JSON parser instead of eval()."
+  },
   "awards": [
     {
       "date": "07/2008",
