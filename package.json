@@ -1,4 +1,5 @@
 {
+  "private": true,
   "devDependencies": {
     "autoprefixer": "^10.4.23",
     "postcss": "^8.5.6",
